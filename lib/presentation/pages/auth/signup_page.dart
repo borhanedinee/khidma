@@ -18,6 +18,7 @@ class SignupPage extends StatelessWidget {
             width: size.width,
             child: Stack(
               children: [
+                
                 Positioned(
                   bottom: 0,
                   left: 30,
