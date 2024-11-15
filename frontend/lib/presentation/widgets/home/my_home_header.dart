@@ -21,14 +21,15 @@ class MyHomeHeader extends StatelessWidget {
         children: [
           Text(
             headerLabel,
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: Colors.black,
                 ),
           ),
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.widgets_rounded,
+              size: 20,
             ),
           ),
         ],

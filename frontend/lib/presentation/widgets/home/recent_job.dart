@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
@@ -13,9 +12,11 @@ class RecentJob extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Container(
-        padding: const EdgeInsets.only(left: 20 ,),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
         margin: const EdgeInsets.only(bottom: 10),
-        width: 200,
+        width: size.width,
         height: 130,
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
@@ -26,24 +27,27 @@ class RecentJob extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: size.width,
+              width: size.width - 40,
               child: Row(
                 children: [
-                  Image.asset(
-                    'assets/logos/recruitingLOGO.png',
-                    height: 40,
-                  ),
-                  const SizedBox(
-                    width: 10,
+                  SizedBox(
+                    width: (size.width - 40) * .2,
+                    child: Image.asset(
+                      'assets/logos/recruitingLOGO.png',
+                      height: 40,
+                    ),
                   ),
                   SizedBox(
-                    width: size.width * .6,
+                    width: (size.width - 40) * .025,
+                  ),
+                  SizedBox(
+                    width: (size.width - 40) * .55,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Horizon',
-                          style: textTheme.titleMedium!.copyWith(
+                          style: textTheme.titleSmall!.copyWith(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -51,16 +55,22 @@ class RecentJob extends StatelessWidget {
                         Text(
                           'Software Engineer - Full-Stack',
                           overflow: TextOverflow.fade,
-                          style: textTheme.titleSmall!.copyWith(
+                          style: textTheme.bodySmall!.copyWith(
                             color: Colors.grey.shade700,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  IconButton.filled(
-                    onPressed: () {},
-                    icon: const Icon(Icons.navigate_next),
+                  SizedBox(
+                    width: (size.width - 40) * .05,
+                  ),
+                  SizedBox(
+
+                    child: IconButton.filled(
+                      onPressed: () {},
+                      icon: const Icon(Icons.navigate_next),
+                    ),
                   ),
                 ],
               ),
@@ -69,7 +79,7 @@ class RecentJob extends StatelessWidget {
               padding: const EdgeInsets.only(left: 40),
               child: Text(
                 '\$25k / Monthly',
-                style: textTheme.titleLarge!.copyWith(
+                style: textTheme.bodyMedium!.copyWith(
                   color: Colors.grey,
                 ),
               ),

@@ -17,7 +17,7 @@ class OnBoardingOne extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: (size.height - 100) * .1,
+            height: size.height * .08,
           ),
           JobItem(
             jobModel: JobModel(
@@ -29,8 +29,9 @@ class OnBoardingOne extends StatelessWidget {
             ),
             isLeftRadius: false,
           ),
+          
           SizedBox(
-            height:  (size.height - 100) * .05 ,
+            height: size.height * .02,
           ),
           JobItem(
             jobModel: JobModel(
@@ -43,23 +44,26 @@ class OnBoardingOne extends StatelessWidget {
             isLeftRadius: true,
           ),
           SizedBox(
-            height:  (size.height - 100) * .04,
+            height: size.height * .05,
           ),
-          Column(
-            children: [
-              Text(
-                'Find Your Dream Job',
-                style: textTheme.titleLarge,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                'We help you find your dream job according \nto your skillset, location and preference \nto build your career',
-                style: textTheme.bodySmall,
-                textAlign: TextAlign.center,
-              )
-            ],
+          SizedBox(
+            width: size.width - 60,
+            child: Column(
+              children: [
+                Text(
+                  'Find Your Dream Job',
+                  style: textTheme.titleMedium,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'We help you find your dream job according \nto your skillset, location and preference \nto build your career',
+                  style: textTheme.bodySmall,
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
           )
         ],
       ),

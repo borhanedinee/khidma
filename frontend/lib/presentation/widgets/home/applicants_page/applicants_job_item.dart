@@ -42,7 +42,7 @@ class ApplicantsJobItem extends StatelessWidget {
                       children: [
                         Text(
                           'Horizon',
-                          style: textTheme.titleMedium!.copyWith(
+                          style: textTheme.titleSmall!.copyWith(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -68,7 +68,7 @@ class ApplicantsJobItem extends StatelessWidget {
               padding: const EdgeInsets.only(left: 40 , top: 10),
               child: Text(
                 '\$25k / Monthly',
-                style: textTheme.titleMedium!.copyWith(
+                style: textTheme.bodyMedium!.copyWith(
                   color: Colors.grey,
                 ),
               ),

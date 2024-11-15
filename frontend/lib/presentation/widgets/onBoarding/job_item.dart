@@ -22,7 +22,7 @@ class JobItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.only(left: 20),
         width: size.width - 80,
-        height: (size.height - 100) * .3,
+        height: (size.height ) * .25,
         decoration: BoxDecoration(
           color: Colors.grey.shade200.withOpacity(.2),
           borderRadius: BorderRadius.horizontal(
@@ -42,7 +42,7 @@ class JobItem extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   jobModel.companyName,
-                  style: textTheme.titleLarge!.copyWith(
+                  style: textTheme.titleMedium!.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
@@ -55,7 +55,7 @@ class JobItem extends StatelessWidget {
               children: [
                 Text(
                   jobModel.jobTitle,
-                  style: textTheme.titleMedium!.copyWith(
+                  style: textTheme.titleSmall!.copyWith(
                     color: Colors.white70,
                     fontWeight: FontWeight.bold,
                   ),
@@ -63,7 +63,7 @@ class JobItem extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   jobModel.jobType,
-                  style: textTheme.titleSmall!.copyWith(color: Colors.white54),
+                  style: textTheme.bodySmall!.copyWith(color: Colors.white54),
                 ),
               ],
             ),
@@ -75,7 +75,7 @@ class JobItem extends StatelessWidget {
               children: [
                 Text(jobModel.jobSalary,
                     style:
-                        textTheme.titleMedium!.copyWith(color: Colors.white60)),
+                        textTheme.titleSmall!.copyWith(color: Colors.white60)),
                 const Spacer(),
                 IconButton.filled(
                   onPressed: () {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 
 class MyFormField extends StatelessWidget {
   final String hintText;
@@ -22,6 +23,7 @@ class MyFormField extends StatelessWidget {
           obscureText: isObsecure,
           decoration: InputDecoration(
             hintText: hintText,
+            hintStyle: textTheme.bodySmall!.copyWith(color: Colors.grey),
             border: InputBorder.none,
             filled: true,
             fillColor: Colors.grey[200],

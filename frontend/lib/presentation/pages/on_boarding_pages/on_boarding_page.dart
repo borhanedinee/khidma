@@ -44,20 +44,24 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           builder: (controller) => Stack(
             alignment: Alignment.center,
             children: [
-              PageView(
-                controller: _pageController.pageController,
-                children:  [
-                  const OnBoardingOne(),
-                  const OnBoardingTwo(),
-                  GetStartedPage(),
-                ],
+              SizedBox(
+                height: size.height,
+                child: PageView(
+                  controller: _pageController.pageController,
+                  children:  [
+                    const OnBoardingOne(),
+                    const OnBoardingTwo(),
+                    GetStartedPage(),
+                  ],
+                ),
               ),
               Positioned(
+                top: size.height * .85,
                 width: size.width - 40,
-                bottom: 20,
                 child: AnimatedOpacity(
                   opacity: _pageController.currentPage != 2 ? 1 : 0,
                   duration: Durations.long3,
+                  
                   child: Column(
                     children: [
                       SmoothPageIndicator(

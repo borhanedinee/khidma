@@ -64,21 +64,20 @@ class SignupPage extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 20),
                           child: Text(
                             'Hello, Welcome!',
-                            style: textTheme.headlineLarge,
+                            style: textTheme.headlineMedium,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 20, top: 5),
                           child: Text(
                             'Fill the details to sign up for an account',
-                            style: textTheme.bodyMedium!
+                            style: textTheme.bodySmall!
                                 .copyWith(color: Colors.black45),
                           ),
                         ),
                         const SizedBox(
                           height: 50,
                         ),
-                        
                         const MyFormField(
                           hintText: 'Full name',
                           isObsecure: false,
@@ -105,7 +104,11 @@ class SignupPage extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              const Text('Already have an account?'),
+                              Text(
+                                'Already have an account?',
+                                style: textTheme.bodySmall!
+                                    .copyWith(color: Colors.black),
+                              ),
                               const SizedBox(width: 5),
                               GestureDetector(
                                 onTap: () {
@@ -113,9 +116,8 @@ class SignupPage extends StatelessWidget {
                                 },
                                 child: Text(
                                   'Login',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
+                                  style: textTheme.bodySmall!.copyWith(
+                                      color: Theme.of(context).primaryColor),
                                 ),
                               ),
                             ],

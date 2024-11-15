@@ -12,33 +12,36 @@ class OnBoardingTwo extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: (size.height - 100) * .1,
+            height: size.height * .1
           ),
           Center(
             child: Image.asset(
               'assets/images/onbrd2.png',
               fit: BoxFit.fill,
-              height: (size.height - 100) * .65,
+              height: size.height * .5,
             ),
           ),
           SizedBox(
-            height: (size.height - 100) * .04,
+            height: size.height * .05,
           ),
-          Column(
-            children: [
-              Text(
-                'Connect with Opportunity',
-                style: textTheme.titleLarge,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Discover jobs tailored to your skills and interests. Connect with top companies and take the next step in your \ncareer journey.',
-                style: textTheme.bodySmall,
-                textAlign: TextAlign.center,
-              )
-            ],
+          SizedBox(
+            width: size.width - 60,
+            child: Column(
+              children: [
+                Text(
+                  'Connect with Opportunity',
+                  style: textTheme.titleLarge,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Discover jobs tailored to your skills and interests. Connect with top companies and take the next step in your career journey.',
+                  style: textTheme.bodySmall,
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
           )
         ],
       ),

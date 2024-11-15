@@ -65,14 +65,14 @@ class LoginPage extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 20),
                           child: Text(
                             'Welcome Back!',
-                            style: textTheme.headlineLarge,
+                            style: textTheme.headlineMedium,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 20, top: 5),
                           child: Text(
                             'Fill the details to login to your account',
-                            style: textTheme.bodyMedium!
+                            style: textTheme.bodySmall!
                                 .copyWith(color: Colors.black45),
                           ),
                         ),
@@ -80,11 +80,11 @@ class LoginPage extends StatelessWidget {
                           height: 50,
                         ),
                         const MyFormField(
-                          hintText: 'Email',
+                          hintText: 'Email...',
                           isObsecure: false,
                         ),
                         const MyFormField(
-                          hintText: 'Password',
+                          hintText: 'Password...',
                           isObsecure: true,
                         ),
                         const SizedBox(
@@ -101,7 +101,11 @@ class LoginPage extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              const Text('Don\'t have an account?'),
+                              Text(
+                                'Don\'t have an account?',
+                                style: textTheme.bodySmall!
+                                    .copyWith(color: Colors.black),
+                              ),
                               const SizedBox(width: 5),
                               GestureDetector(
                                 onTap: () {
@@ -109,9 +113,8 @@ class LoginPage extends StatelessWidget {
                                 },
                                 child: Text(
                                   'Register',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
+                                  style: textTheme.bodySmall!.copyWith(
+                                      color: Theme.of(context).primaryColor),
                                 ),
                               ),
                             ],

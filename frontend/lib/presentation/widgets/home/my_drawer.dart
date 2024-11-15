@@ -86,11 +86,9 @@ class MyDrawer extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            const Text(
+             Text(
               'Version 1.0',
-              style: TextStyle(
-                color: Colors.grey,
-              ),
+              style: textTheme.bodySmall!.copyWith(color: Colors.grey)
             ),
             const SizedBox(
               height: 10,

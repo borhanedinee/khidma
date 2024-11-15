@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/pages/auth/login_page.dart';
+import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 import 'package:khidma/presentation/widgets/home/popular_job.dart';
 import 'package:khidma/presentation/widgets/home/my_home_header.dart';
 import 'package:khidma/presentation/widgets/home/recent_job.dart';
@@ -25,13 +26,12 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Text(
                     'Search \nFind & Apply',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           color: Colors.black,
                           fontWeight: FontWeight.w900,
-                          fontSize: 36,
                         ),
                   ),
                 ),
@@ -63,14 +63,17 @@ class HomePage extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: TextField(
                   decoration: InputDecoration(
-                      hintText: "Search...",
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.grey[100],
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 10),
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: const Icon(Icons.settings)),
+                    hintText: "Search...",
+                    hintStyle:
+                        textTheme.bodySmall!.copyWith(color: Colors.grey),
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.grey[100],
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: const Icon(Icons.settings),
+                  ),
                 ),
               ),
             ),

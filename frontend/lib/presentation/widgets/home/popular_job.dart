@@ -37,7 +37,7 @@ class PopularJob extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   jobModel.companyName,
-                  style: textTheme.titleLarge!.copyWith(
+                  style: textTheme.titleMedium!.copyWith(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold,
                   ),
@@ -50,7 +50,7 @@ class PopularJob extends StatelessWidget {
               children: [
                 Text(
                   jobModel.jobTitle,
-                  style: textTheme.titleMedium!.copyWith(
+                  style: textTheme.titleSmall!.copyWith(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold,
                   ),
@@ -58,7 +58,7 @@ class PopularJob extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   jobModel.jobType,
-                  style: textTheme.titleSmall!.copyWith(
+                  style: textTheme.bodySmall!.copyWith(
                     color: Colors.black38,
                   ),
                 ),
@@ -72,7 +72,7 @@ class PopularJob extends StatelessWidget {
               children: [
                 Text(
                   jobModel.jobSalary,
-                  style: textTheme.titleMedium!.copyWith(
+                  style: textTheme.bodyMedium!.copyWith(
                     color: Colors.black54,
                   ),
                 ),
