@@ -1,6 +1,11 @@
 const errHandler = (err, req, res, next) => {
-    console.log('borhaan');
-    console.log(err.message);
+    console.log('err handler triggered');
+    res.status(500).json(
+        {
+            status: 'error' ,
+            message: err.message
+        }
+    );
     
 }
 

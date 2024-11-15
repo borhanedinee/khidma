@@ -25,7 +25,7 @@ class OnBoardingTwo extends StatelessWidget {
             height: size.height * .05,
           ),
           SizedBox(
-            width: size.width - 60,
+            width: size.width - 30,
             child: Column(
               children: [
                 Text(

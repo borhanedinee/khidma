@@ -47,7 +47,7 @@ class OnBoardingOne extends StatelessWidget {
             height: size.height * .05,
           ),
           SizedBox(
-            width: size.width - 60,
+            width: size.width - 30,
             child: Column(
               children: [
                 Text(
@@ -58,7 +58,7 @@ class OnBoardingOne extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  'We help you find your dream job according \nto your skillset, location and preference \nto build your career',
+                  'We help you find your dream job according to your skillset, location and preference to build your career',
                   style: textTheme.bodySmall,
                   textAlign: TextAlign.center,
                 )
