@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
-import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
 
 class DrawePageItem extends StatelessWidget {
