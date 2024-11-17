@@ -30,8 +30,9 @@ class LoginPage extends StatelessWidget {
                 Positioned(
                   child: Container(
                     height: size.height,
-                    decoration:
-                        BoxDecoration(color: Colors.white.withOpacity(.7)),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(.7),
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -62,14 +63,14 @@ class LoginPage extends StatelessWidget {
                           height: 100,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: Text(
                             'Welcome Back!',
                             style: textTheme.headlineMedium,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20, top: 5),
+                          padding: const EdgeInsets.only(left: 24, top: 5),
                           child: Text(
                             'Fill the details to login to your account',
                             style: textTheme.bodySmall!
@@ -81,11 +82,11 @@ class LoginPage extends StatelessWidget {
                         ),
                         const MyFormField(
                           hintText: 'Email...',
-                          isObsecure: false,
+                          isPassword: false,
                         ),
                         const MyFormField(
                           hintText: 'Password...',
-                          isObsecure: true,
+                          isPassword: true,
                         ),
                         const SizedBox(
                           height: 30,
@@ -96,7 +97,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
+                            horizontal: 24,
                             vertical: 10,
                           ),
                           child: Row(

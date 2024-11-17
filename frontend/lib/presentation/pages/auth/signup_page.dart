@@ -61,14 +61,14 @@ class SignupPage extends StatelessWidget {
                           height: 100,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 24),
                           child: Text(
                             'Hello, Welcome!',
                             style: textTheme.headlineMedium,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20, top: 5),
+                          padding: const EdgeInsets.only(left: 24, top: 5),
                           child: Text(
                             'Fill the details to sign up for an account',
                             style: textTheme.bodySmall!
@@ -80,15 +80,15 @@ class SignupPage extends StatelessWidget {
                         ),
                         const MyFormField(
                           hintText: 'Full name',
-                          isObsecure: false,
+                          isPassword: false,
                         ),
                         const MyFormField(
                           hintText: 'Email',
-                          isObsecure: false,
+                          isPassword: false,
                         ),
                         const MyFormField(
                           hintText: 'Password',
-                          isObsecure: true,
+                          isPassword: true,
                         ),
                         const SizedBox(
                           height: 30,
@@ -99,7 +99,7 @@ class SignupPage extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
+                            horizontal: 24,
                             vertical: 10,
                           ),
                           child: Row(

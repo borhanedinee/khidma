@@ -17,7 +17,7 @@ class MyFilledButton extends StatelessWidget {
       height: 50,
       width: size.width,
       margin: const EdgeInsets.symmetric(
-        horizontal: 10,
+        horizontal: 20,
       ),
       child: ElevatedButton(
         onPressed: onPressed,

@@ -1,40 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 
-class MyFormField extends StatelessWidget {
+class MyFormField extends StatefulWidget {
   final String hintText;
 
-  final bool isObsecure;
+  final bool isPassword;
 
   const MyFormField({
     super.key,
     required this.hintText,
-    required this.isObsecure,
+    required this.isPassword,
   });
 
+  @override
+  State<MyFormField> createState() => _MyFormFieldState();
+}
+
+class _MyFormFieldState extends State<MyFormField> {
+  bool isObsecure = false;
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).primaryColor.withOpacity(.01),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         child: TextField(
-          obscureText: isObsecure,
+          obscureText: widget.isPassword? isObsecure : false,
           decoration: InputDecoration(
-            hintText: hintText,
+            hintText: widget.hintText,
             hintStyle: textTheme.bodySmall!.copyWith(color: Colors.grey),
             border: InputBorder.none,
             filled: true,
             fillColor: Colors.grey[200],
-            suffixIcon: IconButton(
-              onPressed: () {},
+            suffixIcon: widget.isPassword? IconButton(
+              onPressed: () {
+                setState(() {
+                  isObsecure =!isObsecure;
+                });
+              },
               icon: isObsecure
                   ? const Icon(
                       Icons.visibility,
                     )
-                  : const SizedBox(),
-            ),
+                  : const Icon(
+                      Icons.visibility_off_rounded,
+                    )
+            ) : null,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 10,
