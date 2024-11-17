@@ -5,11 +5,15 @@ class MyFormField extends StatefulWidget {
   final String hintText;
 
   final bool isPassword;
+  final String? Function(String?)? validator;
+  final TextEditingController? fieldController;
 
   const MyFormField({
     super.key,
     required this.hintText,
     required this.isPassword,
+    this.validator,
+    this.fieldController,
   });
 
   @override
@@ -18,6 +22,7 @@ class MyFormField extends StatefulWidget {
 
 class _MyFormFieldState extends State<MyFormField> {
   bool isObsecure = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,28 +30,31 @@ class _MyFormFieldState extends State<MyFormField> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
-        child: TextField(
-          obscureText: widget.isPassword? isObsecure : false,
+        child: TextFormField(
+          validator: widget.validator,
+          controller: widget.fieldController,
+          obscureText: widget.isPassword ? isObsecure : false,
           decoration: InputDecoration(
             hintText: widget.hintText,
             hintStyle: textTheme.bodySmall!.copyWith(color: Colors.grey),
             border: InputBorder.none,
             filled: true,
             fillColor: Colors.grey[200],
-            suffixIcon: widget.isPassword? IconButton(
-              onPressed: () {
-                setState(() {
-                  isObsecure =!isObsecure;
-                });
-              },
-              icon: isObsecure
-                  ? const Icon(
-                      Icons.visibility,
-                    )
-                  : const Icon(
-                      Icons.visibility_off_rounded,
-                    )
-            ) : null,
+            suffixIcon: widget.isPassword
+                ? IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isObsecure = !isObsecure;
+                      });
+                    },
+                    icon: isObsecure
+                        ? const Icon(
+                            Icons.visibility,
+                          )
+                        : const Icon(
+                            Icons.visibility_off_rounded,
+                          ))
+                : null,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 10,

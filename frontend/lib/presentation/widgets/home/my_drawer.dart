@@ -5,6 +5,7 @@ import 'package:khidma/presentation/pages/home_pages/chats_page.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/home_pages/logout_page.dart';
 import 'package:khidma/presentation/pages/home_pages/notifications_page.dart';
+import 'package:khidma/presentation/pages/home_pages/profile_page.dart';
 import 'package:khidma/presentation/pages/home_pages/settings_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 import 'package:khidma/presentation/widgets/home/my_drawer_page_item.dart';
@@ -52,11 +53,18 @@ class MyDrawer extends StatelessWidget {
             const SizedBox(
               height: 0,
             ),
-            const DrawePageItem(
+            DrawePageItem(
               label: 'H O M E',
               icon: Icons.home,
               page: HomePage(),
             ),
+            prefs.getString('userfullname') != null
+                ? const DrawePageItem(
+                    label: 'P R O F I L E',
+                    icon: Icons.person,
+                    page: ProfilePage(),
+                  )
+                : const SizedBox(),
             const DrawePageItem(
               label: 'A P P L I C A N T S',
               icon: Icons.groups,
@@ -86,10 +94,8 @@ class MyDrawer extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-             Text(
-              'Version 1.0',
-              style: textTheme.bodySmall!.copyWith(color: Colors.grey)
-            ),
+            Text('Version 1.0',
+                style: textTheme.bodySmall!.copyWith(color: Colors.grey)),
             const SizedBox(
               height: 10,
             ),

@@ -14,7 +14,7 @@ class ApplicantsJobItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Container(
         padding: const EdgeInsets.only(left: 20 , top: 10 , bottom: 10),
-        margin: const EdgeInsets.only(bottom: 10 , left: 10,right: 10),
+        margin: const EdgeInsets.only(bottom: 10 , left: 12,right: 12),
         width: size.width,
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
@@ -32,9 +32,7 @@ class ApplicantsJobItem extends StatelessWidget {
                     'assets/logos/recruitingLOGO.png',
                     height: 40,
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
+                  Spacer(),
                   SizedBox(
                     width: size.width * .6,
                     child: Column(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
@@ -34,12 +35,13 @@ class DrawePageItem extends StatelessWidget {
               message: 'Logged Out Successfully',
             ),
           );
+          prefs.clear();
           Get.off(
             const OnBoardingPage(),
           );
 
           controller.changeSelectedDrawerItem('H O M E');
-          controller.changeCurrentPage(const HomePage());
+          controller.changeCurrentPage(HomePage());
         },
         child: AnimatedContainer(
           duration: Durations.long1,

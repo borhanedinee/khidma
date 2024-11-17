@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:khidma/data/user_api.dart';
+import 'package:khidma/presentation/controllers/auth/login_controller.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
 import 'package:khidma/presentation/controllers/onboarding_controller.dart';
+import 'package:khidma/presentation/pages/home_pages/home_page.dart';
+import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+late SharedPreferences prefs;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   runApp(const Khidma());
 }
 
@@ -42,10 +51,11 @@ class Khidma extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const OnBoardingPage(),
+      home: prefs.getString('userfullname') == null? const OnBoardingPage() : const MainPage(),
       initialBinding: BindingsBuilder(() {
-        Get.put(OnBoardingController());
-        Get.put(MyDrawerController());
+        Get.lazyPut(() => OnBoardingController(), fenix: true);
+        Get.lazyPut(() => MyDrawerController(), fenix: true);
+        Get.lazyPut(() => LoginController(userApi: UserApi()), fenix: true);
       }),
     );
   }

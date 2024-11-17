@@ -5,6 +5,13 @@ const errHandler = require('./middlewares/errHandler');
 
 const app = express()
 
+// uploads
+const path = require('path');
+
+// Make the uploads folder accessible
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+
 // Middleware to parse JSON request bodies
 
 app.use(express.json())

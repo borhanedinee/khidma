@@ -18,7 +18,7 @@ class PopularJob extends StatelessWidget {
       alignment: Alignment.center,
       child: Container(
         padding: const EdgeInsets.only(left: 20),
-        margin: const EdgeInsets.only(left: 5),
+        margin: const EdgeInsets.only(left: 15),
         width: size.width - 100,
         height: (size.height - 100) * .3,
         decoration: BoxDecoration(

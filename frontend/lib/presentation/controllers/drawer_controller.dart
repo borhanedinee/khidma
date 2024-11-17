@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 
 class MyDrawerController extends GetxController {
-  Widget currentPage = const HomePage();
+  Widget currentPage = HomePage();
   changeCurrentPage(page){
     currentPage = page;
     update();

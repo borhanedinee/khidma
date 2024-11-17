@@ -10,7 +10,7 @@ class RecentJob extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -31,15 +31,13 @@ class RecentJob extends StatelessWidget {
               child: Row(
                 children: [
                   SizedBox(
-                    width: (size.width - 40) * .2,
+                    width: (size.width - 40) * .12,
                     child: Image.asset(
                       'assets/logos/recruitingLOGO.png',
                       height: 40,
                     ),
                   ),
-                  SizedBox(
-                    width: (size.width - 40) * .025,
-                  ),
+                  const Spacer(),
                   SizedBox(
                     width: (size.width - 40) * .55,
                     child: Column(

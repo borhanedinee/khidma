@@ -20,13 +20,17 @@ class MyAppBar extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.topLeft,
-            child: IconButton(
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
+            child: Builder(
+              // WHY BUILDER : i have to open drawer from profile page because 
+              // Scaffold got deleted cz off Get.off(ProfilePage)
+              builder: (context) =>  IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
