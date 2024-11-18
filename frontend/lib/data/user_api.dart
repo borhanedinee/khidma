@@ -11,7 +11,7 @@ class UserApi {
       'password': password,
     };
     var req = await http.post(Uri.parse('$BASE_URL/api/auth/login'),
-        body: jsonEncode(body), headers: headers);
+        body: jsonEncode(body), headers: HEADERS);
 
     if (req.statusCode == 200) {
       print('object');
