@@ -139,8 +139,8 @@ class LoginPage extends StatelessWidget {
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
                                       await controller.login(
-                                        emailController.text,
-                                        passwordController.text,
+                                        emailController.text.trim(),
+                                        passwordController.text.trim(),
                                       );
                                     }
                                   },

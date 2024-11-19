@@ -41,7 +41,7 @@ class JobItem extends StatelessWidget {
                 Image.asset(jobModel.companyLogo, height: 40),
                 const SizedBox(width: 10),
                 Text(
-                  jobModel.companyName,
+                  jobModel.company,
                   style: textTheme.titleMedium!.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class JobItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  jobModel.jobTitle,
+                  jobModel.title,
                   style: textTheme.titleSmall!.copyWith(
                     color: Colors.white70,
                     fontWeight: FontWeight.bold,
@@ -62,7 +62,7 @@ class JobItem extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  jobModel.jobType,
+                  jobModel.type,
                   style: textTheme.bodySmall!.copyWith(color: Colors.white54),
                 ),
               ],
@@ -73,7 +73,7 @@ class JobItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(jobModel.jobSalary,
+                Text('${jobModel.salary.toInt()} DA',
                     style:
                         textTheme.titleSmall!.copyWith(color: Colors.white60)),
                 const Spacer(),

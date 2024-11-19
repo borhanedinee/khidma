@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:khidma/data/user_api.dart';
 import 'package:khidma/presentation/controllers/auth/login_controller.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
+import 'package:khidma/presentation/controllers/home/home_controller.dart';
 import 'package:khidma/presentation/controllers/home/profile_controller.dart';
 import 'package:khidma/presentation/controllers/onboarding_controller.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
@@ -57,6 +58,7 @@ class Khidma extends StatelessWidget {
         Get.lazyPut(() => OnBoardingController(), fenix: true);
         Get.lazyPut(() => MyDrawerController(), fenix: true);
         Get.lazyPut(() => ProfileController(), fenix: true);
+        Get.lazyPut(() => HomeController(), fenix: true);
         Get.lazyPut(() => LoginController(userApi: UserApi()), fenix: true);
       }),
     );

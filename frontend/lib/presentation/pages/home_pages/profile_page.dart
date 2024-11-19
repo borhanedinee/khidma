@@ -37,7 +37,7 @@ class ProfilePage extends StatelessWidget {
                   child: ListView(
                     children: [
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                   
                       // PROFILE BAR

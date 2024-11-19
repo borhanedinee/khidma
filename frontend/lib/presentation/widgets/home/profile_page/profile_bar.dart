@@ -12,7 +12,7 @@ class ProfileBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24),
+      margin: const EdgeInsets.symmetric(horizontal: 30),
       padding: const EdgeInsets.only(left: 5),
       height: 80,
       width: size.width,
@@ -24,7 +24,7 @@ class ProfileBar extends StatelessWidget {
         children: [
           // avatar
           SizedBox(
-            width: (size.width - 24 * 2) * .15,
+            width: (size.width - 30 * 2) * .15,
             height: 50,
             child: CircleAvatar(
               backgroundImage: NetworkImage(
@@ -34,7 +34,7 @@ class ProfileBar extends StatelessWidget {
           ),
           const Spacer(),
           SizedBox(
-            width: (size.width - 24 * 2) * .54,
+            width: (size.width - 30 * 2) * .54,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +59,7 @@ class ProfileBar extends StatelessWidget {
           ),
           const Spacer(),
           SizedBox(
-              width: (size.width - 24 * 2) * .2,
+              width: (size.width - 30 * 2) * .2,
               child: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.edit_note_rounded))),

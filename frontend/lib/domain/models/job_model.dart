@@ -1,48 +1,49 @@
 class JobModel {
-  String companyName;
-  String companyLogo;
-  String jobTitle;
-  String jobType;
-  String jobSalary;
+  final int id;
+  final String title;
+  final String type;
+  final String company;
+  final String companyLogo;
+  final double salary;
+  final String description;
+  final int recruiter;
 
-  // Constructor
   JobModel({
-    required this.companyName,
+    required this.id,
+    required this.title,
+    required this.type,
+    required this.company,
     required this.companyLogo,
-    required this.jobTitle,
-    required this.jobType,
-    required this.jobSalary,
+    required this.salary,
+    required this.description,
+    required this.recruiter,
   });
 
-  // Optionally, you can add a method to display job details as a string
-  @override
-  String toString() {
-    return 'Job Title: $jobTitle\n'
-        'Company: $companyName\n'
-        'Type: $jobType\n'
-        'Salary: \$$jobSalary';
-  }
-
-  // You could also add methods to serialize/deserialize to/from JSON if needed
-  // Example of a fromJson method:
-  factory JobModel.fromJson(Map<String, dynamic> json) {
+  // Factory method to create a JobModel from a map (useful for parsing JSON)
+  factory JobModel.fromMap(Map<String, dynamic> map) {
     return JobModel(
-      companyName: json['companyName'],
-      companyLogo: json['companyLogo'],
-      jobTitle: json['jobTitle'],
-      jobType: json['jobType'],
-      jobSalary: json['jobSalary'].toDouble(),
+      id: map['id'],
+      title: map['title'],
+      type: map['type'],
+      company: map['company'],
+      companyLogo: map['companylogo'],
+      salary: double.parse(map['salary'].toString()),
+      description: map['description'],
+      recruiter: map['recruiter'],
     );
   }
 
-  // Example of a toJson method:
-  Map<String, dynamic> toJson() {
+  // Method to convert a JobModel to a map (useful for sending to backend or saving locally)
+  Map<String, dynamic> toMap() {
     return {
-      'companyName': companyName,
-      'companyLogo': companyLogo,
-      'jobTitle': jobTitle,
-      'jobType': jobType,
-      'jobSalary': jobSalary,
+      'id': id,
+      'title': title,
+      'type': type,
+      'company': company,
+      'companylogo': companyLogo,
+      'salary': salary,
+      'description': description,
+      'recruiter': recruiter,
     };
   }
 }
