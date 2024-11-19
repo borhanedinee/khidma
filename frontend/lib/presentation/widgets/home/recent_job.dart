@@ -40,6 +40,7 @@ class RecentJob extends StatelessWidget {
                         width: (size.width - 40) * .12,
                         child: Image.network(
                           '$IMAGE_URL/${jobModel.companyLogo}',
+                          scale: 1.0,
                           height: 40,
                         ),
                       ),
