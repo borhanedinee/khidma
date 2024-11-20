@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/domain/models/job_requirement_model.dart';
@@ -11,13 +10,12 @@ class JobRequirements extends StatelessWidget {
     super.key,
   });
 
-  JobRequirementsController controller =  Get.find();
+  JobRequirementsController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin:
-          const EdgeInsets.symmetric(horizontal: 24),
+      margin: const EdgeInsets.symmetric(horizontal: 24),
       width: size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,15 +29,19 @@ class JobRequirements extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          ...List.generate(
-              controller.jobRequirements.length,
-              (index) {
+          ...List.generate(controller.jobRequirements.length, (index) {
             JobRequirementModel jobRequirementModel =
                 controller.jobRequirements[index];
-            return Text(
-              '● ${jobRequirementModel.requirement}',
-              style: textTheme.bodySmall!
-                  .copyWith(color: Colors.grey),
+            return Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                '● ${jobRequirementModel.requirement}',
+                style: textTheme.bodySmall!.copyWith(
+                  color: Colors.grey,
+                  wordSpacing: 5,
+                  letterSpacing: 2
+                ),
+              ),
             );
           }),
         ],

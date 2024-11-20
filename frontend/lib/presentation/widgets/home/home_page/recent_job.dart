@@ -57,11 +57,12 @@ class RecentJob extends StatelessWidget {
                             children: [
                               Text(
                                 jobModel.company,
-                                style: textTheme.titleSmall!.copyWith(
+                                style: textTheme.titleMedium!.copyWith(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              SizedBox(height: 2),
                               Text(
                                 '${jobModel.title} - ${jobModel.type}',
                                 overflow: TextOverflow.fade,

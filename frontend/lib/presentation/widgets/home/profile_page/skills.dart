@@ -49,15 +49,16 @@ class Skills extends StatelessWidget {
                     ),
                   )
                 : Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
+                    spacing: 10,
+                    runSpacing: 10,
                     children: List.generate(
                       controller.skills.length,
                       (index) {
-                        List skillReversed = controller.skills.reversed.toList();
+                        List skillReversed =
+                            controller.skills.reversed.toList();
                         String skill = skillReversed[index];
                         return Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(15),
@@ -114,6 +115,12 @@ class Skills extends StatelessWidget {
             isPassword: false,
           ),
         ),
+        title: const Text(
+            'By adding your skills, you help us suggest suitable jobs for you.',
+            style: TextStyle(
+              fontSize: 12,
+            ),
+       ),
       ),
     );
   }

@@ -60,7 +60,7 @@ class PopularJob extends StatelessWidget {
                     children: [
                       Text(
                         jobModel.title,
-                        style: textTheme.titleSmall!.copyWith(
+                        style: textTheme.titleMedium!.copyWith(
                           color: Colors.black87,
                           fontWeight: FontWeight.bold,
                         ),

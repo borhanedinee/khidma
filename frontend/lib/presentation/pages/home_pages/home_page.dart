@@ -20,7 +20,9 @@ class _HomePageState extends State<HomePage> {
   HomeController homeController = Get.find();
   @override
   void initState() {
-    homeController.fetchJobs();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      homeController.fetchJobs();
+    });
     super.initState();
   }
 

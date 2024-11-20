@@ -31,6 +31,7 @@ class Khidma extends StatelessWidget {
     size = MediaQuery.of(context).size;
     return GetMaterialApp(
       title: 'Flutter Demo',
+      themeMode: ThemeMode.dark,
       theme: ThemeData(
         textTheme: const TextTheme(
           titleLarge: TextStyle(

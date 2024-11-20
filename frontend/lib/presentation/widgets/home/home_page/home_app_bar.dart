@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/constants.dart';
@@ -19,7 +18,7 @@ class HomeAppBar extends StatelessWidget {
       expandedHeight: 250.0,
       floating: false,
       pinned: true,
-      backgroundColor: Theme.of(context).primaryColor.withOpacity(.3),
+      backgroundColor: Theme.of(context).primaryColor,
       flexibleSpace: FlexibleSpaceBar(
         background: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +50,10 @@ class HomeAppBar extends StatelessWidget {
                 },
                 child: const Text(
                   'Join us',
-                  style: TextStyle(fontWeight: FontWeight.w900),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                  ),
                 ),
               )
             : GetBuilder<MyDrawerController>(
@@ -74,7 +76,7 @@ class HomeAppBar extends StatelessWidget {
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
         child: Container(
-          color: Theme.of(context).primaryColor.withOpacity(.01),
+          color: Theme.of(context).primaryColor,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(16)),

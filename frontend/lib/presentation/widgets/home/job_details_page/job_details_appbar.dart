@@ -35,12 +35,16 @@ class JobDetailsAppBar extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.bookmark_border_rounded,
-            ),
-          ),
+          prefs.getString('userfullname') != null
+              ? IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.bookmark_border_rounded,
+                  ),
+                )
+              : const SizedBox(
+                  width: 30,
+                ),
         ],
       ),
     );
