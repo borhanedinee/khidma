@@ -6,7 +6,7 @@ import 'package:khidma/presentation/shimmers/home_shimmers/popular_job_shimmer.d
 import 'package:khidma/presentation/widgets/home/home_page/home_app_bar.dart';
 import 'package:khidma/presentation/widgets/home/home_page/home_popular_jobs.dart';
 import 'package:khidma/presentation/widgets/home/my_home_header.dart';
-import 'package:khidma/presentation/widgets/home/recent_job.dart';
+import 'package:khidma/presentation/widgets/home/home_page/recent_job.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
@@ -76,8 +76,11 @@ class _HomePageState extends State<HomePage> {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 JobModel jobModel = controller.recentJobs[index];
-                return RecentJob(
-                  jobModel: jobModel,
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: RecentJob(
+                    jobModel: jobModel,
+                  ),
                 );
               },
               childCount: controller.recentJobs.length,

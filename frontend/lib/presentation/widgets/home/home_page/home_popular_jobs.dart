@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/home_controller.dart';
-import 'package:khidma/presentation/widgets/home/popular_job.dart';
+import 'package:khidma/presentation/widgets/home/home_page/popular_job.dart';
 
 class HomePopularJobs extends StatelessWidget {
   const HomePopularJobs({
@@ -21,10 +21,13 @@ class HomePopularJobs extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             JobModel job = controller.popularJobs[index];
-            return PopularJob(
-            jobModel: job,
-            isLeftRadius: index.isEven,
-          );
+            return Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: PopularJob(
+              jobModel: job,
+              isLeftRadius: index.isEven,
+                        ),
+            );
           },
           itemCount: controller.popularJobs.length,
         ),
