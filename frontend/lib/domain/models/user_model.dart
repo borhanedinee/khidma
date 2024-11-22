@@ -23,7 +23,7 @@ class User {
       password: json['password'],
       fullname: json['fullname'],
       avatar: json['avatar'],
-      isRecruiter: json['isrecruiter'],
+      isRecruiter: json['isRecruiter'],
     );
   }
 
@@ -35,7 +35,7 @@ class User {
       'password': password,
       'fullname': fullname,
       'avatar': avatar,
-      'isrecruiter': isRecruiter,
+      'isRecruiter': isRecruiter,
     };
   }
 }

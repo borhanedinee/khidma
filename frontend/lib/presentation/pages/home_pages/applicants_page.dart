@@ -19,43 +19,38 @@ class ApplicantsPage extends StatelessWidget {
           ),
           Positioned.fill(
             top: 80,
-            child: Expanded(
-              child: Container(
-                height: size.height - 100,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(
-                      20,
+            child: Container(
+              height: size.height - 100,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(
+                    20,
+                  ),
+                ),
+              ),
+              child: ListView(
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  // in case , there are jobs added by user
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      'View Applicants for Jobs you have added',
+                      style: textTheme.bodySmall!
+                          .copyWith(color: Colors.black),
                     ),
                   ),
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      // in case , there are jobs added by user
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          'View Applicants for Jobs you have added',
-                          style: textTheme.bodySmall!
-                              .copyWith(color: Colors.black),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ...List.generate(
-                        3,
-                        (index) => const ApplicantsJobItem(),
-                      )
-                    ],
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
+                  ...List.generate(
+                    3,
+                    (index) => const ApplicantsJobItem(),
+                  )
+                ],
               ),
             ),
           )

@@ -6,46 +6,66 @@ import 'package:khidma/main.dart';
 import 'package:khidma/presentation/pages/home_pages/job_details_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 
-class RecentJob extends StatelessWidget {
+class RecentJob extends StatefulWidget {
   final JobModel jobModel;
   const RecentJob({
-    super.key,
+    Key? key,
     required this.jobModel,
-  });
+  }) : super(key: key);
+
+  @override
+  _RecentJobState createState() => _RecentJobState();
+}
+
+class _RecentJobState extends State<RecentJob>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2000),
+    );
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+    _controller.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(JobDetailsPage(jobModel: jobModel));
+        Get.to(JobDetailsPage(jobModel: widget.jobModel));
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Stack(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              width: size.width,
-              height: 130,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: size.width - 40,
-                    child: Row(
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Stack(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                width: size.width,
+                height: 130,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
                         SizedBox(
                           width: (size.width - 40) * .12,
                           child: Image.network(
-                            '$IMAGE_URL/${jobModel.companyLogo}',
-                            scale: 1.0,
+                            '$IMAGE_URL/${widget.jobModel.companyLogo}',
                             height: 40,
                           ),
                         ),
@@ -56,15 +76,15 @@ class RecentJob extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                jobModel.company,
+                                widget.jobModel.company,
                                 style: textTheme.titleMedium!.copyWith(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 2),
+                              const SizedBox(height: 2),
                               Text(
-                                '${jobModel.title} - ${jobModel.type}',
+                                '${widget.jobModel.title} - ${widget.jobModel.type}',
                                 overflow: TextOverflow.fade,
                                 style: textTheme.bodySmall!.copyWith(
                                   color: Colors.grey.shade700,
@@ -73,48 +93,39 @@ class RecentJob extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          width: (size.width - 40) * .2,
-                        ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 40),
-                    child: Text(
-                      '\$${jobModel.salary.toInt()} / Monthly',
-                      style: textTheme.bodyMedium!.copyWith(
-                        color: Colors.grey,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40),
+                      child: Text(
+                        '\$${widget.jobModel.salary.toInt()} / Monthly',
+                        style: textTheme.bodyMedium!.copyWith(
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: -80,
-              child: Opacity(
-                opacity: .05,
-                child: Image.asset(
-                  'assets/images/photo.png',
+                  ],
                 ),
               ),
-            ),
-            Positioned(
-              right: 20,
-              top: 20,
-              child: IconButton.filled(
-                onPressed: () {
-                  Get.to(JobDetailsPage(jobModel: jobModel));
-                },
-                icon: const Icon(Icons.navigate_next),
+              Positioned(
+                bottom: -80,
+                left: 0,
+                right: 0,
+                child: Opacity(
+                  opacity: .05,
+                  child: Image.asset('assets/images/photo.png'),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

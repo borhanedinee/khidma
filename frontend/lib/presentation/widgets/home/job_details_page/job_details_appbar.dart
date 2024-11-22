@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/main.dart';
+import 'package:khidma/presentation/controllers/home/bookmarks_controller.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
+import 'package:khidma/presentation/services/get_saved_user.dart';
 
 class JobDetailsAppBar extends StatelessWidget {
   const JobDetailsAppBar({
@@ -36,10 +38,15 @@ class JobDetailsAppBar extends StatelessWidget {
             ),
           ),
           prefs.getString('userfullname') != null
-              ? IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.bookmark_border_rounded,
+              ? GetBuilder<BookmarksController>(
+                  builder: (controller) => IconButton(
+                    onPressed: () {
+                      controller.toggleBookmark(getSavedUser(), jobModel , );
+                    },
+                    icon: Icon(controller.isSelectedJobInBookamrks(
+                            prefs.getInt('userid'), jobModel.id)
+                        ? Icons.bookmark
+                        : Icons.bookmark_border),
                   ),
                 )
               : const SizedBox(

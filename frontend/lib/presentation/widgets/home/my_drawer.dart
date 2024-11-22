@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/pages/home_pages/applicants_page.dart';
-import 'package:khidma/presentation/pages/home_pages/chats_page.dart';
+import 'package:khidma/presentation/pages/home_pages/bookmarks_page.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/home_pages/logout_page.dart';
 import 'package:khidma/presentation/pages/home_pages/notifications_page.dart';
@@ -71,9 +71,9 @@ class MyDrawer extends StatelessWidget {
               page: ApplicantsPage(),
             ),
             const DrawePageItem(
-              label: 'C H A T S',
-              icon: Icons.chat,
-              page: ChatPage(),
+              label: 'B O O K M A R K S',
+              icon: Icons.bookmark,
+              page: BookmarksPage(),
             ),
             const DrawePageItem(
               label: 'N O T I F I C A T I O N S',

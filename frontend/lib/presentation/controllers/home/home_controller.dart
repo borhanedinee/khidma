@@ -14,14 +14,12 @@ class HomeController extends GetxController {
       isFetchingJobsLoading = true;
       update();
       await Future.delayed(
-        Duration(seconds: 7),
+        const Duration(seconds: 4),
       );
       List<dynamic> results = await jobsApi.fetchJobs();
       
       for (var job in results) {
-        print(job);
         jobs.add(JobModel.fromMap(job));
-        print(jobs);
       }
 
       recentJobs = jobs.reversed.take(6).toList();
