@@ -8,6 +8,6 @@ User getSavedUser() {
     password: prefs.getString('userpassword')!,
     fullname: prefs.getString('userfullname')!,
     avatar: prefs.getString('useravatar')!,
-    isRecruiter: prefs.getInt('isRecruiter')!,
+    isRecruiter: prefs.getBool('isrecruiter')!,
   );
 }

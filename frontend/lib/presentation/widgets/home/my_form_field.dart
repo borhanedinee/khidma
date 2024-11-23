@@ -7,13 +7,14 @@ class MyFormField extends StatefulWidget {
   final bool isPassword;
   final String? Function(String?)? validator;
   final TextEditingController? fieldController;
+  final TextInputType? textInputType;
 
   const MyFormField({
     super.key,
     required this.hintText,
     required this.isPassword,
     this.validator,
-    this.fieldController,
+    this.fieldController, this.textInputType,
   });
 
   @override
@@ -22,6 +23,7 @@ class MyFormField extends StatefulWidget {
 
 class _MyFormFieldState extends State<MyFormField> {
   bool isObsecure = false;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +33,13 @@ class _MyFormFieldState extends State<MyFormField> {
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         child: TextFormField(
+          style: textTheme.bodyMedium,
+          keyboardType: widget.textInputType ,
           validator: widget.validator,
           controller: widget.fieldController,
           obscureText: widget.isPassword ? isObsecure : false,
           decoration: InputDecoration(
+
             hintText: widget.hintText,
             hintStyle: textTheme.bodySmall!.copyWith(color: Colors.grey),
             border: InputBorder.none,

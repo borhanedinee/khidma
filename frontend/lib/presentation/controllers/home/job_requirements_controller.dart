@@ -12,7 +12,7 @@ class JobRequirementsController extends GetxController {
       isFetchingJobRequirementsLoading = true;
       update();
       await Future.delayed(
-        Duration(seconds: 3),
+        Duration(seconds: 1),
       );
       List results = await jobRequirementsApi.fetchJobRequirements(jobID);
       print(results);

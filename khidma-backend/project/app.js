@@ -9,7 +9,8 @@ const app = express()
 const path = require('path');
 
 // Make the uploads folder accessible
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/uploads/logos', express.static(path.join(__dirname, '../uploads/logos')));
+app.use('/uploads/cvs', express.static(path.join(__dirname, '../uploads/cvs')));
 
 
 // Middleware to parse JSON request bodies

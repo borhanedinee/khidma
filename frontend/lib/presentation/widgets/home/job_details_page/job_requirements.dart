@@ -73,14 +73,14 @@ class _JobRequirementsState extends State<JobRequirements>
                     ),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
                   Text(
                     controller.jobRequirements
                         .map((e) => '● ${e.requirement}')
-                        .join('\n'),
+                        .join('\n \n'),
                     style: textTheme.bodySmall!.copyWith(
-                      color: Colors.grey,
+                      color: Colors.black.withOpacity(.65),
                       wordSpacing: 5,
                       letterSpacing: 2,
                     ),

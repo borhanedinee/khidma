@@ -4,7 +4,7 @@ class User {
   final String password;
   final String fullname;
   final String avatar;
-  final int isRecruiter;
+  final bool isRecruiter;
 
   User({
     required this.id,
@@ -15,7 +15,7 @@ class User {
     required this.isRecruiter,
   });
 
-  // fromJson method to map JSON to User object
+  // Factory constructor to create a User from JSON
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
@@ -23,11 +23,11 @@ class User {
       password: json['password'],
       fullname: json['fullname'],
       avatar: json['avatar'],
-      isRecruiter: json['isRecruiter'],
+      isRecruiter: json['isrecruiter'] == 1, // Convert 0/1 to boolean
     );
   }
 
-  // toJson method to convert User object back to JSON
+  // Method to convert a User instance to JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -35,7 +35,7 @@ class User {
       'password': password,
       'fullname': fullname,
       'avatar': avatar,
-      'isRecruiter': isRecruiter,
+      'isrecruiter': isRecruiter ? 1 : 0, // Convert boolean to 0/1
     };
   }
 }

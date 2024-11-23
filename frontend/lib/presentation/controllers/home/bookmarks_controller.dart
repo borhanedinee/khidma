@@ -15,7 +15,7 @@ class BookmarksController extends GetxController {
       isFetchingBookmarks = true;
       update();
       await Future.delayed(
-        const Duration(seconds: 5),
+        const Duration(seconds:2),
       );
       List fetchedBookmarks = await bookmarksApi.fetchBookmarks(userID);
       for (var element in fetchedBookmarks) {

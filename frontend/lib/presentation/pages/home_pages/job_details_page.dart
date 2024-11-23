@@ -4,6 +4,7 @@ import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/job_requirements_controller.dart';
 import 'package:khidma/presentation/pages/auth/login_page.dart';
+import 'package:khidma/presentation/pages/home_pages/application_page.dart';
 import 'package:khidma/presentation/shimmers/job_details_shimmers/job_details_shimmers.dart';
 import 'package:khidma/presentation/widgets/home/job_details_page/job_description.dart';
 import 'package:khidma/presentation/widgets/home/job_details_page/job_details_appbar.dart';
@@ -71,7 +72,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                           JobDetailsCard(jobModel: widget.jobModel),
 
                           const SizedBox(
-                            height: 20,
+                            height: 30,
                           ),
                           controller.isFetchingJobRequirementsLoading
                               ? const JobDetailsPageShimmers()
@@ -109,7 +110,9 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
               child: prefs.getString('userfullname') != null
                   ? MyFilledButton(
                       label: 'A P P L Y    N O W',
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(ApplicationPage(jobModel: widget.jobModel),);
+                      },
                     )
                   : MyOutlinedButton(
                       label: 'Proceed To Sign Up',

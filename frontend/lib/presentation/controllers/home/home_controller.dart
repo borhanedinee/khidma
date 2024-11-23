@@ -14,7 +14,7 @@ class HomeController extends GetxController {
       isFetchingJobsLoading = true;
       update();
       await Future.delayed(
-        const Duration(seconds: 4),
+        const Duration(seconds: 2),
       );
       List<dynamic> results = await jobsApi.fetchJobs();
       

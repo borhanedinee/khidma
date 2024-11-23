@@ -78,7 +78,7 @@ class _JobDescriptionState extends State<JobDescription>
                 // TODO: modify job descriptions in DB to be longer
                 widget.jobModel.description,
                 style: textTheme.bodySmall!.copyWith(
-                  color: Colors.grey,
+                  color: Colors.black.withOpacity(.65),
                   wordSpacing: 5,
                   letterSpacing: 1.5, // Balanced letter spacing
                   height: 1.5, // Line height for better readability

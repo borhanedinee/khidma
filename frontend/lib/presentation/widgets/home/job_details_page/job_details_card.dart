@@ -61,83 +61,89 @@ class _JobDetailsCardState extends State<JobDetailsCard>
           opacity: _fadeAnimation.value,
           child: SlideTransition(
             position: _slideAnimation,
-            child: Container(
-              width: size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 18),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Stack(
-                children: [
-                  // Background image
-                  Positioned(
-                    left: 40,
-                    bottom: -70,
-                    child: Opacity(
-                      opacity: .2,
-                      child: Image.asset(
-                        'assets/images/photo.png',
-                        height: 230,
-                      ),
-                    ),
-                  ),
-                  Column(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 4,
+                color: Theme.of(context).primaryColor,
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 18),
+                  
+                  child: Stack(
                     children: [
-                      const SizedBox(height: 20),
-                      // Company logo
-                      SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: Image.network(
-                          '$IMAGE_URL/${widget.jobModel.companyLogo}',
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      // Job title
-                      Text(
-                        widget.jobModel.title,
-                        style: textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      // Location (hardcoded for now)
-                      Text(
-                        'Algiers ( Remote )',
-                        style: textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      // Job type and salary
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 3),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            child: Text(widget.jobModel.type),
+                      // Background image
+                      Positioned(
+                        left: 40,
+                        bottom: -30,
+                        child: Opacity(
+                          opacity: .2,
+                          child: Image.asset(
+                            'assets/images/photo.png',
+                            height: 230,
                           ),
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          // Company logo
+                          SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: Image.network(
+                              '$IMAGE_URL/${widget.jobModel.companyLogo}',
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          // Job title
                           Text(
-                            '${widget.jobModel.salary.toInt()} DA',
+                            widget.jobModel.title,
                             style: textTheme.bodyLarge!.copyWith(
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          // Location (hardcoded for now)
+                          Text(
+                            'Algiers ( Remote )',
+                            style: textTheme.bodyMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white54,
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          // Job type and salary
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 3),
+                                decoration: BoxDecoration(
+                                  color: Colors.white70,
+                                  borderRadius: BorderRadius.circular(10),
+                                  
+                                ),
+                                child: Text(widget.jobModel.type),
+                              ),
+                              Text(
+                                ' +${widget.jobModel.salary.toInt()} DA',
+                                style: textTheme.bodyLarge!.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
                         ],
                       ),
-                      const SizedBox(height: 20),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

@@ -99,23 +99,26 @@ class _PopularJobState extends State<PopularJob>
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          '${widget.jobModel.salary.toInt()} DA',
-                          style: textTheme.bodyMedium!.copyWith(
-                            color: Colors.black54,
-                            fontWeight: FontWeight.bold,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Row(
+                        children: [
+                          Text(
+                            '${widget.jobModel.salary.toInt()} DA',
+                            style: textTheme.bodyMedium!.copyWith(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const Spacer(),
-                        IconButton.filled(
-                          onPressed: () {
-                            Get.to(JobDetailsPage(jobModel: widget.jobModel));
-                          },
-                          icon: const Icon(Icons.navigate_next),
-                        ),
-                      ],
+                          const Spacer(),
+                          IconButton.filled(
+                            onPressed: () {
+                              Get.to(JobDetailsPage(jobModel: widget.jobModel));
+                            },
+                            icon: const Icon(Icons.navigate_next),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

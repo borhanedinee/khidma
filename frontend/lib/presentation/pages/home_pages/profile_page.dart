@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:khidma/constants.dart';
+import 'package:get/get.dart';
 import 'package:khidma/main.dart';
-import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
+import 'package:khidma/presentation/controllers/home/application_controller.dart';
 import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
 import 'package:khidma/presentation/widgets/home/my_filled_button.dart';
 import 'package:khidma/presentation/widgets/home/profile_page/profile_bar.dart';
+import 'package:khidma/presentation/widgets/home/profile_page/review_or_update_resume.dart';
 import 'package:khidma/presentation/widgets/home/profile_page/skills.dart';
 import 'package:khidma/presentation/widgets/home/profile_page/upload_resume.dart';
 
@@ -17,7 +18,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+  late AnimationController _applicationController;
   late Animation<double> _fadeInAnimation;
   late Animation<Offset> _slideInAnimation;
 
@@ -25,9 +26,9 @@ class _ProfilePageState extends State<ProfilePage>
   void initState() {
     super.initState();
 
-    // Initialize animation controller
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 800),
+    // Initialize animation applicationController
+    _applicationController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
 
@@ -36,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage>
       begin: 0, // Start below
       end: 1, // Slide to original position
     ).animate(CurvedAnimation(
-      parent: _controller,
+      parent: _applicationController,
       curve: Curves.easeIn,
     ));
 
@@ -45,14 +46,16 @@ class _ProfilePageState extends State<ProfilePage>
       end: Offset.zero, // Slide to original position
     ).animate(
       CurvedAnimation(
-        parent: _controller,
+        parent: _applicationController,
         curve: Curves.easeOut,
       ),
     );
 
     // Start animations
-    _controller.forward();
+    _applicationController.forward();
   }
+
+  ApplicationController applicationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage>
         child: Stack(
           children: [
             AnimatedBuilder(
-              animation: _controller,
+              animation: _applicationController,
               builder: (context, child) {
                 return MyAppBar(
                   label: 'Profile',
@@ -97,7 +100,15 @@ class _ProfilePageState extends State<ProfilePage>
 
                       child: SlideTransition(
                         position: _slideInAnimation,
-                        child: const UploadResume(),
+                        child: prefs.getString('userresume') == null
+                      ? UploadResume(
+                        onUploadResume: () => applicationController.pickAndSaveFile() ,
+                      )
+                      : ReviewResume(
+                          fileName: 'fileName',
+                          onReview: () => applicationController.openSavedFile(),
+                          onReplace: () => applicationController.pickAndSaveFile(),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 30),
@@ -139,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _applicationController.dispose();
     super.dispose();
   }
 }

@@ -23,8 +23,8 @@ class LoginController extends GetxController {
         throw Exception();
       }
       if (req['status'] == 'success') {
+        print(req['user']);
         User user = User.fromJson(req['user']);
-        print(user.avatar);
         saveUser(user);
         Get.showSnackbar(
           const GetSnackBar(
@@ -44,6 +44,7 @@ class LoginController extends GetxController {
       isLogingLoading = false;
       update();
     } catch (e) {
+      print(e.toString());
       isLogingLoading = false;
       update();
       Get.showSnackbar(
@@ -59,7 +60,7 @@ class LoginController extends GetxController {
     prefs.setString('userfullname', user.fullname);
     prefs.setString('useremail', user.email);
     prefs.setString('userpassword', user.password);
-    prefs.setInt('isRecruiter', user.isRecruiter);
+    prefs.setBool('isrecruiter', user.isRecruiter);
     prefs.setString('useravatar', user.avatar);
     prefs.setInt('userid', user.id);
   }
