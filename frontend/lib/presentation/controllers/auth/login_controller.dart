@@ -55,13 +55,54 @@ class LoginController extends GetxController {
       );
     }
   }
-  
+
+  //fetching user data to update prefs in case anything had changed
+  loginFromSharedPreference(email, password) async {
+    try {
+      var req = await userApi.login(email, password);
+      if (req['status'] == '') {
+        throw Exception();
+      }
+      if (req['status'] == 'success') {
+        User user = User.fromJson(req['user']);
+        saveUser(user);
+        Get.showSnackbar(
+          const GetSnackBar(
+            message: 'User info updated successfully',
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else if (req['status'] == 'fail') {
+        Get.showSnackbar(
+          const GetSnackBar(
+            message: 'Invalid email or password.',
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          message: 'Something went wrong updating user data',
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
   void saveUser(User user) {
     prefs.setString('userfullname', user.fullname);
     prefs.setString('useremail', user.email);
     prefs.setString('userpassword', user.password);
     prefs.setBool('isrecruiter', user.isRecruiter);
     prefs.setString('useravatar', user.avatar);
+    if (user.resume == 'none') {
+      prefs.setBool('dbgotresume', false);
+    } else {
+      prefs.setBool('dbgotresume', true);
+      prefs.setString('userremoteresume', user.resume);
+      prefs.setBool('userremoteresumeISNOTchanged', true);
+    }
     prefs.setInt('userid', user.id);
   }
 }

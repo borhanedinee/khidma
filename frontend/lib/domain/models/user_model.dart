@@ -4,6 +4,7 @@ class User {
   final String password;
   final String fullname;
   final String avatar;
+  final String resume;
   final bool isRecruiter;
 
   User({
@@ -13,6 +14,7 @@ class User {
     required this.fullname,
     required this.avatar,
     required this.isRecruiter,
+    required this.resume,
   });
 
   // Factory constructor to create a User from JSON
@@ -23,6 +25,7 @@ class User {
       password: json['password'],
       fullname: json['fullname'],
       avatar: json['avatar'],
+      resume: json['resume'] ?? '',
       isRecruiter: json['isrecruiter'] == 1, // Convert 0/1 to boolean
     );
   }
@@ -35,6 +38,7 @@ class User {
       'password': password,
       'fullname': fullname,
       'avatar': avatar,
+      'resume': resume,
       'isrecruiter': isRecruiter ? 1 : 0, // Convert boolean to 0/1
     };
   }

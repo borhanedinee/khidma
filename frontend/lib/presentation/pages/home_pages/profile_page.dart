@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:khidma/constants.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/application_controller.dart';
 import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
@@ -97,26 +98,41 @@ class _ProfilePageState extends State<ProfilePage>
                     // UPLOAD RESUME with Slide-in effect
                     FadeTransition(
                       opacity: _fadeInAnimation,
-
                       child: SlideTransition(
                         position: _slideInAnimation,
-                        child: prefs.getString('userresume') == null
-                      ? UploadResume(
-                        onUploadResume: () => applicationController.pickAndSaveFile() ,
-                      )
-                      : ReviewResume(
-                          fileName: 'fileName',
-                          onReview: () => applicationController.openSavedFile(),
-                          onReplace: () => applicationController.pickAndSaveFile(),
-                        ),
+                        child: prefs.getBool('dbgotresume')! && prefs.getBool('userremoteresumeISNOTchanged')!
+                      ? ReviewResume(
+                          fileName: 'resume',
+                          onReview: () {
+                            applicationController.downloadPdf(
+                                '$RESUME_URL/${prefs.getString('userremoteresume')}',
+                                'my_resume.pdf',
+                                context);
+                          },
+                          onReplace: () {
+                            applicationController.pickSaveAndUploadFile();
+                          },
+                        )
+                      : prefs.getString('userlocalresume') != null
+                          ? ReviewResume(
+                              fileName: 'fileName',
+                              onReview: () => applicationController.openSavedFile(),
+                              onReplace: () =>
+                                  applicationController.pickSaveAndUploadFile(),
+                            )
+                          : UploadResume(
+                              onUploadResume: () =>
+                                  applicationController.pickSaveAndUploadFile(),
+                            )
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(
+                      height: 30,
+                    ),
 
                     // SKILLS with Slide-in effect
                     FadeTransition(
                       opacity: _fadeInAnimation,
-
                       child: SlideTransition(
                         position: _slideInAnimation,
                         child: Skills(),
@@ -127,7 +143,6 @@ class _ProfilePageState extends State<ProfilePage>
                     // LOG OUT BUTTON with Slide-in effect
                     FadeTransition(
                       opacity: _fadeInAnimation,
-
                       child: SlideTransition(
                         position: _slideInAnimation,
                         child: MyFilledButton(

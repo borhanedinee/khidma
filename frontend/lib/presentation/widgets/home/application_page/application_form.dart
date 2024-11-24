@@ -263,25 +263,41 @@ class _ApplicationFormState extends State<ApplicationForm>
 
                   // Shimmer Effect
                   prefs.getString('userresume') == null
-                      ?
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
-                    child: Text(
-                      'Make sure you upload your resume in PDF format.',
-                      style: textTheme.bodySmall!
-                          .copyWith(color: Colors.grey, fontSize: 10),
-                    ),
-                  ) : SizedBox(),
-                  prefs.getString('userresume') == null
-                      ? UploadResume(
-                        onUploadResume: () => controller.pickAndSaveFile() ,
-                      )
-                      : ReviewResume(
-                          fileName: 'fileName',
-                          onReview: () => controller.openSavedFile(),
-                          onReplace: () => controller.pickAndSaveFile(),
-                        ),
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 5),
+                          child: Text(
+                            'Make sure you upload your resume in PDF format.',
+                            style: textTheme.bodySmall!
+                                .copyWith(color: Colors.grey, fontSize: 10),
+                          ),
+                        )
+                      : SizedBox(),
+                  prefs.getBool('dbgotresume')! &&
+                          prefs.getBool('userremoteresumeISNOTchanged')!
+                      ? ReviewResume(
+                          fileName: 'resume',
+                          onReview: () {
+                            controller.downloadPdf(
+                                '$RESUME_URL/${prefs.getString('userremoteresume')}',
+                                'my_resume.pdf',
+                                context);
+                          },
+                          onReplace: () {
+                            controller.pickSaveAndUploadFile();
+                          },
+                        )
+                      : prefs.getString('userlocalresume') != null
+                          ? ReviewResume(
+                              fileName: 'fileName',
+                              onReview: () => controller.openSavedFile(),
+                              onReplace: () =>
+                                  controller.pickSaveAndUploadFile(),
+                            )
+                          : UploadResume(
+                              onUploadResume: () =>
+                                  controller.pickSaveAndUploadFile(),
+                            )
                 ],
               ),
             ),
