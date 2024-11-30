@@ -27,11 +27,13 @@ class SubmissionSuccessScreen extends StatelessWidget {
                 ActionButtons(
                   onViewApplications: () {
                     // Navigate to ome page
-                    drawerController.navigateToPageFromExternal(PageType.applications);
+                    // drawerController.navigateToPageFromExternal(PageType.applications);
+                    Get.back();
                   },
                   onBackToJobs: () {
                     // Navigate back to jobs list
-                    drawerController.navigateToPageFromExternal(PageType.home);
+                    // drawerController.navigateToPageFromExternal(PageType.home);
+                    Get.back();
 
                   },
                 ),

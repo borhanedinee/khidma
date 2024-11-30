@@ -3,7 +3,7 @@ import 'package:khidma/domain/models/user_model.dart';
 
 class BookmarkModel {
   final int bookmarkID;
-  final User user;
+  final UserModel user;
   final JobModel job;
 
   BookmarkModel({
@@ -16,7 +16,7 @@ class BookmarkModel {
   factory BookmarkModel.fromJson(Map json) {
     return BookmarkModel(
       bookmarkID: json['bookmarkID'],
-      user: User.fromJson(json['user']),
+      user: UserModel.fromJson(json['user']),
       job: JobModel.fromMap(json['job']),
     );
   }

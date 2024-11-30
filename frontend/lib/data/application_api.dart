@@ -32,4 +32,20 @@ class ApplicationAPI {
       rethrow;
     }
   }
+
+  fetchUserApplications(int userid) async {
+    try {
+      Uri endpointUrl = Uri.parse('$BASE_URL/api/application/fetchbyuser/$userid');
+      var req = await http.get(
+        endpointUrl,
+        headers: HEADERS,
+      );
+      if (req.statusCode != 200) {
+        throw Exception();
+      }
+      return json.decode(req.body);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

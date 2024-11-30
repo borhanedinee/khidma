@@ -36,7 +36,7 @@ class BookmarksController extends GetxController {
   }
 
   // ADD BOOKMARK
-  addBookmark(User user, JobModel job) async {
+  addBookmark(UserModel user, JobModel job) async {
     try {
       int result = await bookmarksApi.addBookmark(user.id, job.id);
       if (result == 201) {
@@ -96,7 +96,7 @@ class BookmarksController extends GetxController {
   }
 
   // ADDING OR DELETING BOOKMARK
-  toggleBookmark(User user, JobModel job ) async {
+  toggleBookmark(UserModel user, JobModel job ) async {
     if (isSelectedJobInBookamrks(user.id, job.id)) {
       await deleteBookmark(user.id, job.id);
     } else {

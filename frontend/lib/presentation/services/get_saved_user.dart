@@ -1,8 +1,8 @@
 import 'package:khidma/domain/models/user_model.dart';
 import 'package:khidma/main.dart';
 
-User getSavedUser() {
-  return User(
+UserModel getSavedUser() {
+  return UserModel(
     id: prefs.getInt('userid')!,
     email: prefs.getString('useremail')!,
     phone: prefs.getInt('userphone')!,

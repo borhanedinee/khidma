@@ -24,7 +24,7 @@ class LoginController extends GetxController {
       }
       if (req['status'] == 'success') {
         print(req['user']);
-        User user = User.fromJson(req['user']);
+        UserModel user = UserModel.fromJson(req['user']);
         saveUser(user);
         Get.showSnackbar(
           const GetSnackBar(
@@ -64,14 +64,8 @@ class LoginController extends GetxController {
         throw Exception();
       }
       if (req['status'] == 'success') {
-        User user = User.fromJson(req['user']);
+        UserModel user = UserModel.fromJson(req['user']);
         saveUser(user);
-        Get.showSnackbar(
-          const GetSnackBar(
-            message: 'User info updated successfully',
-            duration: Duration(seconds: 2),
-          ),
-        );
       } else if (req['status'] == 'fail') {
         Get.showSnackbar(
           const GetSnackBar(
@@ -90,7 +84,7 @@ class LoginController extends GetxController {
     }
   }
 
-  void saveUser(User user) {
+  void saveUser(UserModel user) {
     prefs.setString('userfullname', user.fullname);
     prefs.setString('useremail', user.email);
     prefs.setString('userpassword', user.password);

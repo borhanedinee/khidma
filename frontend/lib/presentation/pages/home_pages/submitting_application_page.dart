@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/main.dart';
-import 'package:khidma/presentation/controllers/home/application_controller.dart';
+import 'package:khidma/presentation/controllers/home/submitting_application_controller.dart';
 import 'package:khidma/presentation/pages/home_pages/pdf_page.dart';
 import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/widgets/home/application_page/application_form.dart';
@@ -43,7 +43,7 @@ class ApplicationPage extends StatelessWidget {
                         left: 0,
                         right: 0,
                         bottom: 10,
-                        child: GetBuilder<ApplicationController>(
+                        child: GetBuilder<SubmittingApplicationController>(
                           builder: (controller) => MyFilledButton(
                                   label: controller.isSubmittingApplicationLoading? 'Submitting ...' : 'Submit Application' ,
                                   onPressed: () {

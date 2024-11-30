@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/main.dart';
-import 'package:khidma/presentation/controllers/home/application_controller.dart';
+import 'package:khidma/presentation/controllers/home/submitting_application_controller.dart';
 import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
 import 'package:khidma/presentation/widgets/home/my_filled_button.dart';
@@ -57,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage>
     _applicationController.forward();
   }
 
-  ApplicationController applicationController = Get.find();
+  SubmittingApplicationController applicationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage>
                     const SizedBox(height: 30),
 
                     // UPLOAD RESUME with Slide-in effect
-                    GetBuilder<ApplicationController>(
+                    GetBuilder<SubmittingApplicationController>(
                       builder: (controller) => FadeTransition(
                         opacity: _fadeInAnimation,
                         child: SlideTransition(

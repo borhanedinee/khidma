@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
@@ -20,6 +21,19 @@ enum PageLabel {
   notificationsLabel,
   settingsLabel,
   logoutLabel,
+}
+
+enum PageIcon {
+  homeIcon(Icons.home ,),
+  profileIcon(Icons.person),
+  applicationsIcon(Icons.work),
+  bookmarksIcon(Icons.bookmark),
+  notificationsIcon(Icons.notifications),
+  settingsIcon(Icons.settings),
+  logoutIcon(Icons.logout);
+
+  final IconData icon;
+  const PageIcon(this.icon);
 }
 
 class MyDrawerController extends GetxController {
@@ -72,7 +86,7 @@ class MyDrawerController extends GetxController {
       case PageLabel.profileLabel:
         return 'P R O F I L E';
       case PageLabel.applicationsLabel:
-        return 'A P P L I C A N T S';
+        return 'A P P L I C A T I O N S';
       case PageLabel.bookmarksLabel:
         return 'B O O K M A R K S';
       case PageLabel.notificationsLabel:
@@ -84,6 +98,27 @@ class MyDrawerController extends GetxController {
 
       default:
         return 'H O M E';
+    }
+  }
+
+  IconData get icon => iconForLabel(_selectedLabel); 
+
+  IconData iconForLabel(PageLabel label) {
+    switch (label) {
+      case PageLabel.homeLabel:
+        return PageIcon.homeIcon.icon;
+      case PageLabel.profileLabel:
+        return PageIcon.profileIcon.icon;
+      case PageLabel.applicationsLabel:
+        return PageIcon.applicationsIcon.icon;
+      case PageLabel.bookmarksLabel:
+        return PageIcon.bookmarksIcon.icon;
+      case PageLabel.notificationsLabel:
+        return PageIcon.notificationsIcon.icon;
+      case PageLabel.settingsLabel:
+        return PageIcon.settingsIcon.icon;
+      case PageLabel.logoutLabel:
+        return PageIcon.logoutIcon.icon;
     }
   }
 }

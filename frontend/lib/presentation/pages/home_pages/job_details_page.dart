@@ -4,8 +4,9 @@ import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/job_requirements_controller.dart';
 import 'package:khidma/presentation/pages/auth/login_page.dart';
-import 'package:khidma/presentation/pages/home_pages/application_page.dart';
+import 'package:khidma/presentation/pages/home_pages/submitting_application_page.dart';
 import 'package:khidma/presentation/shimmers/job_details_shimmers/job_details_shimmers.dart';
+import 'package:khidma/presentation/widgets/home/job_details_page/job_card_description_req.dart';
 import 'package:khidma/presentation/widgets/home/job_details_page/job_description.dart';
 import 'package:khidma/presentation/widgets/home/job_details_page/job_details_appbar.dart';
 import 'package:khidma/presentation/widgets/home/job_details_page/job_details_card.dart';
@@ -49,59 +50,8 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                 ),
               ),
             ),
-            GetBuilder<JobRequirementsController>(
-              builder: (controller) => SizedBox(
-                height: size.height,
-                width: size.width,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // APP BAR
-                    JobDetailsAppBar(jobModel: widget.jobModel),
-
-                    Expanded(
-                      child: ListView(
-                        scrollDirection: Axis.vertical,
-                        children: [
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          // JOB DETAILS CARD
-                          JobDetailsCard(jobModel: widget.jobModel),
-
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          controller.isFetchingJobRequirementsLoading
-                              ? const JobDetailsPageShimmers()
-                              : Column(
-                                  children: [
-                                    // DESCRIPTION
-
-                                    JobDescription(
-                                      jobModel: widget.jobModel,
-                                    ),
-
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-
-                                    // JOB REQUIREMENTS
-                                    JobRequirements(),
-
-                                    const SizedBox(
-                                      height: 100,
-                                    ),
-                                  ],
-                                )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            JobCardDescriptionAndRequirements(
+              jobModel: widget.jobModel,
             ),
             Positioned(
               left: 0,
@@ -109,9 +59,11 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
               bottom: 10,
               child: prefs.getString('userfullname') != null
                   ? MyFilledButton(
-                      label: 'A P P L Y    N O W',
+                      label: 'Apply Now',
                       onPressed: () {
-                        Get.to(ApplicationPage(jobModel: widget.jobModel),);
+                        Get.to(
+                          ApplicationPage(jobModel: widget.jobModel),
+                        );
                       },
                     )
                   : MyOutlinedButton(

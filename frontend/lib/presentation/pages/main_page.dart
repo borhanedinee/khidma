@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/auth/login_controller.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
-import 'package:khidma/presentation/pages/home_pages/applicants_page.dart';
+import 'package:khidma/presentation/pages/home_pages/applications_page.dart';
 import 'package:khidma/presentation/pages/home_pages/bookmarks_page.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/home_pages/notifications_page.dart';
@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> {
       case PageType.profile:
         return const ProfilePage();
       case PageType.applications:
-        return const ApplicantsPage();
+        return const ApplicationsPage();
       case PageType.bookmarks:
         return const BookmarksPage();
       case PageType.notifications:

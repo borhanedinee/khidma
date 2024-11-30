@@ -39,7 +39,8 @@ class DrawePageItem extends StatelessWidget {
                 width: 30,
               ),
               Icon(
-                icon,
+                controller.iconForLabel(label),
+                color: Colors.black,
               ),
               const SizedBox(
                 width: 20,

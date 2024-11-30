@@ -31,7 +31,7 @@ class JobDetailsAppBar extends StatelessWidget {
             ),
           ),
           Text(
-            jobModel.company,
+            'Job Details',
             style: textTheme.titleMedium!.copyWith(
               color: Colors.black,
               fontWeight: FontWeight.bold,

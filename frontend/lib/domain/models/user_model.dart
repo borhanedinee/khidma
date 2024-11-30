@@ -1,4 +1,4 @@
-class User {
+class UserModel {
   final int id;
   final String email;
   final int phone;
@@ -8,7 +8,7 @@ class User {
   final String resume;
   final bool isRecruiter;
 
-  User({
+  UserModel({
     required this.id,
     required this.email,
     required this.phone,
@@ -20,8 +20,8 @@ class User {
   });
 
   // Factory constructor to create a User from JSON
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
       id: json['id'],
       email: json['email'],
       phone: json['phone'],

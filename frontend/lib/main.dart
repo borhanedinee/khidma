@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:khidma/data/user_api.dart';
 import 'package:khidma/presentation/controllers/auth/login_controller.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
-import 'package:khidma/presentation/controllers/home/application_controller.dart';
+import 'package:khidma/presentation/controllers/home/applications_controller.dart';
+import 'package:khidma/presentation/controllers/home/submitting_application_controller.dart';
 import 'package:khidma/presentation/controllers/home/bookmarks_controller.dart';
 import 'package:khidma/presentation/controllers/home/home_controller.dart';
 import 'package:khidma/presentation/controllers/home/job_requirements_controller.dart';
 import 'package:khidma/presentation/controllers/home/profile_controller.dart';
 import 'package:khidma/presentation/controllers/onboarding_controller.dart';
-import 'package:khidma/presentation/pages/home_pages/applicants_page.dart';
+import 'package:khidma/presentation/pages/home_pages/applications_page.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
@@ -63,12 +64,13 @@ class Khidma extends StatelessWidget {
           : const MainPage(),
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => OnBoardingController(), fenix: true);
-        Get.put(() => MyDrawerController(), permanent: true ,);
+        Get.lazyPut(() => MyDrawerController(), fenix: true ,);
         Get.lazyPut(() => ProfileController(), fenix: true);
         Get.lazyPut(() => HomeController(), fenix: true);
         Get.lazyPut(() => JobRequirementsController(), fenix: true);
         Get.lazyPut(() => BookmarksController(), fenix: true);
-        Get.lazyPut(() => ApplicationController(), fenix: true);
+        Get.lazyPut(() => SubmittingApplicationController(), fenix: true);
+        Get.lazyPut(() => ApplicationsController(), fenix: true);
         Get.lazyPut(() => LoginController(userApi: UserApi()), fenix: true);
       }),
     );

@@ -7,7 +7,7 @@ const applicationRouter = express.Router();
 
 applicationRouter.post('/api/application/add' , addApplicant),
 applicationRouter.delete('/api/application/delete' , deleteApplicant),
-applicationRouter.get('/api/application/fetch/:jobid' , fetchApplicants),
+applicationRouter.get('/api/application/fetchbyuser/:userid' , fetchApplicants),
 
 
 

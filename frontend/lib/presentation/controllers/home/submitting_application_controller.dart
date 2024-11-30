@@ -14,7 +14,7 @@ import 'package:open_file/open_file.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-class ApplicationController extends GetxController {
+class SubmittingApplicationController extends GetxController {
   ApplicationAPI applicationAPI = ApplicationAPI();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 

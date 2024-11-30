@@ -4,7 +4,7 @@ import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/domain/models/user_model.dart';
 import 'package:khidma/main.dart';
-import 'package:khidma/presentation/controllers/home/application_controller.dart';
+import 'package:khidma/presentation/controllers/home/submitting_application_controller.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/widgets/home/my_form_field.dart';
@@ -29,15 +29,15 @@ class _ApplicationFormState extends State<ApplicationForm>
   late Animation<Offset> _cardSlideAnimation;
   late Animation<double> _fadeAnimation;
 
-  ApplicationController applicationController = Get.find();
+  SubmittingApplicationController applicationController = Get.find();
 
   @override
   void initState() {
     // Initialize controllers with user data
-    User user = getSavedUser();
+    UserModel user = getSavedUser();
     applicationController.emailController.text = user.email;
     applicationController.fullnameController.text = user.fullname;
-    applicationController.phoneController.text = user.phone.toString();
+    applicationController.phoneController.text = '0${user.phone}';
 
     // Animation setup
     _animationController = AnimationController(
@@ -72,12 +72,13 @@ class _ApplicationFormState extends State<ApplicationForm>
     applicationController.phoneController.dispose();
     applicationController.expectedSalaryController.dispose();
     applicationController.formKey.currentState?.dispose();
+    // applicationController.formKey.currentState?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ApplicationController>(
+    return GetBuilder<SubmittingApplicationController>(
       builder: (controller) => ListView(
         children: [
           const SizedBox(height: 40),
