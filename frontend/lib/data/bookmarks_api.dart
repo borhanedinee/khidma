@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:khidma/constants.dart';
+import 'package:khidma/constatnts/constants.dart';
 
 class BookmarksApi {
   addBookmark(userID, jobID) async {

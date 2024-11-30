@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
-import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
-import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
 
 class DrawePageItem extends StatelessWidget {
-  final String label;
+  final PageLabel label;
 
   final IconData? icon;
 
-  final Widget page;
+  final PageType page;
 
   const DrawePageItem({
     super.key,
@@ -25,29 +22,14 @@ class DrawePageItem extends StatelessWidget {
     return GetBuilder<MyDrawerController>(
       builder: (controller) => GestureDetector(
         onTap: () {
-          if (label != 'L O G O U T') {
-            controller.changeCurrentPage(page);
-            controller.changeSelectedDrawerItem(label);
-            return;
-          }
-          Get.showSnackbar(
-            const GetSnackBar(
-              message: 'Logged Out Successfully',
-            ),
-          );
-          prefs.clear();
-          Get.off(
-            const OnBoardingPage(),
-          );
-
-          controller.changeSelectedDrawerItem('H O M E');
-          controller.changeCurrentPage(HomePage());
+          controller.changeCurrentPage(page);
+          controller.changeSelectedDrawerItem(label);
         },
         child: AnimatedContainer(
           duration: Durations.long1,
           padding: const EdgeInsets.symmetric(vertical: 20),
           decoration: BoxDecoration(
-            color: controller.selectedDrawerItem == label
+            color: controller.selectedLabel == label
                 ? Theme.of(context).primaryColor.withOpacity(.3)
                 : null,
           ),
@@ -63,7 +45,7 @@ class DrawePageItem extends StatelessWidget {
                 width: 20,
               ),
               Text(
-                label,
+                controller.updateSelectedLabel(label),
                 style: textTheme.bodySmall!.copyWith(color: Colors.black),
               ),
             ],

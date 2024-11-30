@@ -5,10 +5,11 @@ User getSavedUser() {
   return User(
     id: prefs.getInt('userid')!,
     email: prefs.getString('useremail')!,
+    phone: prefs.getInt('userphone')!,
     password: prefs.getString('userpassword')!,
     fullname: prefs.getString('userfullname')!,
     avatar: prefs.getString('useravatar')!,
-    resume: prefs.getString('userresume') ?? '',
+    resume: prefs.getString('userremoteresume') ?? '',
     isRecruiter: prefs.getBool('isrecruiter')!,
   );
 }

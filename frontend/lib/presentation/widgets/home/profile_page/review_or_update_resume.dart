@@ -8,22 +8,23 @@ class ReviewResume extends StatelessWidget {
     required this.fileName,
     required this.onReview,
     required this.onReplace,
+    required this.onDelete,
   });
 
   final String fileName;
   final VoidCallback onReview; // Action to review the resume
   final VoidCallback onReplace; // Action to replace the resume
+  final VoidCallback onDelete; // Action to delete the resume
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(right: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 20 , vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       width: size.width,
       height: 100,
       decoration: BoxDecoration(
-          color: Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(10)),
+          color: Colors.grey.shade100, borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
           Container(
@@ -35,7 +36,8 @@ class ReviewResume extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: const Icon(
-              Icons.insert_drive_file_outlined, // Change icon to indicate a file
+              Icons
+                  .insert_drive_file_outlined, // Change icon to indicate a file
               size: 30,
               color: Colors.green, // Green to show success
             ),
@@ -79,6 +81,13 @@ class ReviewResume extends StatelessWidget {
               color: Colors.orange,
             ),
             onPressed: onReplace, // Replace resume action
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.delete, // Replace icon for replacing resume
+              color: Colors.red,
+            ),
+            onPressed: onDelete, // Replace resume action
           ),
         ],
       ),

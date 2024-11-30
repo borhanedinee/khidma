@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:khidma/constants.dart';
+import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/pages/home_pages/job_details_page.dart';

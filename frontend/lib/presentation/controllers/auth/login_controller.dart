@@ -94,8 +94,12 @@ class LoginController extends GetxController {
     prefs.setString('userfullname', user.fullname);
     prefs.setString('useremail', user.email);
     prefs.setString('userpassword', user.password);
+    prefs.setInt('userphone', user.phone);
     prefs.setBool('isrecruiter', user.isRecruiter);
     prefs.setString('useravatar', user.avatar);
+
+    // DEFAULT VALUE OF user_resume IN DB IS 'none' just to easily
+    //track user_resume
     if (user.resume == 'none') {
       prefs.setBool('dbgotresume', false);
     } else {

@@ -4,68 +4,164 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:khidma/constants.dart';
+import 'package:khidma/constatnts/constants.dart';
+import 'package:khidma/data/application_api.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/services/get_saved_user.dart';
+import 'package:khidma/presentation/widgets/home/application_page/submission_failure/submission_failure_page.dart';
+import 'package:khidma/presentation/widgets/home/application_page/submission_success/subbmission_success_page.dart';
 import 'package:open_file/open_file.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 class ApplicationController extends GetxController {
+  ApplicationAPI applicationAPI = ApplicationAPI();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  // GET APPLICANT RESUME
+  bool isResumeSelected = true;
+  String? get applicantResume {
+    return prefs.getBool('dbgotresume')! &&
+            prefs.getBool('userremoteresumeISNOTchanged')!
+        ? getSavedUser().resume
+        : prefs.getString('userlocalresume');
+  }
+
+  // FORM CONTROLLERS
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController fullnameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController expectedSalaryController = TextEditingController();
+
+  // SUBMIT APPLICATION
+  bool isSubmittingApplicationLoading = false;
+  submitApplication(jobID, applicantID, expectedSalary, applicantFullname,
+      applicantEmail, applicantPhone, applicantResume) async {
+    // TODO: handle applicantResume when the user firstly upload his resume
+    // the resume should be the same as the stored on the server
+    // so that it is accessible
+    try {
+      isSubmittingApplicationLoading = true;
+      update();
+      await Future.delayed(
+        const Duration(seconds: 4),
+      );
+
+      // SEND REQUEST to
+      var result = await applicationAPI.submitApplication(
+        jobID,
+        applicantID,
+        expectedSalary,
+        applicantFullname,
+        applicantEmail,
+        applicantPhone,
+        applicantResume,
+      );
+      if (result != 201) {
+        throw Exception();
+      }
+      // STATUS CODE IS 201 -- success
+      isSubmittingApplicationLoading = false;
+      update();
+
+      // NAVIGATING TO SUBMISSION SUCCESS PAGE
+      Get.to(SubmissionSuccessScreen());
+    } catch (e) {
+      // STATUS CODE IS NOT 201 -- failure
+      isSubmittingApplicationLoading = false;
+      update();
+      // NAVIGATING TO SUBMISSION FAILURE PAGE
+      Get.to(const SubmissionFailureScreen());
+    }
+  }
+
+  // DELETE RESUME
+  bool isResumeDeleting = false;
+  deleteResume(int userID) async {
+    try {
+      isResumeDeleting = true;
+      update();
+      await Future.delayed(
+        const Duration(seconds: 3),
+      );
+
+      var req = await http.delete(
+        Uri.parse('$BASE_URL/api/deleteresume/$userID'),
+      );
+      if (req.statusCode != 200) {
+        throw Exception();
+      }
+
+      prefs.setBool('dbgotresume', false);
+      prefs.remove('userlocalresume');
+
+      // deleted successfully
+
+      Get.showSnackbar(
+        const GetSnackBar(
+          message: 'Resume was successfully deleted',
+          duration: Duration(seconds: 3),
+        ),
+      );
+      isResumeSelected = false;
+      isResumeDeleting = false;
+      update();
+    } catch (e) {
+      isResumeDeleting = false;
+      update();
+      // deleting failed
+      Get.showSnackbar(
+        const GetSnackBar(
+          message: 'Something went wrong deleting resume',
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
   // UPLOAD RESUME
+  bool isUploadingFileLoading = false;
   Future<void> pickSaveAndUploadFile() async {
     try {
+      // PICK FILE
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['pdf'], // Restrict to PDF files
       );
 
       if (result != null) {
-        String filePath = result.files.single.path!;
-        File file = File(filePath); // Get the file
+        try {
+          String pickedFilePath = result.files.single.path!;
+          File pickedFile = File(pickedFilePath); // Get the file
 
-        // NOW UPLOADING FILE TO BACKEND
-        // Prepare the file for upload
-        var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-            '$BASE_URL/api/uploadresume',
-          ),
-        );
-        request.files
-            .add(await http.MultipartFile.fromPath('resume', file.path));
-        request.fields['userid'] = getSavedUser().id.toString();
-
-        // Send the request
-        var response = await request.send();
-
-        // Handle the response
-        if (response.statusCode == 200) {
-          print("File uploaded successfully");
-          // Save the file path in SharedPreferences
-
-          await prefs.setString('userlocalresume', filePath);
-
-          // means it did got changed
-          await prefs.setBool('userremoteresumeISNOTchanged', false);
-
-          // Update the UI with removing the upload resume card
+          // UPDATE UI
+          isUploadingFileLoading = true;
           update();
 
+          // sending file to backend and saving it in prefs
+          await uploadFileToBackend(pickedFile);
+
+          // SUCCESS
+
+          // SAVE FILE
+          await prefs.setBool('dbgotresume', true);
+          await prefs.setString('userlocalresume', pickedFilePath);
+          await prefs.setBool('userremoteresumeISNOTchanged', false);
+
+          // UPDATE UI
+          isResumeSelected = true;
+          isUploadingFileLoading = false;
+          update();
+        } catch (e) {
+          // UPDATE UI
+          isUploadingFileLoading = false;
+
+          update();
+          // CATCHING EXCEPTION WHILE UPLOADING FILE
           Get.showSnackbar(
             const GetSnackBar(
-              message: 'File uploaded and saved successfully!',
-              duration: Duration(seconds: 2),
-            ),
-          );
-        } else {
-          print("File upload failed with status: ${response.statusCode}");
-          Get.showSnackbar(
-            GetSnackBar(
-              message:
-                  'File upload failed with status: ${response.stream.toStringStream()}',
+              message: 'File upload failed',
               duration: Duration(seconds: 2),
             ),
           );
@@ -79,6 +175,7 @@ class ApplicationController extends GetxController {
         );
       }
     } catch (e) {
+      // CATCHING EXCEPTION WHILE PICKING FILE
       Get.showSnackbar(
         GetSnackBar(
           message: 'Error picking file $e!',
@@ -88,11 +185,42 @@ class ApplicationController extends GetxController {
     }
   }
 
+  Future<void> uploadFileToBackend(File pickedFile) async {
+    // NOW UPLOADING FILE TO BACKEND
+    await Future.delayed(
+      const Duration(seconds: 4),
+    );
+    // Prepare the file for upload
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(
+        '$BASE_URL/api/uploadresume',
+      ),
+    );
+    request.files
+        .add(await http.MultipartFile.fromPath('resume', pickedFile.path));
+    request.fields['userid'] = getSavedUser().id.toString();
+
+    var response = await request.send();
+
+    // Handle the response
+    if (response.statusCode == 200) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          message: 'File uploaded and saved successfully!',
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      throw Exception();
+    }
+  }
+
   // OPEN RESUME
   Future<void> openSavedFile() async {
-    String? savedFilePath = await prefs.getString('userlocalresume');
-    if (savedFilePath != null && savedFilePath!.isNotEmpty) {
-      final result = await OpenFile.open(savedFilePath!);
+    String? savedFilePath = prefs.getString('userlocalresume');
+    if (savedFilePath != null && savedFilePath.isNotEmpty) {
+      final result = await OpenFile.open(savedFilePath);
 
       if (result.type == ResultType.error) {
         Get.showSnackbar(
@@ -104,16 +232,17 @@ class ApplicationController extends GetxController {
       }
     } else {
       Get.showSnackbar(
-        GetSnackBar(
+        const GetSnackBar(
           message: 'No File path saved in Shared Preferences',
-          duration: const Duration(seconds: 2),
+          duration: Duration(seconds: 2),
         ),
       );
     }
   }
 
   // DOWNLOAD RESUME
-  Future<void> downloadPdf(String url, String fileName , context) async {
+  Future<void> downloadAndOpenResume(
+      String url, String fileName, context) async {
     try {
       // Get the application documents directory
       // final directory = await getApplicationDocumentsDirectory();
@@ -138,7 +267,7 @@ class ApplicationController extends GetxController {
     }
   }
 
-  void _showOpenFileDialog(String filePath , context) {
+  void _showOpenFileDialog(String filePath, context) {
     showBottomSheet(
       context: context,
       builder: (context) {

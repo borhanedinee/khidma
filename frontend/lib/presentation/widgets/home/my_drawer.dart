@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khidma/main.dart';
-import 'package:khidma/presentation/pages/home_pages/applicants_page.dart';
-import 'package:khidma/presentation/pages/home_pages/bookmarks_page.dart';
-import 'package:khidma/presentation/pages/home_pages/home_page.dart';
-import 'package:khidma/presentation/pages/home_pages/logout_page.dart';
-import 'package:khidma/presentation/pages/home_pages/notifications_page.dart';
-import 'package:khidma/presentation/pages/home_pages/profile_page.dart';
-import 'package:khidma/presentation/pages/home_pages/settings_page.dart';
+import 'package:khidma/presentation/controllers/drawer_controller.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 import 'package:khidma/presentation/widgets/home/my_drawer_page_item.dart';
 
@@ -53,43 +47,36 @@ class MyDrawer extends StatelessWidget {
             const SizedBox(
               height: 0,
             ),
-            DrawePageItem(
-              label: 'H O M E',
-              icon: Icons.home,
-              page: HomePage(),
+            const DrawePageItem(
+              label: PageLabel.homeLabel,
+              page: PageType.home,
             ),
             prefs.getString('userfullname') != null
                 ? const DrawePageItem(
-                    label: 'P R O F I L E',
-                    icon: Icons.person,
-                    page: ProfilePage(),
+                    label: PageLabel.profileLabel,
+                    page: PageType.profile,
                   )
                 : const SizedBox(),
             const DrawePageItem(
-              label: 'A P P L I C A N T S',
-              icon: Icons.groups,
-              page: ApplicantsPage(),
+              label: PageLabel.applicationsLabel,
+              page: PageType.applications,
             ),
             const DrawePageItem(
-              label: 'B O O K M A R K S',
-              icon: Icons.bookmark,
-              page: BookmarksPage(),
+              label: PageLabel.bookmarksLabel,
+              page: PageType.bookmarks,
             ),
             const DrawePageItem(
-              label: 'N O T I F I C A T I O N S',
-              icon: Icons.notifications,
-              page: NotificationsPage(),
+              label: PageLabel.notificationsLabel,
+              page: PageType.notifications,
             ),
             const DrawePageItem(
-              label: 'S E T T I N G S',
-              icon: Icons.settings,
-              page: SettingsPage(),
+              label: PageLabel.settingsLabel,
+              page: PageType.settings,
             ),
             const Spacer(),
             const DrawePageItem(
-              label: 'L O G O U T',
-              icon: Icons.logout,
-              page: LogoutPage(),
+              label: PageLabel.logoutLabel,
+              page: PageType.home,
             ),
             const SizedBox(
               height: 30,

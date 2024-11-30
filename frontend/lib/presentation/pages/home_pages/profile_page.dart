@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:khidma/constants.dart';
+import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/application_controller.dart';
+import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
 import 'package:khidma/presentation/widgets/home/my_filled_button.dart';
 import 'package:khidma/presentation/widgets/home/profile_page/profile_bar.dart';
@@ -96,34 +97,59 @@ class _ProfilePageState extends State<ProfilePage>
                     const SizedBox(height: 30),
 
                     // UPLOAD RESUME with Slide-in effect
-                    FadeTransition(
-                      opacity: _fadeInAnimation,
-                      child: SlideTransition(
-                        position: _slideInAnimation,
-                        child: prefs.getBool('dbgotresume')! && prefs.getBool('userremoteresumeISNOTchanged')!
-                      ? ReviewResume(
-                          fileName: 'resume',
-                          onReview: () {
-                            applicationController.downloadPdf(
-                                '$RESUME_URL/${prefs.getString('userremoteresume')}',
-                                'my_resume.pdf',
-                                context);
-                          },
-                          onReplace: () {
-                            applicationController.pickSaveAndUploadFile();
-                          },
-                        )
-                      : prefs.getString('userlocalresume') != null
-                          ? ReviewResume(
-                              fileName: 'fileName',
-                              onReview: () => applicationController.openSavedFile(),
-                              onReplace: () =>
-                                  applicationController.pickSaveAndUploadFile(),
-                            )
-                          : UploadResume(
-                              onUploadResume: () =>
-                                  applicationController.pickSaveAndUploadFile(),
-                            )
+                    GetBuilder<ApplicationController>(
+                      builder: (controller) => FadeTransition(
+                        opacity: _fadeInAnimation,
+                        child: SlideTransition(
+                            position: _slideInAnimation,
+                            child: applicationController.isUploadingFileLoading
+                                ? const Center(
+                                    child: Text('Uploading Resume ...'),
+                                  )
+                                : applicationController.isResumeDeleting
+                                    ? const Center(
+                                        child: Text('Deleting Resume ...'),
+                                      )
+                                    : prefs.getBool('dbgotresume')! &&
+                                            prefs.getBool(
+                                                'userremoteresumeISNOTchanged')!
+                                        ? ReviewResume(
+                                            fileName: 'resume',
+                                            onDelete: () =>
+                                                applicationController
+                                                    .deleteResume(
+                                                        getSavedUser().id),
+                                            onReview: () {
+                                              applicationController.downloadAndOpenResume(
+                                                  '$RESUME_URL/${prefs.getString('userremoteresume')}',
+                                                  'my_resume.pdf',
+                                                  context);
+                                            },
+                                            onReplace: () {
+                                              applicationController
+                                                  .pickSaveAndUploadFile();
+                                            },
+                                          )
+                                        : prefs.getString('userlocalresume') !=
+                                                null
+                                            ? ReviewResume(
+                                                fileName: 'fileName',
+                                                onDelete: () =>
+                                                    applicationController
+                                                        .deleteResume(
+                                                            getSavedUser().id),
+                                                onReview: () =>
+                                                    applicationController
+                                                        .openSavedFile(),
+                                                onReplace: () =>
+                                                    applicationController
+                                                        .pickSaveAndUploadFile(),
+                                              )
+                                            : UploadResume(
+                                                onUploadResume: () =>
+                                                    applicationController
+                                                        .pickSaveAndUploadFile(),
+                                              )),
                       ),
                     ),
                     const SizedBox(

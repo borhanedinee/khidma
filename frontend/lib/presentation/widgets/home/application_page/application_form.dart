@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:khidma/constants.dart';
+import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/domain/models/user_model.dart';
 import 'package:khidma/main.dart';
@@ -25,29 +25,19 @@ class ApplicationForm extends StatefulWidget {
 
 class _ApplicationFormState extends State<ApplicationForm>
     with SingleTickerProviderStateMixin {
-  late TextEditingController emailController;
-  late TextEditingController fullnameController;
-  late TextEditingController phoneController;
-  late TextEditingController expectedSalaryController;
-
   late AnimationController _animationController;
   late Animation<Offset> _cardSlideAnimation;
   late Animation<double> _fadeAnimation;
 
+  ApplicationController applicationController = Get.find();
+
   @override
   void initState() {
-    // Controllers for text fields
-    emailController = TextEditingController();
-    fullnameController = TextEditingController();
-    phoneController = TextEditingController();
-    expectedSalaryController = TextEditingController();
-
     // Initialize controllers with user data
     User user = getSavedUser();
-    emailController.text = user.email;
-    fullnameController.text = user.fullname;
-    phoneController.text = '0777777733';
-    expectedSalaryController.text = '100000';
+    applicationController.emailController.text = user.email;
+    applicationController.fullnameController.text = user.fullname;
+    applicationController.phoneController.text = user.phone.toString();
 
     // Animation setup
     _animationController = AnimationController(
@@ -77,10 +67,11 @@ class _ApplicationFormState extends State<ApplicationForm>
   void dispose() {
     // Dispose controllers
     _animationController.dispose();
-    emailController.dispose();
-    fullnameController.dispose();
-    phoneController.dispose();
-    expectedSalaryController.dispose();
+    applicationController.emailController.dispose();
+    applicationController.fullnameController.dispose();
+    applicationController.phoneController.dispose();
+    applicationController.expectedSalaryController.dispose();
+    applicationController.formKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -200,7 +191,7 @@ class _ApplicationFormState extends State<ApplicationForm>
                     },
                     hintText: 'Enter your fullname',
                     isPassword: false,
-                    fieldController: fullnameController,
+                    fieldController: applicationController.fullnameController,
                     textInputType: TextInputType.name,
                   ),
                   const SizedBox(height: 10),
@@ -217,7 +208,7 @@ class _ApplicationFormState extends State<ApplicationForm>
                     },
                     hintText: 'exemple@gmail.com',
                     isPassword: false,
-                    fieldController: emailController,
+                    fieldController: applicationController.emailController,
                     textInputType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 10),
@@ -234,7 +225,7 @@ class _ApplicationFormState extends State<ApplicationForm>
                     },
                     hintText: '+213',
                     isPassword: false,
-                    fieldController: phoneController,
+                    fieldController: applicationController.phoneController,
                     textInputType: TextInputType.phone,
                   ),
                   const SizedBox(height: 10),
@@ -255,11 +246,25 @@ class _ApplicationFormState extends State<ApplicationForm>
                     },
                     hintText: '000000 DA',
                     isPassword: false,
-                    fieldController: expectedSalaryController,
+                    fieldController:
+                        applicationController.expectedSalaryController,
                     textInputType: TextInputType.number,
                   ),
                   const SizedBox(height: 20),
-                  getHeader('Resume'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      getHeader('Resume'),
+                      controller.isResumeSelected
+                          ? const SizedBox()
+                          : Text(
+                              'Please select a resume',
+                              style: textTheme.bodySmall!.copyWith(
+                                color: Colors.red,
+                              ),
+                            ),
+                    ],
+                  ),
 
                   // Shimmer Effect
                   prefs.getString('userresume') == null
@@ -272,32 +277,49 @@ class _ApplicationFormState extends State<ApplicationForm>
                                 .copyWith(color: Colors.grey, fontSize: 10),
                           ),
                         )
-                      : SizedBox(),
-                  prefs.getBool('dbgotresume')! &&
-                          prefs.getBool('userremoteresumeISNOTchanged')!
-                      ? ReviewResume(
-                          fileName: 'resume',
-                          onReview: () {
-                            controller.downloadPdf(
-                                '$RESUME_URL/${prefs.getString('userremoteresume')}',
-                                'my_resume.pdf',
-                                context);
-                          },
-                          onReplace: () {
-                            controller.pickSaveAndUploadFile();
-                          },
+                      : const SizedBox(),
+                  controller.isUploadingFileLoading
+                      ? const Center(
+                          child: Text('Uploading Resume ...'),
                         )
-                      : prefs.getString('userlocalresume') != null
-                          ? ReviewResume(
-                              fileName: 'fileName',
-                              onReview: () => controller.openSavedFile(),
-                              onReplace: () =>
-                                  controller.pickSaveAndUploadFile(),
+                      : applicationController.isResumeDeleting
+                          ? const Center(
+                              child: Text('Deleting Resume ...'),
                             )
-                          : UploadResume(
-                              onUploadResume: () =>
-                                  controller.pickSaveAndUploadFile(),
-                            )
+                          : prefs.getBool('dbgotresume')! &&
+                                  prefs.getBool('userremoteresumeISNOTchanged')!
+                              ? ReviewResume(
+                                  fileName: 'resume',
+                                  onReview: () {
+                                    controller.downloadAndOpenResume(
+                                      '$RESUME_URL/${prefs.getString('userremoteresume')}',
+                                      'my_resume.pdf',
+                                      context,
+                                    );
+                                  },
+                                  onDelete: () {
+                                    controller.deleteResume(getSavedUser().id);
+                                  },
+                                  onReplace: () {
+                                    controller.pickSaveAndUploadFile();
+                                  },
+                                )
+                              : prefs.getString('userlocalresume') != null
+                                  ? ReviewResume(
+                                      fileName: 'fileName',
+                                      onDelete: () {
+                                        controller
+                                            .deleteResume(getSavedUser().id);
+                                      },
+                                      onReview: () =>
+                                          controller.openSavedFile(),
+                                      onReplace: () =>
+                                          controller.pickSaveAndUploadFile(),
+                                    )
+                                  : UploadResume(
+                                      onUploadResume: () =>
+                                          controller.pickSaveAndUploadFile(),
+                                    )
                 ],
               ),
             ),

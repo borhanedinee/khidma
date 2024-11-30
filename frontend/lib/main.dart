@@ -9,6 +9,7 @@ import 'package:khidma/presentation/controllers/home/home_controller.dart';
 import 'package:khidma/presentation/controllers/home/job_requirements_controller.dart';
 import 'package:khidma/presentation/controllers/home/profile_controller.dart';
 import 'package:khidma/presentation/controllers/onboarding_controller.dart';
+import 'package:khidma/presentation/pages/home_pages/applicants_page.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
@@ -57,10 +58,12 @@ class Khidma extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: prefs.getString('userfullname') == null? const OnBoardingPage() : const MainPage(),
+      home: prefs.getString('userfullname') == null
+          ? const OnBoardingPage()
+          : const MainPage(),
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => OnBoardingController(), fenix: true);
-        Get.lazyPut(() => MyDrawerController(), fenix: true);
+        Get.put(() => MyDrawerController(), permanent: true ,);
         Get.lazyPut(() => ProfileController(), fenix: true);
         Get.lazyPut(() => HomeController(), fenix: true);
         Get.lazyPut(() => JobRequirementsController(), fenix: true);

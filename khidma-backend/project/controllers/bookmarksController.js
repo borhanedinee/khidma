@@ -68,6 +68,7 @@ const fetchBookmarks = (req, res, next) => {
                     user: {
                         id: item.userID,
                         email: item.email,
+                        phone: item.phone,
                         password: item.password,
                         fullname: item.fullname,
                         avatar: item.avatar,

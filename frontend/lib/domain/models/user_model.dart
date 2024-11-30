@@ -1,6 +1,7 @@
 class User {
   final int id;
   final String email;
+  final int phone;
   final String password;
   final String fullname;
   final String avatar;
@@ -10,6 +11,7 @@ class User {
   User({
     required this.id,
     required this.email,
+    required this.phone,
     required this.password,
     required this.fullname,
     required this.avatar,
@@ -22,6 +24,7 @@ class User {
     return User(
       id: json['id'],
       email: json['email'],
+      phone: json['phone'],
       password: json['password'],
       fullname: json['fullname'],
       avatar: json['avatar'],
@@ -35,6 +38,7 @@ class User {
     return {
       'id': id,
       'email': email,
+      'phone': phone,
       'password': password,
       'fullname': fullname,
       'avatar': avatar,

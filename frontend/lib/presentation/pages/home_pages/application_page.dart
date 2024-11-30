@@ -1,11 +1,12 @@
 // Notifications page
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:khidma/constants.dart';
+import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/application_controller.dart';
 import 'package:khidma/presentation/pages/home_pages/pdf_page.dart';
+import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/widgets/home/application_page/application_form.dart';
 import 'package:khidma/presentation/widgets/home/application_page/application_page_appbar.dart';
 import 'package:khidma/presentation/widgets/home/my_filled_button.dart';
@@ -44,14 +45,53 @@ class ApplicationPage extends StatelessWidget {
                         bottom: 10,
                         child: GetBuilder<ApplicationController>(
                           builder: (controller) => MyFilledButton(
-                            label: 'Submit Application',
-                            onPressed: () {
-                              if (controller.formKey.currentState!.validate()) {
-                                print('Application valid! ready to submit');
-                                Get.to(PdfDownloader());
-                              }
-                            },
-                          ),
+                                  label: controller.isSubmittingApplicationLoading? 'Submitting ...' : 'Submit Application' ,
+                                  onPressed: () {
+                                    if (controller.formKey.currentState!
+                                        .validate()) {
+                                      if (controller.applicantResume == null) {
+                                        controller.isResumeSelected = false;
+                                        controller.update();
+                                      } else {
+                                        controller.isResumeSelected = true;
+                                        controller.update();
+                                        // print('Application valid! ready to submit');
+                                        // Get.to(PdfDownloader());
+                                        int jobID = jobModel.id;
+                                        int applicantID = getSavedUser().id;
+                                        int expectedSalary = int.parse(
+                                            controller
+                                                .expectedSalaryController.text);
+                                        String applicantFullname =
+                                            controller.fullnameController.text;
+                                        String applicantEmail =
+                                            controller.emailController.text;
+                                        int applicantPhone = int.parse(
+                                            controller.phoneController.text);
+                                        String applicantResume =
+                                            controller.applicantResume!;
+
+                                        controller.submitApplication(
+                                          jobID,
+                                          applicantID,
+                                          expectedSalary,
+                                          applicantFullname,
+                                          applicantEmail,
+                                          applicantPhone,
+                                          applicantResume,
+                                        );
+                                      }
+                                    } else {
+                                      if (controller.applicantResume == null) {
+                                        controller.isResumeSelected = false;
+                                        controller.update();
+                                      } else {
+                                        controller.isResumeSelected = true;
+                                        controller.update();
+                                      }
+                                    }
+                                  },
+                                ),
                         ),
                       )
                     ],
