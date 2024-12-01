@@ -1,12 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:khidma/presentation/pages/home_pages/preview_application_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 
-class ApplicationAppBar extends StatelessWidget {
+class EditApplicationAppBar extends StatelessWidget {
+  final int applicantID;
 
-  const ApplicationAppBar({
-    super.key, 
+  const EditApplicationAppBar({
+    super.key, required this.applicantID,
   });
 
   @override
@@ -24,7 +26,9 @@ class ApplicationAppBar extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
                 onPressed: () {
-                  Get.back();
+                  Get.off(()=>
+                    ApplicationPreviewScreen(applicantID: applicantID)
+                  );
                 },
                 icon: const Icon(
                   Icons.navigate_before_outlined,
@@ -38,7 +42,7 @@ class ApplicationAppBar extends StatelessWidget {
             child: Align(
               alignment: Alignment.topCenter,
               child: Text(
-                'Apply Now',
+                'Edit Application',
                 style: textTheme.titleMedium!.copyWith(
                   color: Colors.white,
                 ),

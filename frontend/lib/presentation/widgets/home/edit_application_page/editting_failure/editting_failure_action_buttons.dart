@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class FailureActionButtons extends StatelessWidget {
+class EdittingFailureActionButtons extends StatelessWidget {
   final VoidCallback onTryAgain;
   final VoidCallback onBackToJobs;
 
-  const FailureActionButtons({
+  const EdittingFailureActionButtons({
     super.key,
     required this.onTryAgain,
     required this.onBackToJobs,
@@ -32,7 +32,7 @@ class FailureActionButtons extends StatelessWidget {
         TextButton(
           onPressed: onBackToJobs,
           child: const Text(
-            'Back to Jobs',
+            'Back to Edit Application',
             style: TextStyle(fontSize: 16),
           ),
         ),

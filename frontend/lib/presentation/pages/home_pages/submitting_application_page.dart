@@ -24,7 +24,8 @@ class ApplicationPage extends StatelessWidget {
           height: size.height,
           child: Stack(
             children: [
-              const ApplicationAppBar(),
+              const ApplicationAppBar(
+              ),
               Positioned.fill(
                 top: 80,
                 child: Container(
@@ -47,49 +48,7 @@ class ApplicationPage extends StatelessWidget {
                           builder: (controller) => MyFilledButton(
                                   label: controller.isSubmittingApplicationLoading? 'Submitting ...' : 'Submit Application' ,
                                   onPressed: () {
-                                    if (controller.formKey.currentState!
-                                        .validate()) {
-                                      if (controller.applicantResume == null) {
-                                        controller.isResumeSelected = false;
-                                        controller.update();
-                                      } else {
-                                        controller.isResumeSelected = true;
-                                        controller.update();
-                                        // print('Application valid! ready to submit');
-                                        // Get.to(PdfDownloader());
-                                        int jobID = jobModel.id;
-                                        int applicantID = getSavedUser().id;
-                                        int expectedSalary = int.parse(
-                                            controller
-                                                .expectedSalaryController.text);
-                                        String applicantFullname =
-                                            controller.fullnameController.text;
-                                        String applicantEmail =
-                                            controller.emailController.text;
-                                        int applicantPhone = int.parse(
-                                            controller.phoneController.text);
-                                        String applicantResume =
-                                            controller.applicantResume!;
-
-                                        controller.submitApplication(
-                                          jobID,
-                                          applicantID,
-                                          expectedSalary,
-                                          applicantFullname,
-                                          applicantEmail,
-                                          applicantPhone,
-                                          applicantResume,
-                                        );
-                                      }
-                                    } else {
-                                      if (controller.applicantResume == null) {
-                                        controller.isResumeSelected = false;
-                                        controller.update();
-                                      } else {
-                                        controller.isResumeSelected = true;
-                                        controller.update();
-                                      }
-                                    }
+                                    _submitApplication(controller);
                                   },
                                 ),
                         ),
@@ -103,5 +62,51 @@ class ApplicationPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _submitApplication(SubmittingApplicationController controller) {
+    if (controller.formKey.currentState!
+        .validate()) {
+      if (controller.applicantResume == null) {
+        controller.isResumeSelected = false;
+        controller.update();
+      } else {
+        controller.isResumeSelected = true;
+        controller.update();
+        // print('Application valid! ready to submit');
+        // Get.to(PdfDownloader());
+        int jobID = jobModel.id;
+        int applicantID = getSavedUser().id;
+        int expectedSalary = int.parse(
+            controller
+                .expectedSalaryController.text);
+        String applicantFullname =
+            controller.fullnameController.text;
+        String applicantEmail =
+            controller.emailController.text;
+        int applicantPhone = int.parse(
+            controller.phoneController.text);
+        String applicantResume =
+            controller.applicantResume!;
+    
+        controller.submitApplication(
+          jobID,
+          applicantID,
+          expectedSalary,
+          applicantFullname,
+          applicantEmail,
+          applicantPhone,
+          applicantResume,
+        );
+      }
+    } else {
+      if (controller.applicantResume == null) {
+        controller.isResumeSelected = false;
+        controller.update();
+      } else {
+        controller.isResumeSelected = true;
+        controller.update();
+      }
+    }
   }
 }

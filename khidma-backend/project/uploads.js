@@ -19,13 +19,18 @@ const storage = multer.diskStorage({
 
         cb(null, resumePointerInDatabase);
 
-        // ADING USER RESUME TO DATABASE
-        const sql = `
+        // ADING USER RESUME OR EDITING APPLICATION RESUME
+        const userResumesql = `
                 UPDATE users
                 SET resume = ?
                 WHERE id = ?;
                 `
-        db.query(sql, [resumePointerInDatabase, req.body.userid], (err, result) => {
+        const applicationResumeSql = `
+                UPDATE applicants
+                SET applicant_resume = ?
+                WHERE id = ?;
+                `
+        db.query(req.body.applicationid ? applicationResumeSql : userResumesql, [resumePointerInDatabase, req.body.applicationid ? req.body.applicationid : req.body.userid], (err, result) => {
             if (err) {
                 console.log(err);
 

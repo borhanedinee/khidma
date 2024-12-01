@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/widgets/home/application_page/submission_failure/submission_failured_action_buttons.dart';
-import 'package:khidma/presentation/widgets/home/application_page/submission_failure/failure_messages.dart';
-import '../submission_failure/failure_animation.dart';
+import 'package:khidma/presentation/widgets/home/edit_application_page/editting_failure/editting_failure_action_buttons.dart';
+import 'package:khidma/presentation/widgets/home/edit_application_page/editting_failure/editting_failure_animation.dart';
+import 'package:khidma/presentation/widgets/home/edit_application_page/editting_failure/editting_failure_messages.dart';
 
-class SubmissionFailureScreen extends StatelessWidget {
-  const SubmissionFailureScreen({super.key});
+class EdittingFailureScreen extends StatelessWidget {
+  const EdittingFailureScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +19,11 @@ class SubmissionFailureScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const FailureAnimation(),
+                const EdittingFailureAnimation(),
                 const SizedBox(height: 32),
-                const FailureMessage(),
+                const EdittingFailureMessage(),
                 const SizedBox(height: 40),
-                SubmissionFailureActionButtons(
+                EdittingFailureActionButtons(
                   onTryAgain: () {
                     // Navigate back to form
                     Get.back();

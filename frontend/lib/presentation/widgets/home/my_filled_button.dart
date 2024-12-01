@@ -7,8 +7,10 @@ class MyFilledButton extends StatelessWidget {
   
   final String label;
 
+  final Color? backgroundColor;
+
   const MyFilledButton({
-    super.key, required this.label, required this.onPressed,
+    super.key, required this.label, required this.onPressed, this.backgroundColor,
   });
 
   @override
@@ -24,7 +26,7 @@ class MyFilledButton extends StatelessWidget {
         style: ButtonStyle(
           elevation: const MaterialStatePropertyAll(0),
           backgroundColor: MaterialStatePropertyAll(
-            Theme.of(context).primaryColor,
+            backgroundColor ?? Theme.of(context).primaryColor,
           ),
           shape: MaterialStatePropertyAll(
             RoundedRectangleBorder(

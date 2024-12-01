@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ActionButtons extends StatelessWidget {
+class EdittingSuccessActionButtons extends StatelessWidget {
   final VoidCallback onViewApplications;
   final VoidCallback onBackToJobs;
 
-  const ActionButtons({
+  const EdittingSuccessActionButtons({
     super.key,
     required this.onViewApplications,
     required this.onBackToJobs,
@@ -24,7 +24,7 @@ class ActionButtons extends StatelessWidget {
             ),
           ),
           child: const Text(
-            'Go to Jobs',
+            'Go to Edit Application',
             style: TextStyle(fontSize: 16 , color: Colors.white),
           ),
         ),
@@ -32,7 +32,7 @@ class ActionButtons extends StatelessWidget {
         TextButton(
           onPressed: onBackToJobs,
           child: const Text(
-            'Back to Application',
+            'Back to Edit Application',
             style: TextStyle(fontSize: 16),
           ),
         ),

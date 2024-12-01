@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/domain/models/application_model.dart';
 import 'package:khidma/main.dart';
-import 'package:khidma/presentation/pages/home_pages/view_job_and_application_details_page.dart';
+import 'package:khidma/presentation/pages/home_pages/application_details_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 
 class ApplicationItem extends StatelessWidget {
@@ -18,7 +18,7 @@ class ApplicationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.to(
-        () => ViewJobAndApplicationDetailsPage(
+        () => ApplicationDetailsPage(
           applicationModel: applicationModel,
         ),
       ),
@@ -76,11 +76,14 @@ class ApplicationItem extends StatelessWidget {
                       width: (size.width - 40) * .12,
                       child: IconButton.filled(
                         onPressed: () => Get.to(
-                          () => ViewJobAndApplicationDetailsPage(
+                          () => ApplicationDetailsPage(
                             applicationModel: applicationModel,
                           ),
                         ),
-                        icon: const Icon(Icons.navigate_next , size: 16,),
+                        icon: const Icon(
+                          Icons.navigate_next,
+                          size: 16,
+                        ),
                       ),
                     ),
                   ],

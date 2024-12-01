@@ -7,8 +7,8 @@ import 'package:khidma/presentation/pages/home_pages/preview_application_page.da
 import 'package:khidma/presentation/widgets/home/job_details_page/job_card_description_req.dart';
 import 'package:khidma/presentation/widgets/home/my_filled_button.dart';
 
-class ViewJobAndApplicationDetailsPage extends StatelessWidget {
-  const ViewJobAndApplicationDetailsPage({super.key, required this.applicationModel});
+class ApplicationDetailsPage extends StatelessWidget {
+  const ApplicationDetailsPage({super.key, required this.applicationModel});
   final ApplicationModel applicationModel;
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class ViewJobAndApplicationDetailsPage extends StatelessWidget {
                   onPressed: () {
                     Get.to(
                       ()=> ApplicationPreviewScreen(
-                        applicationModel: applicationModel,
+                        applicantID: applicationModel.applicationId,
                       ),
                     );
                   },

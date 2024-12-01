@@ -1,43 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/constatnts/constants.dart';
+import 'package:khidma/domain/models/application_model.dart';
 import 'package:khidma/domain/models/job_model.dart';
-import 'package:khidma/domain/models/user_model.dart';
 import 'package:khidma/main.dart';
-import 'package:khidma/presentation/controllers/home/submitting_application_controller.dart';
+import 'package:khidma/presentation/controllers/home/edit_application_controller.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
-import 'package:khidma/presentation/services/get_saved_user.dart';
+import 'package:khidma/presentation/widgets/home/edit_application_page/edit_resume.dart';
 import 'package:khidma/presentation/widgets/home/my_form_field.dart';
 import 'package:khidma/presentation/widgets/home/profile_page/review_or_update_resume.dart';
 import 'package:khidma/presentation/widgets/home/profile_page/upload_resume.dart';
 
-class ApplicationForm extends StatefulWidget {
-  const ApplicationForm({
+class EditApplicationForm extends StatefulWidget {
+  const EditApplicationForm({
     super.key,
-    required this.jobModel,
+    required this.applicationModel,
   });
 
-  final JobModel jobModel;
+  final ApplicationModel applicationModel;
 
   @override
-  State<ApplicationForm> createState() => _ApplicationFormState();
+  State<EditApplicationForm> createState() => _EditApplicationFormState();
 }
 
-class _ApplicationFormState extends State<ApplicationForm>
+class _EditApplicationFormState extends State<EditApplicationForm>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Offset> _cardSlideAnimation;
   late Animation<double> _fadeAnimation;
 
-  SubmittingApplicationController applicationController = Get.find();
+  EditApplicationController applicationController = Get.find();
 
   @override
   void initState() {
     // Initialize controllers with user data
-    UserModel user = getSavedUser();
-    applicationController.emailController.text = user.email;
-    applicationController.fullnameController.text = user.fullname;
-    applicationController.phoneController.text = '0${user.phone}';
+    applicationController.emailController.text =
+        widget.applicationModel.applicationEmail;
+    applicationController.fullnameController.text =
+        widget.applicationModel.applicationFullname;
+    applicationController.phoneController.text =
+        '0${widget.applicationModel.applicantPhone}';
+    applicationController.expectedSalaryController.text =
+        '${widget.applicationModel.applicationExpectedSalary}';
 
     // Animation setup
     _animationController = AnimationController(
@@ -74,7 +78,8 @@ class _ApplicationFormState extends State<ApplicationForm>
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<SubmittingApplicationController>(
+    final JobModel jobModel = widget.applicationModel.job;
+    return GetBuilder<EditApplicationController>(
       builder: (controller) => ListView(
         children: [
           const SizedBox(height: 40),
@@ -112,7 +117,7 @@ class _ApplicationFormState extends State<ApplicationForm>
                               height: 50,
                               width: 50,
                               child: Image.network(
-                                '$IMAGE_URL/${widget.jobModel.companyLogo}',
+                                '$IMAGE_URL/${jobModel.companyLogo}',
                               ),
                             ),
                             const SizedBox(width: 16),
@@ -129,7 +134,7 @@ class _ApplicationFormState extends State<ApplicationForm>
                                     ),
                                   ),
                                   Text(
-                                    widget.jobModel.title,
+                                    jobModel.title,
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
@@ -137,7 +142,7 @@ class _ApplicationFormState extends State<ApplicationForm>
                                     ),
                                   ),
                                   Text(
-                                    'at ${widget.jobModel.company}',
+                                    'at ${jobModel.company}',
                                     style: const TextStyle(
                                       color: Colors.white70,
                                       fontSize: 14,
@@ -177,6 +182,13 @@ class _ApplicationFormState extends State<ApplicationForm>
                   // Form
                   getHeader('Fullname'),
                   MyFormField(
+                    onChanged: (value) =>
+                        controller.updateIsSaveButtonClickable(
+                      widget.applicationModel.applicationFullname,
+                      widget.applicationModel.applicationEmail,
+                      widget.applicationModel.applicantPhone,
+                      widget.applicationModel.applicationExpectedSalary,
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your full name';
@@ -194,6 +206,13 @@ class _ApplicationFormState extends State<ApplicationForm>
                   const SizedBox(height: 10),
                   getHeader('Email'),
                   MyFormField(
+                    onChanged: (value) =>
+                        controller.updateIsSaveButtonClickable(
+                      widget.applicationModel.applicationFullname,
+                      widget.applicationModel.applicationEmail,
+                      widget.applicationModel.applicantPhone,
+                      widget.applicationModel.applicationExpectedSalary,
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your email';
@@ -211,6 +230,13 @@ class _ApplicationFormState extends State<ApplicationForm>
                   const SizedBox(height: 10),
                   getHeader('Phone number'),
                   MyFormField(
+                    onChanged: (value) =>
+                        controller.updateIsSaveButtonClickable(
+                      widget.applicationModel.applicationFullname,
+                      widget.applicationModel.applicationEmail,
+                      widget.applicationModel.applicantPhone,
+                      widget.applicationModel.applicationExpectedSalary,
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your phone number';
@@ -228,6 +254,13 @@ class _ApplicationFormState extends State<ApplicationForm>
                   const SizedBox(height: 10),
                   getHeader('Expected Salary'),
                   MyFormField(
+                    onChanged: (value) =>
+                        controller.updateIsSaveButtonClickable(
+                      widget.applicationModel.applicationFullname,
+                      widget.applicationModel.applicationEmail,
+                      widget.applicationModel.applicantPhone,
+                      widget.applicationModel.applicationExpectedSalary,
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your expected salary';
@@ -275,48 +308,25 @@ class _ApplicationFormState extends State<ApplicationForm>
                           ),
                         )
                       : const SizedBox(),
-                  controller.isUploadingFileLoading
+                  controller.isEditingResumeLoading
                       ? const Center(
-                          child: Text('Uploading Resume ...'),
+                          child: Text('Editing Resume ...'),
                         )
-                      : applicationController.isResumeDeleting
-                          ? const Center(
-                              child: Text('Deleting Resume ...'),
-                            )
-                          : prefs.getBool('dbgotresume')! &&
-                                  prefs.getBool('userremoteresumeISNOTchanged')!
-                              ? ReviewResume(
-                                  fileName: 'resume',
-                                  onReview: () {
-                                    controller.downloadAndOpenResume(
-                                      '$RESUME_URL/${prefs.getString('userremoteresume')}',
-                                      'my_resume.pdf',
-                                      context,
-                                    );
-                                  },
-                                  onDelete: () {
-                                    controller.deleteResume(getSavedUser().id);
-                                  },
-                                  onReplace: () {
-                                    controller.pickSaveAndUploadFile();
-                                  },
-                                )
-                              : prefs.getString('userlocalresume') != null
-                                  ? ReviewResume(
-                                      fileName: 'fileName',
-                                      onDelete: () {
-                                        controller
-                                            .deleteResume(getSavedUser().id);
-                                      },
-                                      onReview: () =>
-                                          controller.openSavedFile(),
-                                      onReplace: () =>
-                                          controller.pickSaveAndUploadFile(),
-                                    )
-                                  : UploadResume(
-                                      onUploadResume: () =>
-                                          controller.pickSaveAndUploadFile(),
-                                    )
+                      : EditResume(
+                          fileName: 'resume',
+                          onReview: () {
+                            controller.openResume(
+                              '$RESUME_URL/${widget.applicationModel.applicationResume}',
+                              'my_resume.pdf',
+                              context,
+                            );
+                          },
+                          onReplace: () {
+                            controller.pickSaveAndUploadFile(
+                              widget.applicationModel.applicationId.toString(),
+                            );
+                          },
+                        )
                 ],
               ),
             ),

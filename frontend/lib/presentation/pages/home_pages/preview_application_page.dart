@@ -3,80 +3,162 @@ import 'package:get/get.dart';
 import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/domain/models/application_model.dart';
 import 'package:khidma/main.dart';
+import 'package:khidma/presentation/controllers/home/preview_application_controller.dart';
 import 'package:khidma/presentation/controllers/home/submitting_application_controller.dart';
+import 'package:khidma/presentation/pages/home_pages/edit_application.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 import 'package:khidma/presentation/widgets/home/job_details_page/job_details_card.dart';
 import 'package:khidma/presentation/widgets/home/my_filled_button.dart';
+import 'package:shimmer/shimmer.dart';
 
-class ApplicationPreviewScreen extends StatelessWidget {
-  final ApplicationModel applicationModel;
+class ApplicationPreviewScreen extends StatefulWidget {
+  const ApplicationPreviewScreen({
+    super.key,
+    required this.applicantID,
+  });
 
-  const ApplicationPreviewScreen({super.key, required this.applicationModel});
+  final int applicantID;
+
+  @override
+  State<ApplicationPreviewScreen> createState() =>
+      _ApplicationPreviewScreenState();
+}
+
+class _ApplicationPreviewScreenState extends State<ApplicationPreviewScreen> {
+  PreviewApplicationController previewApplicationController = Get.find();
+  @override
+  void initState() {
+    previewApplicationController.fetchApplicationInfos(widget.applicantID);
+
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   previewApplicationController.fetchApplicationInfos(widget.applicantID);
+    // });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SizedBox(
-          width: size.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              const PreviewApplicationAppBar(),
-              const SizedBox(
-                height: 30,
-              ),
-              JobDetailsCard(jobModel: applicationModel.job),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildDetailRow(
-                        "Full Name", applicationModel.applicationFullname),
-                    _buildDetailRow("Email", applicationModel.applicationEmail),
-                    _buildDetailRow(
-                        "Phone Number", '0${applicationModel.applicantPhone}'),
-                    _buildDetailRow("Expected Salary",
-                        '${applicationModel.applicationExpectedSalary} DA'),
-                    const SizedBox(height: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Resume",
-                          style: textTheme.bodyMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "The resume you have applied with",
-                          style: textTheme.bodySmall!.copyWith(
-                            color: Colors.grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    _viewResumeCard(
-                        applicationModel.applicationResume, context),
-                  ],
+    return GetBuilder<PreviewApplicationController>(
+      builder: (controller) => SafeArea(
+        child: Scaffold(
+          body: SizedBox(
+            width: size.width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const Spacer(),
-              MyFilledButton(
-                label: 'Edit Application',
-                onPressed: () {},
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
+                const PreviewApplicationAppBar(),
+                const SizedBox(
+                  height: 30,
+                ),
+                controller.isFetchingApplicationInfos
+                    ? _shimmerLoader()
+                    : Column(
+                        children: [
+                          JobDetailsCard(
+                              jobModel: controller.applicationModel!.job),
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildDetailRow(
+                                    "Full Name",
+                                    controller
+                                        .applicationModel!.applicationFullname),
+                                _buildDetailRow(
+                                    "Email",
+                                    controller
+                                        .applicationModel!.applicationEmail),
+                                _buildDetailRow("Phone Number",
+                                    '0${controller.applicationModel!.applicantPhone}'),
+                                _buildDetailRow("Expected Salary",
+                                    '${controller.applicationModel!.applicationExpectedSalary} DA'),
+                                const SizedBox(height: 20),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Resume",
+                                      style: textTheme.bodyMedium!.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "The resume you have applied with",
+                                      style: textTheme.bodySmall!.copyWith(
+                                        color: Colors.grey,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                _viewResumeCard(
+                                    controller
+                                        .applicationModel!.applicationResume,
+                                    context),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                const Spacer(),
+                MyFilledButton(
+                  backgroundColor: controller.isFetchingApplicationInfos
+                      ? Colors.grey.shade300
+                      : Theme.of(context).primaryColor,
+                  label: 'Edit Application',
+                  onPressed: () {
+                    if (!controller.isFetchingApplicationInfos) {
+                      Get.off(
+                        () => EditApplicationPage(
+                          applicationModel: controller.applicationModel!,
+                        ),
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding _shimmerLoader() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildShimmer(size.width, 240.0),
+          _buildShimmer(size.width, 180.0),
+          _buildShimmer(size.width, 50.0),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildShimmer(width, height) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[200]!,
+        highlightColor: Colors.white,
+        child: Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: Colors.white,
           ),
         ),
       ),

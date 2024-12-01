@@ -4,9 +4,10 @@ import 'package:khidma/presentation/controllers/drawer_controller.dart';
 import 'package:khidma/presentation/widgets/home/application_page/submission_success/submission_success_action_button.dart';
 import 'package:khidma/presentation/widgets/home/application_page/submission_success/success_animation.dart';
 import 'package:khidma/presentation/widgets/home/application_page/submission_success/success_message.dart';
+import 'package:khidma/presentation/widgets/home/edit_application_page/editting_success/editting_success_action_button.dart';
 
-class SubmissionSuccessScreen extends StatelessWidget {
-  SubmissionSuccessScreen({super.key});
+class EdittingSuccessScreen extends StatelessWidget {
+  EdittingSuccessScreen({super.key});
 
   final MyDrawerController drawerController = Get.find();
 
@@ -24,7 +25,7 @@ class SubmissionSuccessScreen extends StatelessWidget {
                 const SizedBox(height: 32),
                 const SuccessMessage(),
                 const SizedBox(height: 40),
-                SubmissionSuccessActionButtons(
+                EdittingSuccessActionButtons(
                   onViewApplications: () {
                     // Navigate to ome page
                     // drawerController.navigateToPageFromExternal(PageType.applications);
