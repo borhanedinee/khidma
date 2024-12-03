@@ -8,6 +8,7 @@ import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/shimmers/application_page_shimmers/application_item_shimmer.dart';
 import 'package:khidma/presentation/widgets/home/applicants_page/applicants_job_item.dart';
 import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
+import 'package:khidma/presentation/widgets/home/my_top_shaddow.dart';
 
 class ApplicationsPage extends StatefulWidget {
   const ApplicationsPage({super.key});
@@ -39,55 +40,60 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
             ),
             Positioned.fill(
               top: 80,
-              child: Container(
-                height: size.height - 100,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(
-                      20,
-                    ),
-                  ),
-                ),
-                child: controller.isFetchingApplicationsLoading
-                    ? ListView(children: [
-                        const SizedBox(
-                          height: 40,
+              child: Stack(
+                children: [
+                  Container(
+                    height: size.height - 100,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(
+                          30,
                         ),
-                        ...List.generate(
-                          4,
-                          (index) => const ApplicationItemShimmer(),
-                        )
-                      ])
-                    : ListView(
-                        children: [
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          // in case , there are jobs added by user
-                          Padding(
-                            padding: const EdgeInsets.only(left: 14),
-                            child: Text(
-                              'View Jobs you have applied for',
-                              style: textTheme.bodySmall!
-                                  .copyWith(color: Colors.black),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          ...List.generate(
-                            controller.applications.length,
-                            (index) {
-                              final applicationModel =
-                                  controller.applications[index];
-                              return ApplicationItem(
-                                applicationModel: applicationModel,
-                              );
-                            },
-                          )
-                        ],
                       ),
+                    ),
+                    child: controller.isFetchingApplicationsLoading
+                        ? ListView(children: [
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            ...List.generate(
+                              4,
+                              (index) => const ApplicationItemShimmer(),
+                            )
+                          ])
+                        : ListView(
+                            children: [
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              // in case , there are jobs added by user
+                              Padding(
+                                padding: const EdgeInsets.only(left: 14),
+                                child: Text(
+                                  'View Jobs you have applied for',
+                                  style: textTheme.bodySmall!
+                                      .copyWith(color: Colors.black),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              ...List.generate(
+                                controller.applications.length,
+                                (index) {
+                                  final applicationModel =
+                                      controller.applications[index];
+                                  return ApplicationItem(
+                                    applicationModel: applicationModel,
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                  ),
+                  const MyTopShaddow(),
+                ],
               ),
             )
           ],

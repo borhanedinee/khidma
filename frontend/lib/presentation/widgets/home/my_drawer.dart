@@ -66,6 +66,10 @@ class MyDrawer extends StatelessWidget {
               page: PageType.bookmarks,
             ),
             const DrawePageItem(
+              label: PageLabel.chatsLabel,
+              page: PageType.chats,
+            ),
+            const DrawePageItem(
               label: PageLabel.notificationsLabel,
               page: PageType.notifications,
             ),

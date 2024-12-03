@@ -24,7 +24,7 @@ class EdittingSuccessActionButtons extends StatelessWidget {
             ),
           ),
           child: const Text(
-            'Go to Edit Application',
+            'Preview Application',
             style: TextStyle(fontSize: 16 , color: Colors.white),
           ),
         ),

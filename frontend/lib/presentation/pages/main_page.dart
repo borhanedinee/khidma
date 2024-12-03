@@ -5,6 +5,7 @@ import 'package:khidma/presentation/controllers/auth/login_controller.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
 import 'package:khidma/presentation/pages/home_pages/applications_page.dart';
 import 'package:khidma/presentation/pages/home_pages/bookmarks_page.dart';
+import 'package:khidma/presentation/pages/home_pages/chats_page.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/home_pages/notifications_page.dart';
 import 'package:khidma/presentation/pages/home_pages/profile_page.dart';
@@ -55,6 +56,8 @@ class _MainPageState extends State<MainPage> {
         return const ApplicationsPage();
       case PageType.bookmarks:
         return const BookmarksPage();
+      case PageType.chats:
+        return const ChatsPage();
       case PageType.notifications:
         return const NotificationsPage();
       case PageType.settings:

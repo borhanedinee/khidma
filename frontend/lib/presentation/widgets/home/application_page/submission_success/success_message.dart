@@ -8,7 +8,7 @@ class SuccessMessage extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Application Editted!',
+          'Application Submitted!',
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.green,
@@ -17,7 +17,7 @@ class SuccessMessage extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          'Your job application has been successfully editted.',
+          'Your job application has been successfully submitted. we will keep you updated.',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Colors.grey[600],
               ),

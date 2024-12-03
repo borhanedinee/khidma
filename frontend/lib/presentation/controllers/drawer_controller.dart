@@ -9,6 +9,7 @@ enum PageType {
   profile,
   applications,
   bookmarks,
+  chats,
   notifications,
   settings,
 }
@@ -18,16 +19,20 @@ enum PageLabel {
   profileLabel,
   applicationsLabel,
   bookmarksLabel,
+  chatsLabel,
   notificationsLabel,
   settingsLabel,
   logoutLabel,
 }
 
 enum PageIcon {
-  homeIcon(Icons.home ,),
+  homeIcon(
+    Icons.home,
+  ),
   profileIcon(Icons.person),
   applicationsIcon(Icons.work),
   bookmarksIcon(Icons.bookmark),
+  chatsIcon(Icons.chat),
   notificationsIcon(Icons.notifications),
   settingsIcon(Icons.settings),
   logoutIcon(Icons.logout);
@@ -89,6 +94,8 @@ class MyDrawerController extends GetxController {
         return 'A P P L I C A T I O N S';
       case PageLabel.bookmarksLabel:
         return 'B O O K M A R K S';
+      case PageLabel.chatsLabel:
+        return 'C H A T S';
       case PageLabel.notificationsLabel:
         return 'N O T I F I C A T I O N S';
       case PageLabel.settingsLabel:
@@ -101,7 +108,7 @@ class MyDrawerController extends GetxController {
     }
   }
 
-  IconData get icon => iconForLabel(_selectedLabel); 
+  IconData get icon => iconForLabel(_selectedLabel);
 
   IconData iconForLabel(PageLabel label) {
     switch (label) {
@@ -113,6 +120,8 @@ class MyDrawerController extends GetxController {
         return PageIcon.applicationsIcon.icon;
       case PageLabel.bookmarksLabel:
         return PageIcon.bookmarksIcon.icon;
+      case PageLabel.chatsLabel:
+        return PageIcon.chatsIcon.icon;
       case PageLabel.notificationsLabel:
         return PageIcon.notificationsIcon.icon;
       case PageLabel.settingsLabel:

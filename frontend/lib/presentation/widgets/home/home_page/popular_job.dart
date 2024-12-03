@@ -51,92 +51,101 @@ class _PopularJobState extends State<PopularJob>
       },
       child: SlideTransition(
         position: _slideAnimation,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                padding: const EdgeInsets.only(left: 20),
-                width: size.width - 100,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      children: [
-                        Image.network('$IMAGE_URL/${widget.jobModel.companyLogo}',
-                            height: 40),
-                        const SizedBox(width: 10),
-                        Text(
-                          widget.jobModel.company,
-                          style: textTheme.titleMedium!.copyWith(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.jobModel.title,
-                          style: textTheme.titleMedium!.copyWith(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          widget.jobModel.type,
-                          style: textTheme.bodySmall!.copyWith(
-                            color: Colors.black38,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: Row(
+        child: Card(
+          shadowColor: Theme.of(context).primaryColor,
+          elevation: 1,
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  padding: const EdgeInsets.only(left: 20),
+                  width: size.width - 100,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor.withOpacity(.03),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
                         children: [
+                          Image.network(
+                              '$IMAGE_URL/${widget.jobModel.companyLogo}',
+                              height: 40),
+                          const SizedBox(width: 10),
                           Text(
-                            '${widget.jobModel.salary.toInt()} DA',
-                            style: textTheme.bodyMedium!.copyWith(
-                              color: Colors.black54,
+                            widget.jobModel.company,
+                            style: textTheme.titleMedium!.copyWith(
+                              color: Colors.black87,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const Spacer(),
-                          IconButton.filled(
-                            onPressed: () {
-                              Get.to(JobDetailsPage(jobModel: widget.jobModel));
-                            },
-                            icon: const Icon(Icons.navigate_next),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.jobModel.title,
+                            style: textTheme.titleLarge!.copyWith(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            widget.jobModel.type,
+                            style: textTheme.bodyMedium!.copyWith(
+                              color: Colors.black87,
+                            ),
                           ),
                         ],
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: Row(
+                          children: [
+                            Text(
+                              '${widget.jobModel.salary.toInt()} DA',
+                              style: textTheme.bodyLarge!.copyWith(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Spacer(),
+                            IconButton.filled(
+                              onPressed: () {
+                                Get.to(
+                                    JobDetailsPage(jobModel: widget.jobModel));
+                              },
+                              icon: const Icon(Icons.navigate_next),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: -50,
+                left: 0,
+                right: 0,
+                child: Opacity(
+                  opacity: .2,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(70),
+                    child: Image.asset(
+                      'assets/images/photo.png',
+                      fit: BoxFit.fitWidth,
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: -50,
-              left: 0,
-              right: 0,
-              child: Opacity(
-                opacity: .1,
-                child: Image.asset(
-                  'assets/images/photo.png',
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

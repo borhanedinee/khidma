@@ -54,7 +54,9 @@ class EditApplicationController extends GetxController {
       update();
 
       // NAVIGATING TO SUBMISSION SUCCESS PAGE
-      Get.to(EdittingSuccessScreen());
+      Get.to(EdittingSuccessScreen(
+        applicationID: int.parse(applicationID.toString()),
+      ));
     } catch (e) {
       // STATUS CODE IS NOT 201 -- failure
       isEditingApplicationLoading = false;

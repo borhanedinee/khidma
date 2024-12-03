@@ -16,6 +16,7 @@ import 'package:khidma/presentation/pages/home_pages/applications_page.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
+import 'package:khidma/presentation/pallets/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences prefs;
@@ -55,7 +56,7 @@ class Khidma extends StatelessWidget {
         ),
         fontFamily: 'Montserrat',
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF0A74DA),
+          seedColor: AppColors.primaryColor,
           // seedColor:  Colors.redAccent,
         ),
         useMaterial3: true,

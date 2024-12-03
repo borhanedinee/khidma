@@ -89,8 +89,13 @@ class EditApplicationPage extends StatelessWidget {
       String applicantEmail = controller.emailController.text;
       int applicantPhone = int.parse(controller.phoneController.text);
 
-      controller.editApplication(applicantFullname, applicantEmail,
-          applicantPhone, expectedSalary, applicationID);
+      controller.editApplication(
+        applicantFullname,
+        applicantEmail,
+        applicantPhone,
+        expectedSalary,
+        applicationID,
+      );
     }
   }
 }
