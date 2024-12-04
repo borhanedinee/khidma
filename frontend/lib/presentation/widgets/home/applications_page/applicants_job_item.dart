@@ -33,7 +33,7 @@ class ApplicationItem extends StatelessWidget {
                 width: size.width,
                 height: 130,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
+                  color: Theme.of(context).primaryColor.withOpacity(.03),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(

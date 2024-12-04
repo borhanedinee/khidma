@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
-import 'package:khidma/presentation/widgets/home/application_page/submission_success/submission_success_action_button.dart';
-import 'package:khidma/presentation/widgets/home/application_page/submission_success/success_animation.dart';
-import 'package:khidma/presentation/widgets/home/application_page/submission_success/success_message.dart';
+import 'package:khidma/presentation/widgets/home/submitt_application_page/submission_success/submission_success_action_button.dart';
+import 'package:khidma/presentation/widgets/home/submitt_application_page/submission_success/success_animation.dart';
+import 'package:khidma/presentation/widgets/home/submitt_application_page/submission_success/success_message.dart';
 
 class SubmissionSuccessScreen extends StatelessWidget {
   SubmissionSuccessScreen({super.key});

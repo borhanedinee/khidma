@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
-import 'package:khidma/presentation/widgets/home/application_page/submission_failure/submission_failured_action_buttons.dart';
-import 'package:khidma/presentation/widgets/home/application_page/submission_failure/failure_messages.dart';
+import 'package:khidma/presentation/widgets/home/submitt_application_page/submission_failure/submission_failured_action_buttons.dart';
+import 'package:khidma/presentation/widgets/home/submitt_application_page/submission_failure/failure_messages.dart';
 import '../submission_failure/failure_animation.dart';
 
 class SubmissionFailureScreen extends StatelessWidget {

@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:khidma/domain/models/bookmark_model.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/bookmarks_controller.dart';
+import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 import 'package:khidma/presentation/widgets/home/bookmarks_page/bookmark_item.dart';
 import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
 import 'package:khidma/presentation/widgets/home/my_top_shaddow.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 
 class BookmarksPage extends StatefulWidget {
@@ -85,32 +87,70 @@ class _BookmarksPageState extends State<BookmarksPage> {
                             }),
                           ])
                         : controller.bookmarks.isEmpty
-                            ? const Center(
-                                child: Text('Empty bookmarks'),
+                            ? Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 100,
+                                  ),
+                                  SizedBox(
+                                    height: 250,
+                                    child: Lottie.asset(
+                                      'assets/lottie/lottie_empty_bookmarks.json',
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Text(
+                                    'Empty Bookmarks!',
+                                    style: textTheme.headlineMedium!.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24),
+                                    child: Text(
+                                      'You haven\'t saved anything yet. Start exploring and bookmark your favorite items to find them easily later!',
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: textTheme.bodyMedium!.copyWith(
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               )
-                            : ListView(children: [
-                                const SizedBox(
-                                  height: 40,
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 24),
-                                  child:
-                                      Text('See your saved jobs in one place!'),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                ...List.generate(controller.bookmarks.length,
-                                    (index) {
-                                  BookmarkModel bookmarkModel =
-                                      controller.bookmarks[index];
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: BookmarkItem(
-                                        bookmarkModel: bookmarkModel),
-                                  );
-                                }),
-                              ]),
+                            : ListView(
+                                children: [
+                                  const SizedBox(
+                                    height: 40,
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 24),
+                                    child: Text(
+                                        'See your saved jobs in one place!'),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ...List.generate(controller.bookmarks.length,
+                                      (index) {
+                                    BookmarkModel bookmarkModel =
+                                        controller.bookmarks[index];
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: BookmarkItem(
+                                          bookmarkModel: bookmarkModel),
+                                    );
+                                  }),
+                                ],
+                              ),
                   ),
                   const MyTopShaddow()
                 ],

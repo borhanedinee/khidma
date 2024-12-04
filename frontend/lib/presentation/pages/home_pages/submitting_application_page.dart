@@ -7,8 +7,8 @@ import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/submitting_application_controller.dart';
 import 'package:khidma/presentation/pages/home_pages/pdf_page.dart';
 import 'package:khidma/presentation/services/get_saved_user.dart';
-import 'package:khidma/presentation/widgets/home/application_page/application_form.dart';
-import 'package:khidma/presentation/widgets/home/application_page/application_page_appbar.dart';
+import 'package:khidma/presentation/widgets/home/submitt_application_page/application_form.dart';
+import 'package:khidma/presentation/widgets/home/submitt_application_page/application_page_appbar.dart';
 import 'package:khidma/presentation/widgets/home/my_filled_button.dart';
 import 'package:khidma/presentation/widgets/home/my_top_shaddow.dart';
 

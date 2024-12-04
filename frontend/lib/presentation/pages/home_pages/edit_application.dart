@@ -6,7 +6,7 @@ import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/edit_application_controller.dart';
 import 'package:khidma/presentation/services/get_saved_user.dart';
-import 'package:khidma/presentation/widgets/home/application_page/application_page_appbar.dart';
+import 'package:khidma/presentation/widgets/home/submitt_application_page/application_page_appbar.dart';
 import 'package:khidma/presentation/widgets/home/edit_application_page/edit_application_appbar.dart';
 import 'package:khidma/presentation/widgets/home/edit_application_page/edit_application_form.dart';
 import 'package:khidma/presentation/widgets/home/my_filled_button.dart';

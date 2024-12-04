@@ -10,9 +10,11 @@ class ApplicationItemShimmer extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Container(
-        padding: const EdgeInsets.only(left: 20, top: 10, bottom: 10, right: 20),
+        padding:
+            const EdgeInsets.only(left: 20, top: 10, bottom: 10, right: 20),
         margin: const EdgeInsets.only(bottom: 10, left: 12, right: 12),
         width: size.width,
+        height: 130,
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
           borderRadius: BorderRadius.circular(20),
@@ -34,7 +36,10 @@ class ApplicationItemShimmer extends StatelessWidget {
                       child: Container(
                         height: 40,
                         width: 40,
-                        color: Colors.grey.shade300,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.grey.shade300,
+                        ),
                       ),
                     ),
                   ),
@@ -51,7 +56,10 @@ class ApplicationItemShimmer extends StatelessWidget {
                           child: Container(
                             height: 15,
                             width: (size.width - 40) * .4,
-                            color: Colors.grey.shade300,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.grey.shade300,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -61,7 +69,10 @@ class ApplicationItemShimmer extends StatelessWidget {
                           child: Container(
                             height: 12,
                             width: (size.width - 40) * .3,
-                            color: Colors.grey.shade300,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.grey.shade300,
+                            ),
                           ),
                         ),
                       ],
@@ -77,7 +88,10 @@ class ApplicationItemShimmer extends StatelessWidget {
                       child: Container(
                         height: 40,
                         width: 40,
-                        color: Colors.grey.shade300,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.grey.shade300,
+                        ),
                       ),
                     ),
                   ),
@@ -94,7 +108,10 @@ class ApplicationItemShimmer extends StatelessWidget {
                 child: Container(
                   height: 15,
                   width: (size.width - 40) * .3,
-                  color: Colors.grey.shade300,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.grey.shade300,
+                  ),
                 ),
               ),
             ),
