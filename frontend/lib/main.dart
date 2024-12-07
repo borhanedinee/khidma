@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/data/user_api.dart';
 import 'package:khidma/presentation/controllers/auth/login_controller.dart';
+import 'package:khidma/presentation/controllers/chat/chats_controller.dart';
+import 'package:khidma/presentation/controllers/chat/conversations_controller.dart';
+import 'package:khidma/presentation/controllers/chat/messages_controller.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
 import 'package:khidma/presentation/controllers/home/applications_controller.dart';
 import 'package:khidma/presentation/controllers/home/edit_application_controller.dart';
@@ -12,17 +15,18 @@ import 'package:khidma/presentation/controllers/home/home_controller.dart';
 import 'package:khidma/presentation/controllers/home/job_requirements_controller.dart';
 import 'package:khidma/presentation/controllers/home/profile_controller.dart';
 import 'package:khidma/presentation/controllers/onboarding_controller.dart';
-import 'package:khidma/presentation/pages/home_pages/applications_page.dart';
-import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
 import 'package:khidma/presentation/pallets/colors.dart';
+import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences prefs;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final socketService = Get.put(SocketService());
+  socketService.connect(); // Establish connection
   prefs = await SharedPreferences.getInstance();
   runApp(const Khidma());
 }
@@ -67,7 +71,10 @@ class Khidma extends StatelessWidget {
           : const MainPage(),
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => OnBoardingController(), fenix: true);
-        Get.lazyPut(() => MyDrawerController(), fenix: true ,);
+        Get.lazyPut(
+          () => MyDrawerController(),
+          fenix: true,
+        );
         Get.lazyPut(() => ProfileController(), fenix: true);
         Get.lazyPut(() => HomeController(), fenix: true);
         Get.lazyPut(() => JobRequirementsController(), fenix: true);
@@ -75,6 +82,8 @@ class Khidma extends StatelessWidget {
         Get.lazyPut(() => SubmittingApplicationController(), fenix: true);
         Get.lazyPut(() => EditApplicationController(), fenix: true);
         Get.lazyPut(() => ApplicationsController(), fenix: true);
+        Get.lazyPut(() => ConversationsController(), fenix: true);
+        Get.lazyPut(() => MessagesController(), fenix: true);
         Get.lazyPut(() => PreviewApplicationController(), fenix: true);
         Get.lazyPut(() => LoginController(userApi: UserApi()), fenix: true);
       }),
