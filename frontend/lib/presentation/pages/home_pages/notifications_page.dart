@@ -8,28 +8,32 @@ class NotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: size.height,
-      child: Stack(
-        children: [
-          const MyAppBar(
-            label: 'Notifications',
-          ),
-          Positioned.fill(
-            top: 80,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(
-                    30,
-                  ),
-                ),
+    return SafeArea(
+      child: Scaffold(
+        body: SizedBox(
+          height: size.height,
+          child: Stack(
+            children: [
+              const MyAppBar(
+                label: 'Notifications',
               ),
-              child: const Column(),
-            ),
-          )
-        ],
+              Positioned.fill(
+                top: 80,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(
+                        30,
+                      ),
+                    ),
+                  ),
+                  child: const Column(),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

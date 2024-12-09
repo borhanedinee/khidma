@@ -3,12 +3,18 @@ import 'package:get/get.dart';
 import 'package:khidma/data/user_api.dart';
 import 'package:khidma/domain/models/user_model.dart';
 import 'package:khidma/main.dart';
+import 'package:khidma/presentation/controllers/chat/chats_controller.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
+import 'package:khidma/presentation/services/get_saved_user.dart';
 
 class LoginController extends GetxController {
+  final SocketService socketService;
   final UserApi userApi;
-  LoginController({required this.userApi});
+  LoginController({
+    required this.userApi,
+    required this.socketService,
+  });
 
   // login
   bool isLogingLoading = false;
@@ -32,6 +38,8 @@ class LoginController extends GetxController {
             duration: Duration(seconds: 2),
           ),
         );
+        prefs.setBool('isauthenticated', true);
+        socketService.connectUser(getSavedUser().id);
         Get.off(const MainPage());
       } else if (req['status'] == 'fail') {
         Get.showSnackbar(
@@ -66,6 +74,7 @@ class LoginController extends GetxController {
       if (req['status'] == 'success') {
         UserModel user = UserModel.fromJson(req['user']);
         saveUser(user);
+        socketService.connectUser(getSavedUser().id);
       } else if (req['status'] == 'fail') {
         Get.showSnackbar(
           const GetSnackBar(

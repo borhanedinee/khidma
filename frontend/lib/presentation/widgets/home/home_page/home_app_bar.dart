@@ -4,6 +4,7 @@ import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
 import 'package:khidma/presentation/pages/auth/login_page.dart';
+import 'package:khidma/presentation/pages/home_pages/profile_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 
 class HomeAppBar extends StatelessWidget {
@@ -58,8 +59,7 @@ class HomeAppBar extends StatelessWidget {
             : GetBuilder<MyDrawerController>(
                 builder: (controller) => InkWell(
                   onTap: () {
-                    controller.changeCurrentPage(PageType.profile);
-                    controller.changeSelectedDrawerItem(PageLabel.profileLabel);
+                    Get.to(()=>ProfilePage(),);
                   },
                   child: CircleAvatar(
                     radius: 15,

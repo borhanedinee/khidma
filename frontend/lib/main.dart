@@ -18,16 +18,33 @@ import 'package:khidma/presentation/controllers/onboarding_controller.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
 import 'package:khidma/presentation/pallets/colors.dart';
-import 'package:khidma/presentation/services/get_saved_user.dart';
+import 'package:khidma/presentation/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences prefs;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final socketService = Get.put(SocketService());
-  socketService.connect(); // Establish connection
+  await NotificationService.initialize();
   prefs = await SharedPreferences.getInstance();
+  prefs.setBool('isauthenticated', false);
+
+  final messagesController = Get.put(MessagesController());
+  final conversationsController = Get.put(ConversationsController());
+  final socketService = Get.put(
+    SocketService(
+      messagesController: messagesController,
+      conversationsController: conversationsController,
+    ),
+  );
+  Get.lazyPut(
+      () => LoginController(
+            userApi: UserApi(),
+            socketService: socketService,
+          ),
+      fenix: true);
+
+  socketService.connect(); // Establish connection
   runApp(const Khidma());
 }
 
@@ -85,7 +102,6 @@ class Khidma extends StatelessWidget {
         Get.lazyPut(() => ConversationsController(), fenix: true);
         Get.lazyPut(() => MessagesController(), fenix: true);
         Get.lazyPut(() => PreviewApplicationController(), fenix: true);
-        Get.lazyPut(() => LoginController(userApi: UserApi()), fenix: true);
       }),
     );
   }

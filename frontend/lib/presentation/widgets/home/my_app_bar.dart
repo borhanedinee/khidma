@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 
 class MyAppBar extends StatelessWidget {
@@ -25,10 +26,10 @@ class MyAppBar extends StatelessWidget {
               // Scaffold got deleted cz off Get.off(ProfilePage)
               builder: (context) =>  IconButton(
                 onPressed: () {
-                  Scaffold.of(context).openDrawer();
+                  Get.back();
                 },
                 icon: const Icon(
-                  Icons.menu,
+                  Icons.navigate_before,
                   color: Colors.white,
                 ),
               ),

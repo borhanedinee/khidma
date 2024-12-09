@@ -27,10 +27,14 @@ class MessagesAPI {
   // mark all messages as read
   markAllMessagesAsRead(int conversationid, int senderid) async {
     try {
+      print('ak hna a frere');
       var response = await http.post(
         Uri.parse('$BASE_URL/api/messages/markallmessagesasread'),
         body: json.encode(
-          {'conversationid': conversationid, 'senderid': senderid},
+          {
+            'conversationid': conversationid,
+            'senderid': senderid,
+          },
         ),
         headers: HEADERS,
       );

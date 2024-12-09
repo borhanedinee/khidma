@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/constatnts/constants.dart';
-import 'package:khidma/domain/models/messages_model.dart';
 import 'package:khidma/domain/models/user_model.dart';
 import 'package:khidma/main.dart';
+import 'package:khidma/presentation/controllers/chat/chats_controller.dart';
 import 'package:khidma/presentation/controllers/chat/messages_controller.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
-import 'package:khidma/presentation/widgets/home/job_details_page/job_details_appbar.dart';
+import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/widgets/home/messages_page/message_item.dart';
 import 'package:khidma/presentation/widgets/home/messages_page/send_message_field.dart';
-import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class MessagesPage extends StatefulWidget {
   final int conversationId;
@@ -29,22 +29,39 @@ class MessagesPage extends StatefulWidget {
 
 class _MessagesPageState extends State<MessagesPage> {
   MessagesController messagesController = Get.find();
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      messagesController.fetchMessages(widget.conversationId);
-      if (widget.needToUpdateUnreadMessages) {
-        messagesController.markAllMessagesAsRead(
-          widget.conversationId,
-          widget.userToText.id,
-        );
-      }
+      messagesController.fetchMessages(widget.conversationId).then((_) {
+        print('then called');
+        print(scrollController.hasClients);
+        _scrollToBottom();
+      });
+      messagesController.markAllMessagesAsRead(
+        widget.conversationId,
+        widget.userToText.id,
+      );
     });
+
+    socketService.currentConversationId = widget.conversationId;
+
     super.initState();
   }
 
-  final int currentUserId = 1;
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // waiting for the widget tree to update ( means the list view will be
+      // on the widget tree then calling this method)
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(scrollController.position.maxScrollExtent);
+      }
+    });
+  }
+
+  SocketService socketService = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -102,68 +119,132 @@ class _MessagesPageState extends State<MessagesPage> {
                       children: [
                         Positioned.fill(
                           top: 0,
+                          bottom: 70,
                           child: ListView.builder(
-                            itemCount: messagesController.messages.length,
+                            controller: scrollController,
+                            itemCount: messagesController.messages.length +
+                                (socketService.isUserToTextTyping ? 1 : 0),
                             itemBuilder: (context, index) {
-                              final message =
-                                  messagesController.messages[index];
-                              final isCurrentUser =
-                                  message.senderId == currentUserId;
+                              if (socketService.isUserToTextTyping &&
+                                  index == messagesController.messages.length) {
+                                _scrollToBottom();
+                                return _typingIndicator();
+                              } else if (messagesController
+                                      .messages.isNotEmpty &&
+                                  index < messagesController.messages.length) {
+                                final message =
+                                    messagesController.messages[index];
+                                final isCurrentUser =
+                                    message.senderId == getSavedUser().id;
 
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                  top: index == 0 ? 30 : 0,
-                                ),
-                                child: Column(
-                                  children: [
-                                    index == 0
-                                        ? Column(
-                                            children: [
-                                              CircleAvatar(
-                                                radius: 50,
-                                                backgroundImage: NetworkImage(
-                                                  widget.userToText.avatar
-                                                          .isNotEmpty
-                                                      ? '$IMAGE_URL/${widget.userToText.avatar}'
-                                                      : 'https://via.placeholder.com/150', // Placeholder for missing image
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                widget.userToText.fullname,
-                                                style: textTheme.titleMedium!
-                                                    .copyWith(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w900,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                            ],
-                                          )
-                                        : const SizedBox(),
-                                    MessageItem(
-                                      isCurrentUser: isCurrentUser,
-                                      message: message,
-                                    ),
-                                  ],
-                                ),
-                              );
+// when adding new message scroll to bottom
+                                _scrollToBottom();
+
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    top: index == 0 ? 30 : 0,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      index == 0
+                                          ? _userAvatarAboveMessages()
+                                          : const SizedBox(),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          bottom: index ==
+                                                  messagesController
+                                                          .messages.length -
+                                                      1
+                                              ? 20.0
+                                              : 0.0,
+                                        ),
+                                        child: MessageItem(
+                                          isCurrentUser: isCurrentUser,
+                                          message: message,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              return null;
                             },
                           ),
                         ),
-                         Positioned(
+                        Positioned(
                           bottom: 0,
-                          child: SendMessageField(),
+                          child: SendMessageField(
+                            conversationid: widget.conversationId,
+                            recieverid: widget.userToText.id,
+                          ),
                         ),
                       ],
                     ),
                   ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _typingIndicator() {
+    return Container(
+      width: 50,
+      margin: const EdgeInsets.only(
+        right: 300,
+        left: 10,
+        bottom: 10,
+      ),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: const DotLoader(), // Custom animation widget
+    );
+  }
+
+  Column _userAvatarAboveMessages() {
+    return Column(
+      children: [
+        CircleAvatar(
+          radius: 50,
+          backgroundImage: NetworkImage(
+            widget.userToText.avatar.isNotEmpty
+                ? '$IMAGE_URL/${widget.userToText.avatar}'
+                : 'https://via.placeholder.com/150', // Placeholder for missing image
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          widget.userToText.fullname,
+          style: textTheme.titleMedium!.copyWith(
+            color: Colors.black,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
+}
+
+class DotLoader extends StatelessWidget {
+  const DotLoader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      width: 50,
+      height: 10,
+      child: LoadingIndicator(
+        indicatorType: Indicator.ballPulse, // Three dots animation
+        colors: [Colors.grey],
+        strokeWidth: 2,
       ),
     );
   }

@@ -2,8 +2,8 @@ import 'package:khidma/domain/models/user_model.dart';
 
 class ConversationModel {
   final int convoid;
-  final String convoLastMsg;
-  final DateTime convoLastMsgSentAt;
+  String convoLastMsg;
+  DateTime convoLastMsgSentAt;
   final DateTime convoCreatedAt;
   final UserModel usera;
   final UserModel userb;
@@ -43,8 +43,7 @@ class ConversationModel {
     };
   }
 
-  updateUnreadMessagesCountToZERO(){
+  updateUnreadMessagesCountToZERO() {
     unreadMessagesCount = 0;
   }
 }
-

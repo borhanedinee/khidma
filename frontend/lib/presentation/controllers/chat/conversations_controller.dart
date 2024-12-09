@@ -10,8 +10,6 @@ class ConversationsController extends GetxController {
   List<ConversationModel> conversations = [];
   fetchConversations(int userid) async {
     try {
-      conversations.clear();
-
       isFetchingConversationsLoading = true;
       update();
 
@@ -22,12 +20,15 @@ class ConversationsController extends GetxController {
       List result = await conversationAPI.fetchConversations(userid);
 
       if (result.isNotEmpty) {
+        conversations.clear();
+
         for (var conversation in result) {
           conversations.add(
             ConversationModel.fromJson(conversation),
           );
         }
       }
+      print(result.length);
 
       Get.showSnackbar(
         const GetSnackBar(
@@ -35,7 +36,7 @@ class ConversationsController extends GetxController {
           duration: Duration(seconds: 3),
         ),
       );
-      
+
       isFetchingConversationsLoading = false;
       update();
     } catch (e) {

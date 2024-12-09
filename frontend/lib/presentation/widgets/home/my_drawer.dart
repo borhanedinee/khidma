@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
+import 'package:khidma/presentation/pages/home_pages/applications_page.dart';
+import 'package:khidma/presentation/pages/home_pages/bookmarks_page.dart';
+import 'package:khidma/presentation/pages/home_pages/chats_page.dart';
+import 'package:khidma/presentation/pages/home_pages/home_page.dart';
+import 'package:khidma/presentation/pages/home_pages/my_jobs_pages.dart';
+import 'package:khidma/presentation/pages/home_pages/notifications_page.dart';
+import 'package:khidma/presentation/pages/home_pages/profile_page.dart';
+import 'package:khidma/presentation/pages/home_pages/settings_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 import 'package:khidma/presentation/widgets/home/my_drawer_page_item.dart';
 
@@ -48,39 +56,37 @@ class MyDrawer extends StatelessWidget {
               height: 0,
             ),
             const DrawePageItem(
-              label: PageLabel.homeLabel,
-              page: PageType.home,
+              label: PageLabel.profileLabel,
+              page: ProfilePage(),
             ),
-            prefs.getString('userfullname') != null
-                ? const DrawePageItem(
-                    label: PageLabel.profileLabel,
-                    page: PageType.profile,
-                  )
-                : const SizedBox(),
+            const DrawePageItem(
+              label: PageLabel.myJobsLabel,
+              page: MyJobsPage(),
+            ),
             const DrawePageItem(
               label: PageLabel.applicationsLabel,
-              page: PageType.applications,
+              page: ApplicationsPage(),
             ),
             const DrawePageItem(
               label: PageLabel.bookmarksLabel,
-              page: PageType.bookmarks,
+              page: BookmarksPage(),
             ),
             const DrawePageItem(
               label: PageLabel.chatsLabel,
-              page: PageType.chats,
+              page: ChatsPage(),
             ),
             const DrawePageItem(
               label: PageLabel.notificationsLabel,
-              page: PageType.notifications,
+              page: NotificationsPage(),
             ),
             const DrawePageItem(
               label: PageLabel.settingsLabel,
-              page: PageType.settings,
+              page: SettingsPage(),
             ),
             const Spacer(),
             const DrawePageItem(
               label: PageLabel.logoutLabel,
-              page: PageType.home,
+              page: OnBoardingOne(),
             ),
             const SizedBox(
               height: 30,

@@ -100,14 +100,14 @@ class ApplicationItem extends StatelessWidget {
                         children: [
                           Text(
                             '${applicationModel.job.salary.toInt()} DA',
-                            style: textTheme.bodyMedium!.copyWith(
-                              color: Colors.grey,
+                            style: textTheme.bodyLarge!.copyWith(
+                              color: Colors.black,
                             ),
                           ),
                           Text(
                             applicationModel.timeAgo(),
-                            style: textTheme.bodyMedium!.copyWith(
-                              color: Colors.grey,
+                            style: textTheme.bodySmall!.copyWith(
+                              color: Colors.black,
                             ),
                           ),
                         ],

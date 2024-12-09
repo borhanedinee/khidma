@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:khidma/data/messages_api.dart';
 import 'package:khidma/domain/models/messages_model.dart';
+import 'package:khidma/presentation/services/get_saved_user.dart';
 
 class MessagesController extends GetxController {
   MessagesAPI messagesAPI = MessagesAPI();
@@ -44,6 +45,7 @@ class MessagesController extends GetxController {
   // mark all messages as read when user clicks on the conversation
   void markAllMessagesAsRead(int conversationid, int senderid) async {
     try {
+      print('ccccccc');
       bool result =
           await messagesAPI.markAllMessagesAsRead(conversationid, senderid);
       if (result != true) {

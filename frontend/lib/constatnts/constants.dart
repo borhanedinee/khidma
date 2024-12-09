@@ -5,5 +5,5 @@ const String IMAGE_URL = "http://10.0.2.2:3000/uploads/logos";
 const String RESUME_URL = "http://10.0.2.2:3000/uploads/cvs";
 
 const Map<String, String> HEADERS = {
-        'Content-Type': 'application/json',
-      };
+  'Content-Type': 'application/json',
+};

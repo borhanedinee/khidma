@@ -90,7 +90,7 @@ class _BookmarkItemState extends State<BookmarkItem>
                       width: size.width,
                       height: 130,
                       decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(.03),
+                        color: Theme.of(context).primaryColor.withOpacity(.03),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
@@ -113,7 +113,8 @@ class _BookmarkItemState extends State<BookmarkItem>
                                 SizedBox(
                                   width: (size.width - 40) * .55,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         jobModel.company,
@@ -142,9 +143,9 @@ class _BookmarkItemState extends State<BookmarkItem>
                           Padding(
                             padding: const EdgeInsets.only(left: 40),
                             child: Text(
-                              '\$${jobModel.salary.toInt()} / Monthly',
-                              style: textTheme.bodyMedium!.copyWith(
-                                color: Colors.grey,
+                              '${jobModel.salary.toInt()} DA',
+                              style: textTheme.bodyLarge!.copyWith(
+                                color: Colors.black,
                               ),
                             ),
                           ),

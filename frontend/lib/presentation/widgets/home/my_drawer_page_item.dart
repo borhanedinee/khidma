@@ -8,7 +8,7 @@ class DrawePageItem extends StatelessWidget {
 
   final IconData? icon;
 
-  final PageType page;
+  final Widget page;
 
   const DrawePageItem({
     super.key,
@@ -22,17 +22,14 @@ class DrawePageItem extends StatelessWidget {
     return GetBuilder<MyDrawerController>(
       builder: (controller) => GestureDetector(
         onTap: () {
-          controller.changeCurrentPage(page);
-          controller.changeSelectedDrawerItem(label);
+          if (label == PageLabel.logoutLabel) {
+            controller.logOut();
+          } else {
+            Get.to(() => page);
+          }
         },
-        child: AnimatedContainer(
-          duration: Durations.long1,
+        child: Container(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          decoration: BoxDecoration(
-            color: controller.selectedLabel == label
-                ? Theme.of(context).primaryColor.withOpacity(.3)
-                : null,
-          ),
           child: Row(
             children: [
               const SizedBox(

@@ -4,19 +4,10 @@ import 'package:khidma/main.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
 
-enum PageType {
-  home,
-  profile,
-  applications,
-  bookmarks,
-  chats,
-  notifications,
-  settings,
-}
-
 enum PageLabel {
   homeLabel,
   profileLabel,
+  myJobsLabel,
   applicationsLabel,
   bookmarksLabel,
   chatsLabel,
@@ -30,6 +21,7 @@ enum PageIcon {
     Icons.home,
   ),
   profileIcon(Icons.person),
+  myJobsIcon(Icons.window_rounded),
   applicationsIcon(Icons.work),
   bookmarksIcon(Icons.bookmark),
   chatsIcon(Icons.chat),
@@ -43,18 +35,11 @@ enum PageIcon {
 
 class MyDrawerController extends GetxController {
   // initial state
-  PageType _currentPage = PageType.home;
   String _selectedDrawerItem = 'H O M E';
   PageLabel _selectedLabel = PageLabel.homeLabel;
 
-  PageType get currentPage => _currentPage;
   String get selectedDrawerItem => _selectedDrawerItem;
   PageLabel get selectedLabel => _selectedLabel;
-
-  changeCurrentPage(PageType page) {
-    _currentPage = page;
-    update();
-  }
 
   changeSelectedDrawerItem(PageLabel pageLabel) {
     if (pageLabel == PageLabel.logoutLabel) {
@@ -76,20 +61,15 @@ class MyDrawerController extends GetxController {
         message: 'Logged Out Successfully',
       ),
     );
-  }
-
-  // Method to handle navigation from external screens
-  void navigateToPageFromExternal(PageType page) {
-    _currentPage = page;
-    update();
-    // Navigate to main page with the new state
-    Get.offAll(() => const MainPage());
+    prefs.setBool('isauthenticated', false);
   }
 
   String updateSelectedLabel(PageLabel pageLabel) {
     switch (pageLabel) {
       case PageLabel.profileLabel:
         return 'P R O F I L E';
+      case PageLabel.myJobsLabel:
+        return 'M Y   J O B S';
       case PageLabel.applicationsLabel:
         return 'A P P L I C A T I O N S';
       case PageLabel.bookmarksLabel:
@@ -116,6 +96,8 @@ class MyDrawerController extends GetxController {
         return PageIcon.homeIcon.icon;
       case PageLabel.profileLabel:
         return PageIcon.profileIcon.icon;
+      case PageLabel.myJobsLabel:
+        return PageIcon.myJobsIcon.icon;
       case PageLabel.applicationsLabel:
         return PageIcon.applicationsIcon.icon;
       case PageLabel.bookmarksLabel:

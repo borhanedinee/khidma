@@ -7,6 +7,7 @@ import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
 import 'package:khidma/presentation/widgets/home/my_filled_button.dart';
 import 'package:khidma/presentation/widgets/home/my_top_shaddow.dart';
+import 'package:khidma/presentation/widgets/home/proceed_to_login.dart';
 import 'package:khidma/presentation/widgets/home/profile_page/profile_bar.dart';
 import 'package:khidma/presentation/widgets/home/profile_page/review_or_update_resume.dart';
 import 'package:khidma/presentation/widgets/home/profile_page/skills.dart';
@@ -63,138 +64,146 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SizedBox(
-        height: size.height,
-        child: Stack(
-          children: [
-            AnimatedBuilder(
-              animation: _applicationController,
-              builder: (context, child) {
-                return const MyAppBar(
-                  label: 'Profile',
-                );
-              },
-            ),
-            Positioned.fill(
-              top: 80,
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(30),
-                      ),
-                    ),
-                    child: ListView(
-                      children: [
-                        const SizedBox(height: 30),
-                        // PROFILE BAR with Slide-in effect
-                        FadeTransition(
-                          opacity: _fadeInAnimation,
-                          child: SlideTransition(
-                            position: _slideInAnimation,
-                            child: const ProfileBar(),
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-
-                        // UPLOAD RESUME with Slide-in effect
-                        GetBuilder<SubmittingApplicationController>(
-                          builder: (controller) => FadeTransition(
-                            opacity: _fadeInAnimation,
-                            child: SlideTransition(
-                              position: _slideInAnimation,
-                              child: applicationController
-                                      .isUploadingFileLoading
-                                  ? const Center(
-                                      child: Text('Uploading Resume ...'),
-                                    )
-                                  : applicationController.isResumeDeleting
-                                      ? const Center(
-                                          child: Text('Deleting Resume ...'),
-                                        )
-                                      : prefs.getBool('dbgotresume')! &&
-                                              prefs.getBool(
-                                                  'userremoteresumeISNOTchanged')!
-                                          ? ReviewResume(
-                                              fileName: 'resume',
-                                              onDelete: () =>
-                                                  applicationController
-                                                      .deleteResume(
-                                                          getSavedUser().id),
-                                              onReview: () {
-                                                applicationController
-                                                    .downloadAndOpenResume(
-                                                        '$RESUME_URL/${prefs.getString('userremoteresume')}',
-                                                        'my_resume.pdf',
-                                                        context);
-                                              },
-                                              onReplace: () {
-                                                applicationController
-                                                    .pickSaveAndUploadFile();
-                                              },
-                                            )
-                                          : prefs.getString(
-                                                      'userlocalresume') !=
-                                                  null
-                                              ? ReviewResume(
-                                                  fileName: 'fileName',
-                                                  onDelete: () =>
-                                                      applicationController
-                                                          .deleteResume(
-                                                              getSavedUser()
-                                                                  .id),
-                                                  onReview: () =>
-                                                      applicationController
-                                                          .openSavedFile(),
-                                                  onReplace: () =>
-                                                      applicationController
-                                                          .pickSaveAndUploadFile(),
-                                                )
-                                              : UploadResume(
-                                                  onUploadResume: () =>
-                                                      applicationController
-                                                          .pickSaveAndUploadFile(),
-                                                ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-
-                        // SKILLS with Slide-in effect
-                        FadeTransition(
-                          opacity: _fadeInAnimation,
-                          child: SlideTransition(
-                            position: _slideInAnimation,
-                            child: Skills(),
-                          ),
-                        ),
-                        const SizedBox(height: 60),
-
-                        // LOG OUT BUTTON with Slide-in effect
-                        FadeTransition(
-                          opacity: _fadeInAnimation,
-                          child: SlideTransition(
-                            position: _slideInAnimation,
-                            child: MyFilledButton(
-                              label: 'L O G O U T',
-                              onPressed: () {
-                                // Add your logout functionality here
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const MyTopShaddow(),
-                ],
+      child: Scaffold(
+        body: SizedBox(
+          height: size.height,
+          child: Stack(
+            children: [
+              AnimatedBuilder(
+                animation: _applicationController,
+                builder: (context, child) {
+                  return const MyAppBar(
+                    label: 'Profile',
+                  );
+                },
               ),
-            ),
-          ],
+              Positioned.fill(
+                top: 80,
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(30),
+                        ),
+                      ),
+                      child: !prefs.getBool('isauthenticated')!
+                          ? const ProceedToLogin()
+                          : ListView(
+                              children: [
+                                const SizedBox(height: 30),
+                                // PROFILE BAR with Slide-in effect
+                                FadeTransition(
+                                  opacity: _fadeInAnimation,
+                                  child: SlideTransition(
+                                    position: _slideInAnimation,
+                                    child: const ProfileBar(),
+                                  ),
+                                ),
+                                const SizedBox(height: 30),
+
+                                // UPLOAD RESUME with Slide-in effect
+                                GetBuilder<SubmittingApplicationController>(
+                                  builder: (controller) => FadeTransition(
+                                    opacity: _fadeInAnimation,
+                                    child: SlideTransition(
+                                      position: _slideInAnimation,
+                                      child: applicationController
+                                              .isUploadingFileLoading
+                                          ? const Center(
+                                              child:
+                                                  Text('Uploading Resume ...'),
+                                            )
+                                          : applicationController
+                                                  .isResumeDeleting
+                                              ? const Center(
+                                                  child: Text(
+                                                      'Deleting Resume ...'),
+                                                )
+                                              : prefs.getBool('dbgotresume')! &&
+                                                      prefs.getBool(
+                                                          'userremoteresumeISNOTchanged')!
+                                                  ? ReviewResume(
+                                                      fileName: 'resume',
+                                                      onDelete: () =>
+                                                          applicationController
+                                                              .deleteResume(
+                                                                  getSavedUser()
+                                                                      .id),
+                                                      onReview: () {
+                                                        applicationController
+                                                            .downloadAndOpenResume(
+                                                                '$RESUME_URL/${prefs.getString('userremoteresume')}',
+                                                                'my_resume.pdf',
+                                                                context);
+                                                      },
+                                                      onReplace: () {
+                                                        applicationController
+                                                            .pickSaveAndUploadFile();
+                                                      },
+                                                    )
+                                                  : prefs.getString(
+                                                              'userlocalresume') !=
+                                                          null
+                                                      ? ReviewResume(
+                                                          fileName: 'fileName',
+                                                          onDelete: () =>
+                                                              applicationController
+                                                                  .deleteResume(
+                                                                      getSavedUser()
+                                                                          .id),
+                                                          onReview: () =>
+                                                              applicationController
+                                                                  .openSavedFile(),
+                                                          onReplace: () =>
+                                                              applicationController
+                                                                  .pickSaveAndUploadFile(),
+                                                        )
+                                                      : UploadResume(
+                                                          onUploadResume: () =>
+                                                              applicationController
+                                                                  .pickSaveAndUploadFile(),
+                                                        ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+
+                                // SKILLS with Slide-in effect
+                                FadeTransition(
+                                  opacity: _fadeInAnimation,
+                                  child: SlideTransition(
+                                    position: _slideInAnimation,
+                                    child: Skills(),
+                                  ),
+                                ),
+                                const SizedBox(height: 60),
+
+                                // LOG OUT BUTTON with Slide-in effect
+                                FadeTransition(
+                                  opacity: _fadeInAnimation,
+                                  child: SlideTransition(
+                                    position: _slideInAnimation,
+                                    child: MyFilledButton(
+                                      label: 'L O G O U T',
+                                      onPressed: () {
+                                        // Add your logout functionality here
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ),
+                    const MyTopShaddow(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

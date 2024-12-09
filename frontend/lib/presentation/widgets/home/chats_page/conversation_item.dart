@@ -33,8 +33,6 @@ class ConversationItem extends StatelessWidget {
             InkWell(
               excludeFromSemantics: true,
               onTap: () {
-                print('convo item clicked');
-
                 Get.to(
                   () => MessagesPage(
                     needToUpdateUnreadMessages:
@@ -43,6 +41,8 @@ class ConversationItem extends StatelessWidget {
                     userToText: userToText,
                   ),
                 );
+
+                // OPTMISTIC UI
                 conversation.updateUnreadMessagesCountToZERO();
                 conversationsController.update();
               },
@@ -67,7 +67,7 @@ class ConversationItem extends StatelessWidget {
                         conversationsController.update();
                       },
                       child: CircleAvatar(
-                        radius: 30,
+                        radius: 23,
                         backgroundImage: NetworkImage(
                           userToText.avatar.isNotEmpty
                               ? '$IMAGE_URL/${conversation.usera.avatar}'
@@ -76,7 +76,8 @@ class ConversationItem extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                        width: 12), // Spacing between avatar and content
+                      width: 17,
+                    ), // Spacing between avatar and content
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
