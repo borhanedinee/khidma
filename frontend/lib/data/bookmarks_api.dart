@@ -46,6 +46,7 @@ class BookmarksApi {
         Uri.parse('$BASE_URL/api/bookmarks/fetch/$userID'),
       );
       if (req.statusCode == 200) {
+        print(req.body);
         return jsonDecode(req.body);
       }
       throw Exception();

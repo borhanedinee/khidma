@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:khidma/constatnts/constants.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/submitting_application_controller.dart';
+import 'package:khidma/presentation/services/authentication.dart';
 import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
 import 'package:khidma/presentation/widgets/home/my_filled_button.dart';
@@ -88,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage>
                           top: Radius.circular(30),
                         ),
                       ),
-                      child: !prefs.getBool('isauthenticated')!
+                      child: !AuthenticationService.isUserAuthenticated()
                           ? const ProceedToLogin()
                           : ListView(
                               children: [

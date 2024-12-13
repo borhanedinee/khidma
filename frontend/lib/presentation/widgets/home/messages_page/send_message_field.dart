@@ -12,7 +12,7 @@ class SendMessageField extends StatefulWidget {
     required this.recieverid,
   });
 
-  final int conversationid;
+  final int? conversationid;
   final int recieverid;
 
   @override
@@ -46,11 +46,13 @@ class _SendMessageFieldState extends State<SendMessageField> {
             child: TextField(
               controller: sendMessageController,
               onChanged: (value) {
-                chatsController.onTyping(
-                  value,
-                  widget.recieverid,
-                  widget.conversationid,
-                );
+                if (widget.conversationid != null) {
+                  chatsController.onTyping(
+                    value,
+                    widget.recieverid,
+                    widget.conversationid!,
+                  );
+                }
                 setState(() {});
               },
               decoration: InputDecoration(
@@ -63,24 +65,27 @@ class _SendMessageFieldState extends State<SendMessageField> {
               ),
             ),
           ),
-          AnimatedOpacity(
-            duration: Durations.long2,
-            opacity: sendMessageController.text.trim() != '' ? 1.0 : 0.0,
-            child: IconButton(
-              icon: const Icon(Icons.send),
-              onPressed: () {
-                // SENDING MESSAGE TO USER AND TO DATABASE AND OPTIMISTIC UI
-                chatsController.sendMessage(
-                  sendMessageController.text,
-                  widget.conversationid,
-                  widget.recieverid,
-                  getSavedUser().id,
-                );
+          sendMessageController.text.trim() == ''
+              ? const SizedBox()
+              : IconButton.filled(
+                  icon: const Icon(
+                    Icons.send,
+                    color: Colors.yellow,
+                    size: 14,
+                  ),
+                  onPressed: () {
+                    // SENDING MESSAGE TO USER AND TO DATABASE AND OPTIMISTIC UI
+                  
+                    chatsController.sendMessage(
+                      sendMessageController.text,
+                      widget.conversationid,
+                      widget.recieverid,
+                      getSavedUser().id,
+                    );
 
-                sendMessageController.clear();
-              },
-            ),
-          ),
+                    sendMessageController.clear();
+                  },
+                ),
         ],
       ),
     );

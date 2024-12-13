@@ -88,7 +88,10 @@ class SocketService extends GetxController {
     });
 
     // RECIEVE MESSAGE
-    _socket.on('recievemessage', (data) {
+    _socket.on('recievemessage', (data) async {
+      await Future.delayed(
+        const Duration(seconds: 3),
+      );
       // show notification
       NotificationService.showNotification(
         title: 'Recieved a Message',
@@ -118,10 +121,8 @@ class SocketService extends GetxController {
         if (conversation.convoid == conversationId) {
           conversation.convoLastMsg = content;
           conversation.convoLastMsgSentAt = DateTime.now();
-          if ( conversation.convoid != currentConversationId ) {
-            conversation.unreadMessagesCount =
-                conversation.unreadMessagesCount + 1;
-          }
+          conversation.unreadMessagesCount =
+              conversation.unreadMessagesCount + 1;
         }
       }
       // SORING CONVERSATIONS
@@ -137,6 +138,7 @@ class SocketService extends GetxController {
     _socket.on(
       'recievetyping',
       (data) {
+        print(data);
         // Check if the typing is for the current conversation
         if (data['currentconversationid'] == currentConversationId) {
           isUserToTextTyping = data['isTyping'];
@@ -147,8 +149,7 @@ class SocketService extends GetxController {
 
     // Handle disconnection
     _socket.onDisconnect((_) {
-      isConnected = false;
-      print("Disconnected from Socket.IO");
+      disconnect();
     });
 
     // Connect to the server
@@ -156,6 +157,7 @@ class SocketService extends GetxController {
   }
 
   void connectUser(int userid) {
+    print('connecting socket to user ... ');
     _socket.emit('connectuserid', {'userid': userid});
   }
 
@@ -173,26 +175,31 @@ class SocketService extends GetxController {
 
   void sendMessage(
     String message,
-    int conversationid,
+    int? conversationid,
     int recieverid,
     int senderid,
   ) {
     // OPTIMISTIC UI
     final tempid = DateTime.now().millisecondsSinceEpoch;
     final sentAt = DateTime.now();
+    final senderId = getSavedUser().id;
     messagesController.messages.add(
       MessageModel(
-          conversationId: conversationid,
-          senderId: getSavedUser().id,
-          content: message,
-          sentAt: sentAt,
-          isMsgRead: true,
-          tempId: tempid,
-          status: 'sending'),
+        conversationId: conversationid ?? -99,
+        senderId: senderId,
+        content: message,
+        sentAt: sentAt,
+        isMsgRead: true,
+        tempId: tempid,
+        status: 'sending',
+      ),
     );
     messagesController.update();
 
     // SEND MESSAGE TO DATABASE
+
+    // TODO: handle in database if convId null insert convo then message
+    // if not null insert the message directly
     Map messageData = {
       'message': message,
       'conversationid': conversationid,
@@ -204,7 +211,12 @@ class SocketService extends GetxController {
     if (isConnected) {
       _socket.emit('message', messageData);
     } else {
-      print("Cannot send message. Not connected to Socket.IO.");
+      Get.showSnackbar(
+        const GetSnackBar(
+          message: 'Not Connected To Socket',
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 

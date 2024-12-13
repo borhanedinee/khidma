@@ -22,109 +22,110 @@ class ApplicationItem extends StatelessWidget {
           applicationModel: applicationModel,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: Card(
-          child: Stack(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: .4),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 18 , vertical: 5),
+        child: Container(
+          padding:
+              const EdgeInsets.only(left: 20, top: 10, bottom: 10, right: 20),
+          width: size.width,
+          height: 130,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor.withOpacity(.03),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.only(
-                    left: 20, top: 10, bottom: 10, right: 20),
+              SizedBox(
                 width: size.width,
-                height: 130,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(.03),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
                     SizedBox(
-                      width: size.width,
-                      child: Row(
+                      width: (size.width - 40) * .1,
+                      child: Image.network(
+                        '$IMAGE_URL/${applicationModel.job.companyLogo}',
+                        height: 40,
+                      ),
+                    ),
+                    const Spacer(),
+                    SizedBox(
+                      width: (size.width - 40) * .6,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: (size.width - 40) * .1,
-                            child: Image.network(
-                              '$IMAGE_URL/${applicationModel.job.companyLogo}',
-                              height: 40,
+                          Text(
+                            applicationModel.job.company,
+                            style: textTheme.titleSmall!.copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const Spacer(),
-                          SizedBox(
-                            width: (size.width - 40) * .6,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  applicationModel.job.company,
-                                  style: textTheme.titleSmall!.copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  '${applicationModel.job.title} - ${applicationModel.job.type}',
-                                  overflow: TextOverflow.fade,
-                                  style: textTheme.bodySmall!.copyWith(
-                                    color: Colors.grey.shade700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Spacer(),
-                          SizedBox(
-                            width: (size.width - 40) * .12,
-                            child: IconButton.filled(
-                              onPressed: () => Get.to(
-                                () => ApplicationDetailsPage(
-                                  applicationModel: applicationModel,
-                                ),
-                              ),
-                              icon: const Icon(
-                                Icons.navigate_next,
-                                size: 16,
-                              ),
+                          Text(
+                            '${applicationModel.job.title} - ${applicationModel.job.type}',
+                            overflow: TextOverflow.fade,
+                            style: textTheme.bodySmall!.copyWith(
+                              color: Colors.grey.shade700,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 40, top: 10, right: 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '${applicationModel.job.salary.toInt()} DA',
-                            style: textTheme.bodyLarge!.copyWith(
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            applicationModel.timeAgo(),
-                            style: textTheme.bodySmall!.copyWith(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
+                    const Spacer(),
+                    Text(
+                      applicationModel.timeAgo(),
+                      style: textTheme.bodySmall!.copyWith(
+                        color: Colors.black,
                       ),
                     ),
                   ],
                 ),
               ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: -80,
-                child: Opacity(
-                  opacity: .1,
-                  child: Image.asset(
-                    'assets/images/photo.png',
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, top: 10, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '+${applicationModel.job.salary.toInt()} DA',
+                              style: textTheme.titleLarge!.copyWith(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: ' /month',
+                              style: textTheme.bodySmall!.copyWith(
+                                color: Colors.grey,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    SizedBox(
+                      width: (size.width - 40) * .12,
+                      child: IconButton.filled(
+                        onPressed: () => Get.to(
+                          () => ApplicationDetailsPage(
+                            applicationModel: applicationModel,
+                          ),
+                        ),
+                        icon: const Icon(
+                          Icons.navigate_next,
+                          size: 16,
+                          color: Colors.yellow,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

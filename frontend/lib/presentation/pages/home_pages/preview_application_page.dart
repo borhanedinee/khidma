@@ -28,11 +28,9 @@ class _ApplicationPreviewScreenState extends State<ApplicationPreviewScreen> {
   PreviewApplicationController previewApplicationController = Get.find();
   @override
   void initState() {
-    previewApplicationController.fetchApplicationInfos(widget.applicantID);
-
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   previewApplicationController.fetchApplicationInfos(widget.applicantID);
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      previewApplicationController.fetchApplicationInfos(widget.applicantID);
+    });
     super.initState();
   }
 
@@ -55,57 +53,61 @@ class _ApplicationPreviewScreenState extends State<ApplicationPreviewScreen> {
                 ),
                 controller.isFetchingApplicationInfos
                     ? _shimmerLoader()
-                    : Column(
-                        children: [
-                          JobDetailsCard(
-                              jobModel: controller.applicationModel!.job),
-                          const SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildDetailRow(
-                                    "Full Name",
-                                    controller
-                                        .applicationModel!.applicationFullname),
-                                _buildDetailRow(
-                                    "Email",
-                                    controller
-                                        .applicationModel!.applicationEmail),
-                                _buildDetailRow("Phone Number",
-                                    '0${controller.applicationModel!.applicantPhone}'),
-                                _buildDetailRow("Expected Salary",
-                                    '${controller.applicationModel!.applicationExpectedSalary} DA'),
-                                const SizedBox(height: 20),
-                                Column(
+                    : controller.applicationModel == null
+                        ? SizedBox()
+                        : Column(
+                            children: [
+                              JobDetailsCard(
+                                jobModel: controller.applicationModel!.job,
+                              ),
+                              const SizedBox(height: 20),
+                              Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "Resume",
-                                      style: textTheme.bodyMedium!.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    _buildDetailRow(
+                                        "Full Name",
+                                        controller.applicationModel!
+                                            .applicationFullname),
+                                    _buildDetailRow(
+                                        "Email",
+                                        controller.applicationModel!
+                                            .applicationEmail),
+                                    _buildDetailRow("Phone Number",
+                                        '0${controller.applicationModel!.applicantPhone}'),
+                                    _buildDetailRow("Expected Salary",
+                                        '${controller.applicationModel!.applicationExpectedSalary} DA'),
+                                    const SizedBox(height: 20),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Resume",
+                                          style: textTheme.bodyMedium!.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          "The resume you have applied with",
+                                          style: textTheme.bodySmall!.copyWith(
+                                            color: Colors.grey,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      "The resume you have applied with",
-                                      style: textTheme.bodySmall!.copyWith(
-                                        color: Colors.grey,
-                                        fontSize: 12,
-                                      ),
-                                    ),
+                                    const SizedBox(height: 10),
+                                    _viewResumeCard(
+                                        controller.applicationModel!
+                                            .applicationResume,
+                                        context),
                                   ],
                                 ),
-                                const SizedBox(height: 10),
-                                _viewResumeCard(
-                                    controller
-                                        .applicationModel!.applicationResume,
-                                    context),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
                 const Spacer(),
                 MyFilledButton(
                   backgroundColor: controller.isFetchingApplicationInfos
@@ -114,7 +116,7 @@ class _ApplicationPreviewScreenState extends State<ApplicationPreviewScreen> {
                   label: 'Edit Application',
                   onPressed: () {
                     if (!controller.isFetchingApplicationInfos) {
-                      Get.off(
+                      Get.to(
                         () => EditApplicationPage(
                           applicationModel: controller.applicationModel!,
                         ),
@@ -165,16 +167,20 @@ class _ApplicationPreviewScreenState extends State<ApplicationPreviewScreen> {
     );
   }
 
-  Card _viewResumeCard(resume, context) {
+  Container _viewResumeCard(resume, context) {
     SubmittingApplicationController submittingApplicationController =
         Get.find();
-    return Card(
-      elevation: 2,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey, width: .5),
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: ListTile(
         leading: const Icon(Icons.picture_as_pdf, color: Colors.red),
         title: const Text('resumeee.pdf'),
         trailing: IconButton(
-          icon: const Icon(Icons.visibility, color: Colors.blue),
+          icon: Icon(Icons.visibility, color: Theme.of(context).primaryColor),
           onPressed: () {
             // Implement logic to view the resume
             submittingApplicationController.downloadAndOpenResume(

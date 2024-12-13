@@ -5,6 +5,8 @@ import 'package:khidma/domain/models/bookmark_model.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/bookmarks_controller.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
+import 'package:khidma/presentation/services/authentication.dart';
+import 'package:khidma/presentation/shimmers/application_page_shimmers/application_item_shimmer.dart';
 import 'package:khidma/presentation/widgets/home/bookmarks_page/bookmark_item.dart';
 import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
 import 'package:khidma/presentation/widgets/home/my_top_shaddow.dart';
@@ -24,8 +26,9 @@ class _BookmarksPageState extends State<BookmarksPage> {
 
   @override
   void initState() {
-    if (prefs.getBool('isauthenticated')!) {
+    if (AuthenticationService.isUserAuthenticated()!) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        bookmarksController.bookmarks.clear();
         bookmarksController.fetchBookmarks(
           prefs.getInt('userid'),
         );
@@ -59,7 +62,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                             ),
                           ),
                         ),
-                        child: !prefs.getBool('isauthenticated')!
+                        child: !AuthenticationService.isUserAuthenticated()
                             ? const ProceedToLogin()
                             : controller.isFetchingBookmarks
                                 ? ListView(children: [
@@ -75,24 +78,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                                       height: 10,
                                     ),
                                     ...List.generate(3, (index) {
-                                      return Shimmer.fromColors(
-                                        baseColor: Colors.grey.shade200,
-                                        highlightColor: Colors.grey.shade50,
-                                        child: Container(
-                                          margin: const EdgeInsets.only(
-                                              bottom: 10, left: 12, right: 12),
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 20,
-                                          ),
-                                          width: size.width,
-                                          height: 130,
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey.shade100,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                        ),
-                                      );
+                                      return const ApplicationItemShimmer();
                                     }),
                                   ])
                                 : controller.bookmarks.isEmpty

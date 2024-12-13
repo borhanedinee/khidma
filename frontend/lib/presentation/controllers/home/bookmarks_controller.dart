@@ -15,11 +15,14 @@ class BookmarksController extends GetxController {
       isFetchingBookmarks = true;
       update();
       await Future.delayed(
-        const Duration(seconds:2),
+        const Duration(seconds: 2),
       );
       List fetchedBookmarks = await bookmarksApi.fetchBookmarks(userID);
-      for (var element in fetchedBookmarks) {
-        bookmarks.add(BookmarkModel.fromJson(element));
+      print(fetchedBookmarks);
+      if (fetchedBookmarks.isNotEmpty) {
+        for (var element in fetchedBookmarks) {
+          bookmarks.add(BookmarkModel.fromJson(element));
+        }
       }
       isFetchingBookmarks = false;
       update();
@@ -27,8 +30,8 @@ class BookmarksController extends GetxController {
       isFetchingBookmarks = false;
       update();
       Get.showSnackbar(
-        const GetSnackBar(
-          message: 'Somethig went wrong fetching the bookmarks',
+        GetSnackBar(
+          message: 'Somethig went wrong fetching the bookmarks $e',
           duration: Duration(seconds: 2),
         ),
       );
@@ -96,7 +99,7 @@ class BookmarksController extends GetxController {
   }
 
   // ADDING OR DELETING BOOKMARK
-  toggleBookmark(UserModel user, JobModel job ) async {
+  toggleBookmark(UserModel user, JobModel job) async {
     if (isSelectedJobInBookamrks(user.id, job.id)) {
       await deleteBookmark(user.id, job.id);
     } else {

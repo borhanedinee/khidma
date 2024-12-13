@@ -29,7 +29,7 @@ class ProceedToLogin extends StatelessWidget {
             height: 30,
           ),
           Text(
-            'You Are Not Logged In',
+            'You are not Logged in',
             style: textTheme.headlineSmall!.copyWith(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold,
@@ -52,8 +52,8 @@ class ProceedToLogin extends StatelessWidget {
               ),
             ),
             child: const Text(
-              'Proceed To Login Or Signup',
-              style: TextStyle(fontSize: 16, color: Colors.white),
+              'Proceed to Login or Signup',
+              style: TextStyle(fontSize: 16, color: Colors.yellow),
             ),
           ),
         ],

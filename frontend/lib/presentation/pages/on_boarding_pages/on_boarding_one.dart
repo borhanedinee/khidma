@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khidma/domain/models/job_model.dart';
 import 'package:khidma/main.dart';
+import 'package:khidma/presentation/services/authentication.dart';
 import 'package:khidma/presentation/widgets/onBoarding/job_item.dart';
 
 late TextTheme textTheme;
@@ -22,11 +23,14 @@ class OnBoardingOne extends StatelessWidget {
           JobItem(
             jobModel: JobModel(
               id: 1,
-              title: 'title',
-              type: 'type',
-              company: 'company',
-              companyLogo: 'assets/logos/recruitingLOGO.png',
-              salary: 33333,
+              title: 'UI UX DEsinger',
+              type: 'On-Site / Contract',
+              category: 'Design',
+              location: 'Annaba',
+              postedAt: DateTime.now(),
+              company: 'EdgeDev + ${AuthenticationService.isUserAuthenticated()}',
+              companyLogo: 'assets/logos/startup_one.png',
+              salary: 90000,
               description: 'description',
               recruiter: 1,
             ),
@@ -38,11 +42,14 @@ class OnBoardingOne extends StatelessWidget {
           JobItem(
             jobModel: JobModel(
               id: 1,
-              title: 'title',
-              type: 'type',
-              company: 'company',
+              title: 'Mobile Developer',
+              type: 'Remote',
+              category: 'Developer',
+              location: 'Algiers',
+              postedAt: DateTime.now(),
+              company: 'TechAdvance',
               companyLogo: 'assets/logos/recruitingLOGO.png',
-              salary: 33333,
+              salary: 79000,
               description: 'description',
               recruiter: 1,
             ),
@@ -57,7 +64,9 @@ class OnBoardingOne extends StatelessWidget {
               children: [
                 Text(
                   'Find Your Dream Job',
-                  style: textTheme.titleMedium,
+                  style: textTheme.titleLarge!.copyWith(
+                    color: Colors.yellow
+                  ),
                 ),
                 const SizedBox(
                   height: 10,

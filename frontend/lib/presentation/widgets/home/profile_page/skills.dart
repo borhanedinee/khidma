@@ -3,18 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/profile_controller.dart';
+import 'package:khidma/presentation/controllers/home/skills_controller.dart';
+import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/widgets/home/my_form_field.dart';
 
-class Skills extends StatelessWidget {
+class Skills extends StatefulWidget {
   Skills({
     super.key,
   });
 
+  @override
+  State<Skills> createState() => _SkillsState();
+}
+
+class _SkillsState extends State<Skills> {
   final TextEditingController fieldController = TextEditingController();
+  SkillsController skillsController = Get.find();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      skillsController.fetchUserSkills(getSavedUser().id);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ProfileController>(
+    return GetBuilder<SkillsController>(
       builder: (controller) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
@@ -41,33 +57,40 @@ class Skills extends StatelessWidget {
                 ],
               ),
             ),
-            controller.skills.isEmpty
+            controller.isFetchingUsrSkills
                 ? const Text(
-                    'No added skills.',
+                    'fetching skills...',
                     style: TextStyle(
                       color: Colors.grey,
                     ),
                   )
-                : Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: List.generate(
-                      controller.skills.length,
-                      (index) {
-                        List skillReversed =
-                            controller.skills.reversed.toList();
-                        String skill = skillReversed[index];
-                        return Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Text(skill),
-                        );
-                      },
-                    ),
-                  ),
+                : controller.userSkills.isEmpty
+                    ? const Text(
+                        'No added skills.',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      )
+                    : Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: List.generate(
+                          controller.userSkills.length,
+                          (index) {
+                            // List skillReversed =
+                            //     controller.userSkills.reversed.toList();
+                            final skill = controller.userSkills[index];
+                            return Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade100,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Text(skill.skill),
+                            );
+                          },
+                        ),
+                      ),
           ],
         ),
       ),
@@ -75,7 +98,7 @@ class Skills extends StatelessWidget {
   }
 
   Future<dynamic> showAddSkillModal(BuildContext context,
-      ProfileController controller, TextEditingController fieldController) {
+      SkillsController controller, TextEditingController fieldController) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -116,11 +139,11 @@ class Skills extends StatelessWidget {
           ),
         ),
         title: const Text(
-            'By adding your skills, you help us suggest suitable jobs for you.',
-            style: TextStyle(
-              fontSize: 12,
-            ),
-       ),
+          'By adding your skills, you help us suggest suitable jobs for you.',
+          style: TextStyle(
+            fontSize: 12,
+          ),
+        ),
       ),
     );
   }

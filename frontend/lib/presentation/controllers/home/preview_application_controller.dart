@@ -13,25 +13,21 @@ class PreviewApplicationController extends GetxController {
       isFetchingApplicationInfos = true;
       update();
       await Future.delayed(
-        const Duration(seconds: 3),
+        const Duration(seconds: 1),
       );
 
       // API CALL
       List result = await applicationAPI.fecthApplicationInfo(applicationID);
-      print(result.first);
-      if (result.isEmpty) {
-        Get.showSnackbar(
-          const GetSnackBar(
-            message: 'Failed to fetch application info',
-            duration: Duration(seconds: 3),
-          ),
-        );
-      } else {
+      print(List);
+      if (result.isNotEmpty) {
         applicationModel = ApplicationModel.fromJson(result.first);
+        print(applicationModel == null ? 'null' : applicationModel!.job);
+        await Future.delayed(
+          const Duration(seconds: 3),
+        );
+        isFetchingApplicationInfos = false;
+        update();
       }
-
-      isFetchingApplicationInfos = false;
-      update();
     } catch (e) {
       Get.showSnackbar(
         GetSnackBar(

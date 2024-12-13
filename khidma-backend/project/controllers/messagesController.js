@@ -1,7 +1,8 @@
 const db = require("../config/db");
-
 async function addMessage(data) {
-    const { message, conversationid, senderid, tempid } = data;
+    console.log(data);
+
+    const { message, conversationid, senderid, tempid, recieverid } = data;
 
     return new Promise((resolve, reject) => {
         // Start the transaction
@@ -10,49 +11,102 @@ async function addMessage(data) {
                 return resolve({ success: false, error: 'Failed to start transaction', tempid: tempid });
             }
 
-            // Insert the message
-            const insertMessageSql = 'INSERT INTO `messages`(`conversationid`, `senderid`, `content`) VALUES (?, ?, ?)';
-            db.query(insertMessageSql, [conversationid, senderid, message], (err, result) => {
-                if (err) {
-                    return db.rollback(() => {
-                        resolve({ success: false, error: err.message, tempid: tempid });
-                    });
-                }
 
-                const insertedId = result.insertId;
 
-                // Update the last message in the conversations table
-                const updateConversationSql = `
-                    UPDATE \`conversations\` 
-                    SET \`lastmsg\` = ?, \`lastmsgsentat\` = NOW() 
-                    WHERE \`id\` = ?
-                `;
-                db.query(updateConversationSql, [message, conversationid], (err, result) => {
+            // Function to insert the message and update the conversation
+            const insertMessageAndUpdateConversation = (convId) => {
+                const insertMessageSql = 'INSERT INTO `messages`(`conversationid`, `senderid`, `content`) VALUES (?, ?, ?)';
+                db.query(insertMessageSql, [convId, senderid, message], (err, result) => {
                     if (err) {
                         return db.rollback(() => {
                             resolve({ success: false, error: err.message, tempid: tempid });
                         });
                     }
 
-                    // Commit the transaction
-                    db.commit((commitErr) => {
-                        if (commitErr) {
+                    const insertedId = result.insertId;
+
+                    const updateConversationSql = `
+                        UPDATE \`conversations\` 
+                        SET \`lastmsg\` = ?, \`lastmsgsentat\` = NOW() 
+                        WHERE \`id\` = ?
+                    `;
+                    db.query(updateConversationSql, [message, convId], (err, result) => {
+                        if (err) {
                             return db.rollback(() => {
-                                resolve({ success: false, error: 'Failed to commit transaction', tempid: tempid });
+                                resolve({ success: false, error: err.message, tempid: tempid });
                             });
                         }
 
-                        // Transaction successful
-                        resolve({
-                            success: true,
-                            insertedId: insertedId,
-                            conversationlastmsg: message,
-                            conversationid: conversationid,
-                            tempid: tempid,
+                        db.commit((commitErr) => {
+                            if (commitErr) {
+                                return db.rollback(() => {
+                                    resolve({ success: false, error: 'Failed to commit transaction', tempid: tempid });
+                                });
+                            }
+
+                            resolve({
+                                success: true,
+                                insertedId: insertedId,
+                                conversationlastmsg: message,
+                                conversationid: convId,
+                                tempid: tempid,
+                            });
                         });
                     });
                 });
-            });
+            };
+
+            if (!conversationid) {
+
+                // Check if a conversation between usera and userb already exists
+                const checkConversationSql = `
+                        SELECT * FROM conversations 
+                        WHERE (usera = ? AND userb = ?) OR (usera = ? AND userb = ?)
+                        `;
+
+                db.query(checkConversationSql, [senderid, recieverid, recieverid, senderid], (err, result) => {
+                    if (err) {
+                        console.log(senderid, recieverid, message);
+                        console.log(err);
+                        return db.rollback(() => {
+                            resolve({ success: false, error: err.message, tempid: tempid });
+                        });
+                    }
+
+                    // If a conversation exists, no need to insert a new one
+                    if (result.length > 0) {
+                        // Conversation already exists, resolve or handle accordingly
+                        console.log("Conversation already exists.");
+                        insertMessageAndUpdateConversation(result[0].id);
+                        return;
+
+                    }
+
+                    // Insert a new conversation if none exists
+                    const insertConversationSql = `
+                        INSERT INTO conversations(usera, userb, lastmsg) 
+                        VALUES (?, ?, ?)
+                    `;
+                    db.query(insertConversationSql, [senderid, recieverid, message], (err, result) => {
+                        if (err) {
+                            console.log(senderid, recieverid, message);
+                            console.log(err);
+                            return db.rollback(() => {
+                                resolve({ success: false, error: err.message, tempid: tempid });
+                            });
+                        }
+
+                        const newConversationId = result.insertId;
+
+                        // Now insert the message
+                        insertMessageAndUpdateConversation(newConversationId);
+                    });
+                });
+
+            } else {
+                // Insert the message into the existing conversation
+                insertMessageAndUpdateConversation(conversationid);
+            }
         });
     });
 }

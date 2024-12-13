@@ -66,8 +66,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     children: [
                       SmoothPageIndicator(
                         effect: const ExpandingDotsEffect(
-                            dotColor: Colors.white,
-                            activeDotColor: Colors.white,
+                            dotColor: Colors.yellow,
+                            activeDotColor: Colors.yellow,
                             dotHeight: 8,
                             dotWidth: 8),
                         controller: _pageController.pageController,
@@ -93,7 +93,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(
-                                    color: Colors.white,
+                                    color: Colors.yellow,
                                   ),
                             ),
                           ),
@@ -110,7 +110,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(
-                                    color: Colors.white,
+                                    color: Colors.yellow,
                                   ),
                             ),
                           ),

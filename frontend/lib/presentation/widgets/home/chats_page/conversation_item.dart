@@ -128,7 +128,7 @@ class ConversationItem extends StatelessWidget {
                               if (conversation.unreadMessagesCount > 0)
                                 CircleAvatar(
                                   radius: 8,
-                                  backgroundColor: Colors.grey,
+                                  backgroundColor: Theme.of(context).primaryColor,
                                   child: Text(
                                     "${conversation.unreadMessagesCount}",
                                     style: const TextStyle(

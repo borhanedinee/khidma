@@ -64,9 +64,10 @@ class _JobDescriptionState extends State<JobDescription>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+               Text(
                 'Description',
                 style: TextStyle(
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 18, // Slightly larger for emphasis
                 ),

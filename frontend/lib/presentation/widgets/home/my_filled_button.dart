@@ -37,7 +37,7 @@ class MyFilledButton extends StatelessWidget {
         child: Text(
           label,
           style: const TextStyle(
-            color: Colors.white,
+            color: Colors.yellow,
           ),
         ),
       ),

@@ -22,6 +22,28 @@ const addApplicant = (req, res, next) => {
     }
 }
 const deleteApplicant = (req, res, next) => { }
+const fetchJobApplicants = (req, res, next) => {
+    try {
+        const jobid = req.params.jobid;
+        const sql = `
+        SELECT a.* , u.avatar as applicantAvatar FROM applicants as a
+        JOIN users as u ON u.id = a.applicant 
+        WHERE a.job = ?
+        `
+        db.query(sql, [jobid], (err, result) => {
+            if (err) {
+                next(err)
+                return;
+            }
+
+            res.status(200).json(
+                result
+            )
+        })
+    } catch (error) {
+        next(error)
+    }
+}
 const updateApplicant = (req, res, next) => {
     try {
         console.log('ffffff');
@@ -73,11 +95,14 @@ const fetchApplicants = (req, res, next) => {
             j.id AS job_id,
             j.title AS job_title,
             j.type AS job_type,
+            j.location AS job_location,
+            j.category AS job_category,
             j.company AS job_company,
             j.companylogo AS job_companylogo,
             j.salary AS job_salary,
             j.description AS job_description,
-            j.recruiter AS job_recruiter
+            j.recruiter AS job_recruiter,
+            j.posted_at AS job_postedat
 
             FROM 
                 applicants AS a
@@ -117,6 +142,9 @@ const fetchApplicants = (req, res, next) => {
                         id: item.job_id,
                         title: item.job_title,
                         type: item.job_type,
+                        category: item.job_category,
+                        location: item.job_location,
+                        posted_at: item.job_postedat,
                         company: item.job_company,
                         companylogo: item.job_companylogo,
                         salary: item.job_salary,
@@ -158,11 +186,15 @@ const fetchApplicationInfo = (req, res, next) => {
             j.id AS job_id,
             j.title AS job_title,
             j.type AS job_type,
+            j.location AS job_location,
+            j.category AS job_category,
             j.company AS job_company,
             j.companylogo AS job_companylogo,
             j.salary AS job_salary,
             j.description AS job_description,
-            j.recruiter AS job_recruiter
+            j.recruiter AS job_recruiter,
+            j.posted_at AS job_postedat
+
 
             FROM 
                 applicants AS a
@@ -204,6 +236,9 @@ const fetchApplicationInfo = (req, res, next) => {
                         type: item.job_type,
                         company: item.job_company,
                         companylogo: item.job_companylogo,
+                        category: item.job_category,
+                        location: item.job_location,
+                        posted_at: item.job_postedat,
                         salary: item.job_salary,
                         description: item.job_description,
                         recruiter: item.job_recruiter
@@ -220,4 +255,4 @@ const fetchApplicationInfo = (req, res, next) => {
 }
 
 
-module.exports = { addApplicant, updateApplicant, fetchApplicants, deleteApplicant, fetchApplicationInfo }
+module.exports = { addApplicant, updateApplicant, fetchApplicants, deleteApplicant, fetchApplicationInfo, fetchJobApplicants }

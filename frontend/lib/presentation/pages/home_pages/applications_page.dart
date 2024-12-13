@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/home/applications_controller.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
+import 'package:khidma/presentation/services/authentication.dart';
 import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/shimmers/application_page_shimmers/application_item_shimmer.dart';
 import 'package:khidma/presentation/widgets/home/applications_page/applicants_job_item.dart';
@@ -26,7 +27,7 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
   void initState() {
     // applicationController.applications.clear();
     // applicationController.update();
-    if (prefs.getBool('isauthenticated')!) {
+    if (AuthenticationService.isUserAuthenticated()) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         applicationController.fetchUserApplications(
           getSavedUser().id,
@@ -62,7 +63,7 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
                             ),
                           ),
                         ),
-                        child: !prefs.getBool('isauthenticated')!
+                        child: !AuthenticationService.isUserAuthenticated()
                             ? const ProceedToLogin()
                             : controller.isFetchingApplicationsLoading
                                 ? ListView(children: [
@@ -79,49 +80,7 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
                                       controller.applications.isEmpty &&
                                               !controller
                                                   .isFetchingApplicationsLoading
-                                          ? Column(
-                                              children: [
-                                                const SizedBox(
-                                                  height: 100,
-                                                ),
-                                                SizedBox(
-                                                  height: 250,
-                                                  child: Lottie.asset(
-                                                    'assets/lottie/lottie_empty_bookmarks.json',
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 30,
-                                                ),
-                                                Text(
-                                                  'No Applications Yet!',
-                                                  style: textTheme
-                                                      .headlineMedium!
-                                                      .copyWith(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 24),
-                                                  child: Text(
-                                                    'You haven’t applied for any jobs yet. Start exploring opportunities and send in your applications to land your dream role!',
-                                                    textAlign: TextAlign.center,
-                                                    style: textTheme.bodyMedium!
-                                                        .copyWith(
-                                                      color: Colors.black54,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            )
+                                          ? _emptyApplications(context)
                                           : Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -138,8 +97,8 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
                                                     'View Jobs you have applied for',
                                                     style: textTheme.bodySmall!
                                                         .copyWith(
-                                                            color:
-                                                                Colors.black),
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
                                                 ),
                                                 const SizedBox(
@@ -172,6 +131,44 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Column _emptyApplications(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 100,
+        ),
+        SizedBox(
+          height: 250,
+          child: Lottie.asset(
+            'assets/lottie/lottie_empty_bookmarks.json',
+          ),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        Text(
+          'No Applications Yet!',
+          style: textTheme.headlineMedium!.copyWith(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Text(
+            'You haven’t applied for any jobs yet. Start exploring opportunities and send in your applications to land your dream role!',
+            textAlign: TextAlign.center,
+            style: textTheme.bodyMedium!.copyWith(
+              color: Colors.black54,
+            ),
+          ),
+        )
+      ],
     );
   }
 }

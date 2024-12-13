@@ -25,7 +25,7 @@ class EdittingSuccessActionButtons extends StatelessWidget {
           ),
           child: const Text(
             'Preview Application',
-            style: TextStyle(fontSize: 16 , color: Colors.white),
+            style: TextStyle(fontSize: 16 , color: Colors.yellow),
           ),
         ),
         const SizedBox(height: 16),

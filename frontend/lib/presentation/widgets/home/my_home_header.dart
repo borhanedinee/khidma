@@ -1,11 +1,13 @@
-
 import 'package:flutter/material.dart';
 
 class MyHomeHeader extends StatelessWidget {
   final String headerLabel;
+  final bool? showIcon;
 
   const MyHomeHeader({
-    super.key, required this.headerLabel,
+    super.key,
+    required this.headerLabel,
+    this.showIcon = false,
   });
 
   @override
@@ -14,7 +16,6 @@ class MyHomeHeader extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: 10,
         right: 10,
-        top: 20,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,13 +26,15 @@ class MyHomeHeader extends StatelessWidget {
                   color: Colors.black,
                 ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.widgets_rounded,
-              size: 20,
+          if (showIcon!)
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.widgets_rounded,
+                color: Theme.of(context).primaryColor,
+                size: 20,
+              ),
             ),
-          ),
         ],
       ),
     );

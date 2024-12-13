@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
 import 'package:khidma/presentation/pages/home_pages/application_details_page.dart';
+import 'package:khidma/presentation/pages/home_pages/applications_page.dart';
 import 'package:khidma/presentation/pages/home_pages/preview_application_page.dart';
-import 'package:khidma/presentation/widgets/home/submitt_application_page/submission_success/submission_success_action_button.dart';
-import 'package:khidma/presentation/widgets/home/submitt_application_page/submission_success/success_animation.dart';
-import 'package:khidma/presentation/widgets/home/submitt_application_page/submission_success/success_message.dart';
+import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/widgets/home/edit_application_page/editting_success/editting_success_action_button.dart';
 import 'package:khidma/presentation/widgets/home/edit_application_page/editting_success/editting_success_animation.dart';
 import 'package:khidma/presentation/widgets/home/edit_application_page/editting_success/editting_success_message.dart';
@@ -34,18 +33,28 @@ class EdittingSuccessScreen extends StatelessWidget {
                   onViewApplications: () {
                     // Navigate to ome page
                     // drawerController.navigateToPageFromExternal(PageType.applications);
+                    // Get.offUntil(
+                    //   GetPageRoute(
+                    //     page: () => ApplicationPreviewScreen(
+                    //       applicantID: applicationID,
+                    //     ),
+                    //   ),
+                    //   (route) {
+                    //     if (route is GetPageRoute) {
+                    //       return route.page == (() => PreviewApplicationAppBar);
+                    //     }
+                    //     return true;
+                    //   },
+                    // );
+
                     Get.offUntil(
-                      GetPageRoute(
-                        page: () => ApplicationPreviewScreen(
-                            applicantID: applicationID),
-                      ),
-                      (route) {
-                        if (route is GetPageRoute) {
-                          return route.page == () => ApplicationDetailsPage;
-                        }
-                        return true;
-                      },
-                    );
+                        GetPageRoute(
+                          page: () => ApplicationPreviewScreen(
+                            applicantID: applicationID,
+                          ),
+                        ), (route) {
+                      return route.isFirst; // Check for the widget type
+                    });
                   },
                   onBackToJobs: () {
                     // Navigate back to jobs list
@@ -59,5 +68,11 @@ class EdittingSuccessScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void printAllRoutes() {
+    Get.routeTree.routes.forEach((route) {
+      print('Route Name: ${route.name}');
+    });
   }
 }

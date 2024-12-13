@@ -30,7 +30,7 @@ class GetStartedPage extends StatelessWidget {
               children: [
                 Text(
                   'Welcome to Khidma',
-                  style: textTheme.titleLarge,
+                  style: textTheme.titleLarge!.copyWith(color: Colors.yellow),
                 ),
                 const SizedBox(
                   height: 10,
@@ -63,7 +63,7 @@ class GetStartedPage extends StatelessWidget {
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                       side: const BorderSide(
-                        color: Colors.white,
+                        color: Colors.yellow,
                         width: .8,
                         style: BorderStyle.solid,
                       ),
@@ -72,7 +72,7 @@ class GetStartedPage extends StatelessWidget {
                 ),
                 child: const Text(
                   'Continue as a guest',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.yellow),
                 ),
               ),
             )

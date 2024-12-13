@@ -25,27 +25,29 @@ class MyDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-              ),
+            Container(
               child: SizedBox(
-                width: size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                width: 340,
+                height: 230,
+                child: Stack(
                   children: [
-                    Text(
-                      'Khidma',
-                      style: textTheme.headlineLarge,
+                    Positioned.fill(
+                      child: Image.asset(
+                        'assets/logos/khidma_logo.png',
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        Scaffold.of(context).closeDrawer();
-                      },
-                      icon: const Icon(
-                        Icons.close_rounded,
-                        color: Colors.white,
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: IconButton(
+                        onPressed: () {
+                          Scaffold.of(context).closeDrawer();
+                        },
+                        icon: const Icon(
+                          Icons.close_rounded,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],
@@ -74,10 +76,6 @@ class MyDrawer extends StatelessWidget {
             const DrawePageItem(
               label: PageLabel.chatsLabel,
               page: ChatsPage(),
-            ),
-            const DrawePageItem(
-              label: PageLabel.notificationsLabel,
-              page: NotificationsPage(),
             ),
             const DrawePageItem(
               label: PageLabel.settingsLabel,

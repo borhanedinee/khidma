@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 
@@ -22,7 +23,10 @@ class EditResume extends StatelessWidget {
       width: size.width,
       height: 100,
       decoration: BoxDecoration(
-          color: Colors.grey.shade100, borderRadius: BorderRadius.circular(10)),
+        border: Border.all(color: Colors.grey, width: .4),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Row(
         children: [
           Container(
@@ -30,14 +34,14 @@ class EditResume extends StatelessWidget {
             height: double.maxFinite,
             width: (size.width - 2 * 24) * .2,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.grey, width: .4),
+              color: Colors.grey.shade50,
+              borderRadius: BorderRadius.circular(20),
             ),
             child: const Icon(
-              Icons
-                  .insert_drive_file_outlined, // Change icon to indicate a file
+              Ionicons.document_text, // Change icon to indicate a file
               size: 30,
-              color: Colors.green, // Green to show success
+              color: Colors.red, // Green to show success
             ),
           ),
           const SizedBox(

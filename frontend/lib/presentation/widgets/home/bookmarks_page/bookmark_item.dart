@@ -75,128 +75,155 @@ class _BookmarkItemState extends State<BookmarkItem>
           onTap: () {
             Get.to(JobDetailsPage(jobModel: widget.bookmarkModel.job));
           },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Card(
-              child: Stack(
-                children: [
-                  AnimatedSize(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                      ),
-                      width: size.width,
-                      height: 130,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(.03),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: size.width - 40,
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: (size.width - 40) * .12,
-                                  child: Image.network(
-                                    '$IMAGE_URL/${jobModel.companyLogo}',
-                                    scale: 1.0,
-                                    height: 40,
-                                  ),
+          child: Container(
+            width: size.width,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: .4),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 12),
+            child: Stack(
+              children: [
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    width: size.width,
+                    height: 130,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor.withOpacity(.03),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: size.width - 40,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: (size.width - 40) * .12,
+                                child: Image.network(
+                                  '$IMAGE_URL/${jobModel.companyLogo}',
+                                  scale: 1.0,
+                                  height: 40,
                                 ),
-                                const Spacer(),
-                                SizedBox(
-                                  width: (size.width - 40) * .55,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        jobModel.company,
-                                        style: textTheme.titleMedium!.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 2),
-                                      Text(
-                                        '${jobModel.title} - ${jobModel.type}',
-                                        overflow: TextOverflow.fade,
-                                        style: textTheme.bodySmall!.copyWith(
-                                          color: Colors.grey.shade700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: (size.width - 40) * .2,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 40),
-                            child: Text(
-                              '${jobModel.salary.toInt()} DA',
-                              style: textTheme.bodyLarge!.copyWith(
-                                color: Colors.black,
                               ),
-                            ),
+                              const Spacer(),
+                              SizedBox(
+                                width: (size.width - 40) * .55,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      jobModel.company,
+                                      style: textTheme.titleMedium!.copyWith(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      '${jobModel.title} - ${jobModel.type}',
+                                      overflow: TextOverflow.fade,
+                                      style: textTheme.bodySmall!.copyWith(
+                                        color: Colors.grey.shade700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: (size.width - 40) * .2,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10, top: 10, right: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          '+${widget.bookmarkModel.job.salary.toInt()} DA',
+                                      style: textTheme.titleLarge!.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: ' /month',
+                                      style: textTheme.bodySmall!.copyWith(
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: (size.width - 40) * .12,
+                                child: IconButton(
+                                  onPressed: () {
+                                    Get.to(JobDetailsPage(
+                                        jobModel: widget.bookmarkModel.job));
+                                  },
+                                  icon: Icon(
+                                    Icons.navigate_next,
+                                    size: 24,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: -80,
-                    child: Opacity(
-                      opacity: .05,
-                      child: Image.asset(
-                        'assets/images/photo.png',
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 10,
-                    top: 10,
-                    child: GetBuilder<BookmarksController>(
-                      builder: (controller) => IconButton(
-                        onPressed: () {
-                          // Trigger a small scale animation on tap
-                          _controller.reverse().then((_) {
-                            controller.toggleBookmark(
-                              getSavedUser(),
-                              jobModel,
-                            );
-                            _controller.forward();
-                          });
-                        },
-                        icon: AnimatedScale(
-                          scale: controller.isSelectedJobInBookamrks(
+                ),
+                Positioned(
+                  right: 10,
+                  top: 10,
+                  child: GetBuilder<BookmarksController>(
+                    builder: (controller) => IconButton(
+                      onPressed: () {
+                        // Trigger a small scale animation on tap
+                        _controller.reverse().then((_) {
+                          controller.toggleBookmark(
+                            getSavedUser(),
+                            jobModel,
+                          );
+                          _controller.forward();
+                        });
+                      },
+                      icon: AnimatedScale(
+                        scale: controller.isSelectedJobInBookamrks(
+                                prefs.getInt('userid'), jobModel.id)
+                            ? 1.2
+                            : 1.0,
+                        duration: const Duration(milliseconds: 200),
+                        child: Icon(
+                          controller.isSelectedJobInBookamrks(
                                   prefs.getInt('userid'), jobModel.id)
-                              ? 1.2
-                              : 1.0,
-                          duration: const Duration(milliseconds: 200),
-                          child: Icon(
-                            controller.isSelectedJobInBookamrks(
-                                    prefs.getInt('userid'), jobModel.id)
-                                ? Icons.bookmark
-                                : Icons.bookmark_border,
-                          ),
+                              ? Icons.bookmark
+                              : Icons.bookmark_border,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

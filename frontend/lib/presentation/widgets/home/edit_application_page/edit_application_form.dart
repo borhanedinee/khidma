@@ -90,66 +90,47 @@ class _EditApplicationFormState extends State<EditApplicationForm>
               position: _cardSlideAnimation,
               child: FadeTransition(
                 opacity: _fadeAnimation,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey, width: .4),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  elevation: 4,
-                  color: Theme.of(context).primaryColor,
-                  child: Stack(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
                     children: [
-                      Positioned(
-                        left: 40,
-                        bottom: -70,
-                        child: Opacity(
-                          opacity: .2,
-                          child: Image.asset(
-                            'assets/images/photo.png',
-                            height: 230,
-                          ),
+                      SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: Image.network(
+                          '$IMAGE_URL/${jobModel.companyLogo}',
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: 50,
-                              width: 50,
-                              child: Image.network(
-                                '$IMAGE_URL/${jobModel.companyLogo}',
+                            const Text(
+                              "Applying for",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "Applying for",
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  Text(
-                                    jobModel.title,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    'at ${jobModel.company}',
-                                    style: const TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ),
-                                ],
+                            Text(
+                              jobModel.title,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'at ${jobModel.company}',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w300,
                               ),
                             ),
                           ],

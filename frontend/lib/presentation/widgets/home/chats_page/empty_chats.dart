@@ -33,12 +33,10 @@ class EmptyChats extends StatelessWidget {
           height: 10,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Text(
-            'Recruiters will DM you here after viewing \nyour applications',
+            'You can start your chats with applicants that applied for your jobs, or recruiters you applied for their jobs will dm you here',
             textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
             style: textTheme.bodyMedium!.copyWith(
               color: Colors.black54,
             ),

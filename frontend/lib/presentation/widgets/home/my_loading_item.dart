@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_one.dart';
 import 'package:lottie/lottie.dart';
 
-class FetchingChats extends StatelessWidget {
-  const FetchingChats({
-    super.key,
+class LoadingItem extends StatelessWidget {
+  const LoadingItem({
+    super.key, required this.loadingLabel, required this.lottieAsset,
   });
+
+  final String loadingLabel;
+  final String lottieAsset;
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +20,14 @@ class FetchingChats extends StatelessWidget {
         SizedBox(
           height: 250,
           child: Lottie.asset(
-            'assets/lottie/fetching_messages_loading.json',
+            lottieAsset,
           ),
         ),
         const SizedBox(
           height: 30,
         ),
         Text(
-          'Loading Conversations ...',
+          loadingLabel,
           style: textTheme.headlineSmall!.copyWith(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold),

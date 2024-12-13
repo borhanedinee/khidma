@@ -52,7 +52,7 @@ const fetchBookmarks = (req, res, next) => {
         users 
         ON 
         bookmarks.user = users.id 
-        WHERE users.id = 1
+        WHERE users.id = ?
         `
         db.query(sql, [userID], (err, results) => {
             if (err) {
@@ -79,6 +79,9 @@ const fetchBookmarks = (req, res, next) => {
                         title: item.title,
                         type: item.type,
                         company: item.company,
+                        category: item.category,
+                        location: item.location,
+                        posted_at: item.posted_at,
                         companylogo: item.companylogo,
                         salary: item.salary,
                         description: item.description,
@@ -86,6 +89,8 @@ const fetchBookmarks = (req, res, next) => {
                     }
                 })
             },);
+            console.log(results);
+            
             res.status(200).json(transformedData);
         })
     } catch (error) {

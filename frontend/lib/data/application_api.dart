@@ -89,4 +89,21 @@ class ApplicationAPI {
       rethrow;
     }
   }
+
+  // fetch job applicants
+  fetchJobApplicants(int jobid)async{
+    try {
+      Uri endpointUrl = Uri.parse('$BASE_URL/api/application/fetchjobapplicants/$jobid');
+      var req = await http.get(
+        endpointUrl,
+        headers: HEADERS,
+      );
+      if (req.statusCode!= 200) {
+        throw Exception();
+      }
+      return json.decode(req.body);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khidma/main.dart';
+import 'package:khidma/presentation/controllers/chat/chats_controller.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
 
@@ -34,6 +35,7 @@ enum PageIcon {
 }
 
 class MyDrawerController extends GetxController {
+  final SocketService socketService = Get.find();
   // initial state
   String _selectedDrawerItem = 'H O M E';
   PageLabel _selectedLabel = PageLabel.homeLabel;
@@ -62,6 +64,8 @@ class MyDrawerController extends GetxController {
       ),
     );
     prefs.setBool('isauthenticated', false);
+    print('disconnecting socket...');
+    // socketService.disconnect();
   }
 
   String updateSelectedLabel(PageLabel pageLabel) {

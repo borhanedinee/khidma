@@ -8,7 +8,9 @@ import 'package:khidma/presentation/controllers/chat/messages_controller.dart';
 import 'package:khidma/presentation/controllers/drawer_controller.dart';
 import 'package:khidma/presentation/controllers/home/applications_controller.dart';
 import 'package:khidma/presentation/controllers/home/edit_application_controller.dart';
+import 'package:khidma/presentation/controllers/home/jobs_of_recruiter_controller.dart';
 import 'package:khidma/presentation/controllers/home/preview_application_controller.dart';
+import 'package:khidma/presentation/controllers/home/skills_controller.dart';
 import 'package:khidma/presentation/controllers/home/submitting_application_controller.dart';
 import 'package:khidma/presentation/controllers/home/bookmarks_controller.dart';
 import 'package:khidma/presentation/controllers/home/home_controller.dart';
@@ -18,6 +20,7 @@ import 'package:khidma/presentation/controllers/onboarding_controller.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
 import 'package:khidma/presentation/pages/on_boarding_pages/on_boarding_page.dart';
 import 'package:khidma/presentation/pallets/colors.dart';
+import 'package:khidma/presentation/services/authentication.dart';
 import 'package:khidma/presentation/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,7 +30,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService.initialize();
   prefs = await SharedPreferences.getInstance();
-  prefs.setBool('isauthenticated', false);
 
   final messagesController = Get.put(MessagesController());
   final conversationsController = Get.put(ConversationsController());
@@ -83,9 +85,9 @@ class Khidma extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: prefs.getString('userfullname') == null
-          ? const OnBoardingPage()
-          : const MainPage(),
+      home: AuthenticationService.isUserAuthenticated()
+          ? const MainPage()
+          : const OnBoardingPage(),
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => OnBoardingController(), fenix: true);
         Get.lazyPut(
@@ -101,8 +103,11 @@ class Khidma extends StatelessWidget {
         Get.lazyPut(() => ApplicationsController(), fenix: true);
         Get.lazyPut(() => ConversationsController(), fenix: true);
         Get.lazyPut(() => MessagesController(), fenix: true);
+        Get.lazyPut(() => JobsOfRecruiterController(), fenix: true);
+        Get.lazyPut(() => SkillsController(), fenix: true);
         Get.lazyPut(() => PreviewApplicationController(), fenix: true);
       }),
+      
     );
   }
 }

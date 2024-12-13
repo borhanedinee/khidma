@@ -30,7 +30,9 @@ class OnBoardingTwo extends StatelessWidget {
               children: [
                 Text(
                   'Connect with Opportunity',
-                  style: textTheme.titleLarge,
+                  style: textTheme.titleLarge!.copyWith(
+                    color: Colors.yellow
+                  ),
                 ),
                 const SizedBox(
                   height: 10,

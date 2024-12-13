@@ -6,6 +6,7 @@ import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/chat/chats_controller.dart';
 import 'package:khidma/presentation/pages/home_pages/home_page.dart';
 import 'package:khidma/presentation/pages/main_page.dart';
+import 'package:khidma/presentation/services/authentication.dart';
 import 'package:khidma/presentation/services/get_saved_user.dart';
 
 class LoginController extends GetxController {
@@ -29,7 +30,6 @@ class LoginController extends GetxController {
         throw Exception();
       }
       if (req['status'] == 'success') {
-        print(req['user']);
         UserModel user = UserModel.fromJson(req['user']);
         saveUser(user);
         Get.showSnackbar(
@@ -38,8 +38,9 @@ class LoginController extends GetxController {
             duration: Duration(seconds: 2),
           ),
         );
-        prefs.setBool('isauthenticated', true);
         socketService.connectUser(getSavedUser().id);
+        AuthenticationService.updateIsUserAuthenticated(true);
+
         Get.off(const MainPage());
       } else if (req['status'] == 'fail') {
         Get.showSnackbar(
@@ -74,6 +75,8 @@ class LoginController extends GetxController {
       if (req['status'] == 'success') {
         UserModel user = UserModel.fromJson(req['user']);
         saveUser(user);
+        AuthenticationService.updateIsUserAuthenticated(true);
+
         socketService.connectUser(getSavedUser().id);
       } else if (req['status'] == 'fail') {
         Get.showSnackbar(

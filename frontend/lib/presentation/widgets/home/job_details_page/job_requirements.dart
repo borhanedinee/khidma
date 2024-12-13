@@ -65,9 +65,11 @@ class _JobRequirementsState extends State<JobRequirements>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Requirements',
                     style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+
                       fontWeight: FontWeight.bold,
                       fontSize: 18, // Emphasized heading
                     ),

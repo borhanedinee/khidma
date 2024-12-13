@@ -39,17 +39,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
       child: Scaffold(
         body: Stack(
           children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: -20,
-              child: Opacity(
-                opacity: .2,
-                child: Image.asset(
-                  'assets/images/photo.png',
-                ),
-              ),
-            ),
             JobCardDescriptionAndRequirements(
               jobModel: widget.jobModel,
             ),

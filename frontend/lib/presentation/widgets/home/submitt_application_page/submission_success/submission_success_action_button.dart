@@ -24,8 +24,8 @@ class SubmissionSuccessActionButtons extends StatelessWidget {
             ),
           ),
           child: const Text(
-            'Go to Jobs',
-            style: TextStyle(fontSize: 16 , color: Colors.white),
+            'View Your Applications',
+            style: TextStyle(fontSize: 16 , color: Colors.yellow),
           ),
         ),
         const SizedBox(height: 16),

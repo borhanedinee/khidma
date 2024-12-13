@@ -20,77 +20,80 @@ class ReviewResume extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
-      child: Card(
-        color: Colors.grey.shade100,
-        child: SizedBox(
-          width: size.width,
-          height: 100,
-          child: Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(10),
-                height: double.maxFinite,
-                width: (size.width - 2 * 24) * .2,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Icon(
-                  Icons
-                      .insert_drive_file_outlined, // Change icon to indicate a file
-                  size: 30,
-                  color: Colors.green, // Green to show success
-                ),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: .4),
+          color: Colors.grey.shade100,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        width: size.width,
+        height: 100,
+        child: Row(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(10),
+              height: double.maxFinite,
+              width: (size.width - 2 * 24) * .2,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey, width: .4),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
               ),
-              const SizedBox(
-                width: 10,
+              child: const Icon(
+                Icons
+                    .insert_drive_file_outlined, // Change icon to indicate a file
+                size: 30,
+                color: Colors.green, // Green to show success
               ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Review your resume',
-                      style: textTheme.bodyMedium!
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      fileName, // Display the file name of the uploaded resume
-                      style: textTheme.bodySmall!
-                          .copyWith(color: Colors.grey, fontSize: 12),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis, // Handle long file names
-                    ),
-                  ],
-                ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Review your resume',
+                    style: textTheme.bodyMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  Text(
+                    fileName, // Display the file name of the uploaded resume
+                    style: textTheme.bodySmall!
+                        .copyWith(color: Colors.grey, fontSize: 12),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis, // Handle long file names
+                  ),
+                ],
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.visibility_outlined, // Eye icon for "review"
-                  color: Colors.blue,
-                ),
-                onPressed: onReview, // Review resume action
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.visibility_outlined, // Eye icon for "review"
+                color: Colors.blue,
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.refresh_outlined, // Replace icon for replacing resume
-                  color: Colors.orange,
-                ),
-                onPressed: onReplace, // Replace resume action
+              onPressed: onReview, // Review resume action
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.refresh_outlined, // Replace icon for replacing resume
+                color: Colors.orange,
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.delete, // Replace icon for replacing resume
-                  color: Colors.red,
-                ),
-                onPressed: onDelete, // Replace resume action
+              onPressed: onReplace, // Replace resume action
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.delete, // Replace icon for replacing resume
+                color: Colors.red,
               ),
-            ],
-          ),
+              onPressed: onDelete, // Replace resume action
+            ),
+          ],
         ),
       ),
     );

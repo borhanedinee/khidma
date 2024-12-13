@@ -4,11 +4,12 @@ import 'package:khidma/domain/models/conversation_model.dart';
 import 'package:khidma/main.dart';
 import 'package:khidma/presentation/controllers/chat/chats_controller.dart';
 import 'package:khidma/presentation/controllers/chat/conversations_controller.dart';
+import 'package:khidma/presentation/services/authentication.dart';
 import 'package:khidma/presentation/services/get_saved_user.dart';
 import 'package:khidma/presentation/widgets/home/chats_page/conversation_item.dart';
 import 'package:khidma/presentation/widgets/home/chats_page/empty_chats.dart';
-import 'package:khidma/presentation/widgets/home/chats_page/fetching_conversations.dart';
 import 'package:khidma/presentation/widgets/home/my_app_bar.dart';
+import 'package:khidma/presentation/widgets/home/my_loading_item.dart';
 import 'package:khidma/presentation/widgets/home/my_top_shaddow.dart';
 import 'package:khidma/presentation/widgets/home/proceed_to_login.dart';
 import 'package:loading_indicator/loading_indicator.dart';
@@ -25,7 +26,7 @@ class _ChatsPageState extends State<ChatsPage> {
 
   @override
   void initState() {
-    if (prefs.getBool('isauthenticated')!) {
+    if (AuthenticationService.isUserAuthenticated()!) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         conversationsController.fetchConversations(getSavedUser().id);
       });
@@ -55,13 +56,16 @@ class _ChatsPageState extends State<ChatsPage> {
                           top: Radius.circular(30),
                         ),
                       ),
-                      child: !prefs.getBool('isauthenticated')!
+                      child: !AuthenticationService.isUserAuthenticated()
                           ? const ProceedToLogin()
                           : GetBuilder<ConversationsController>(
                               builder: (controller) => ListView(
                                 children: [
                                   controller.isFetchingConversationsLoading
-                                      ? const FetchingChats()
+                                      ? const LoadingItem(
+                                        lottieAsset: 'assets/lottie/fetching_messages_loading.json',
+                                        loadingLabel: 'Loading Conversations ...',
+                                      )
                                       : controller.conversations.isNotEmpty
                                           ? Column(children: [
                                               const SizedBox(
@@ -73,9 +77,34 @@ class _ChatsPageState extends State<ChatsPage> {
                                                 final ConversationModel
                                                     conversation = controller
                                                         .conversations[index];
-                                                return ConversationItem(
-                                                  conversation: conversation,
-                                                );
+                                                if (index == 0) {
+                                                  return Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 24),
+                                                        child: Text(
+                                                          'Your Conversations',
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      ConversationItem(
+                                                        conversation:
+                                                            conversation,
+                                                      ),
+                                                    ],
+                                                  );
+                                                } else {
+                                                  return ConversationItem(
+                                                    conversation: conversation,
+                                                  );
+                                                }
                                               }),
                                             ])
                                           : const EmptyChats(),

@@ -7,7 +7,7 @@ const { addMessage } = require('./controllers/messagesController');
 const server = http.createServer(app);
 
 
-const userToSocketMap = {};
+const userToSocketMap = new Map();
 
 // Initialize Socket.IO
 const io = new Server(server);
@@ -16,6 +16,8 @@ io.on('connection', (socket) => {
 
 
     socket.on('connectuserid', (data) => {
+        console.log(data);
+        
 
         // adding user socket and user id to the in-memory data
         // so data i can use the valid socket id
@@ -76,12 +78,21 @@ io.on('connection', (socket) => {
 
 
     socket.on('disconnect', () => {
-        console.log('User disconnected:', socket.id);
+        // Iterate through the object to find the key associated with the socket ID
+        for (const user in userToSocketMap) {
+            if (userToSocketMap[user] === socket.id) {
+                delete userToSocketMap[user]; // Remove the key-value pair from the object
+                console.log('User disconnected:', user, socket.id);
+                break; // Exit the loop once the entry is found and deleted
+            }
+        }
     });
+
+
 });
 
 // Start the combined HTTP and WebSocket server
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running http://localhost:${PORT}`);
 });

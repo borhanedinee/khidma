@@ -22,7 +22,7 @@ class JobItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.only(left: 20),
         width: size.width - 80,
-        height: (size.height ) * .25,
+        height: (size.height) * .25,
         decoration: BoxDecoration(
           color: Colors.grey.shade200.withOpacity(.2),
           borderRadius: BorderRadius.horizontal(
@@ -85,7 +85,10 @@ class JobItem extends StatelessWidget {
                       curve: Curves.easeInOut,
                     );
                   },
-                  icon: const Icon(Icons.navigate_next),
+                  icon: const Icon(
+                    Icons.navigate_next,
+                    color: Colors.yellow,
+                  ),
                 ),
                 const SizedBox(width: 50),
               ],
